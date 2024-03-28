@@ -1,6 +1,5 @@
 # Q10 wireless Keyboard: zmk-config
 
----
 | key          | 含义            | 说明                                                                                                                                                   |
 |--------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | &kp	         | 普通按键          | 	点击的时候发送指定按键                                                                                                                                         |
@@ -11,7 +10,7 @@
 | &caps_word	  | Caps Word	    | Behaves similar to caps lock, but automatically deactivates when any key not in a continue list is pressed, or if the caps word key is pressed again |                                                                                                                                                                                                                                                   |
 | &key_repeat	 | Key Repeat	   | Sends again whatever keycode was last sent                                                                                                           |                                                                                                                                                                                                                                                   |
 
-Hey 👋 welcome. Use this repo to generate your own ZMK keymap for the BB9900 BLE keyboard.
+Hey 👋 welcome. Use this repo to generate your own ZMK keymap for the BBQ10 BLE keyboard.
 > [ZMK 固件中可以使用哪些按键](https://zmk.dev/docs/codes)  
 > [ZMK 固件可以使用哪些动作](https://zmk.dev/docs/behaviors)
 
