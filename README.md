@@ -15,7 +15,6 @@ Hey 👋 welcome. Use this repo to generate your own ZMK keymap for the BBQ10 BL
 > [ZMK 固件可以使用哪些动作](https://zmk.dev/docs/behaviors)
 
 ## 如何构建自己的个性化键盘固件
-
 ### 1. Fork 这个仓库
 
 <img width="1295" alt="Screenshot 2024-03-28 at 10 51 28" src="https://github.com/KyleBing/zmk_config_Q10/assets/12215982/d6bf4867-6593-4022-9983-c264dc2d1786">
@@ -64,6 +63,9 @@ Hey 👋 welcome. Use this repo to generate your own ZMK keymap for the BBQ10 BL
 
 解压下载好的 `firmware.zip` 文件，解压后会获得 `bbxxxx-zmk.uf2` 的文件，这个文件就是键盘固件
 
+<img width="712" alt="Screenshot 2024-03-28 at 08 58 32" src="https://github.com/KyleBing/zmk_config_Q10/assets/12215982/de14cce4-3e72-4aba-81ab-8849898cff7a">
+
+
 
 USB 连接键盘，进入固件更新模式（具体操作参见键盘说明书）。  
 此时电脑上会多出一个名为 `NICENANO` 的外接硬盘。  
@@ -78,6 +80,7 @@ macOS 上的提示是这样的，不要慌张，这是正常的。
 <img width="421" alt="Screenshot 2024-03-28 at 09 15 45" src="https://github.com/KyleBing/zmk_config_Q10/assets/12215982/37cb6907-a432-4e6b-a744-c993dfa6dd92">
 
 ### 5. 更新固件完成
+
 
 
 
