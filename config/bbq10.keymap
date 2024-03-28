@@ -16,7 +16,6 @@
 #define SYM 1
 #define UPPER 2
 
-
 / {
     behaviors {
         td0: tap_dance_0 {
@@ -41,14 +40,23 @@
         default_layer {
 
             bindings = <
-//         --------------------------------------------------------------------------------------------------------------------------         
-//         |    Shoulder Key1    |                                                                             |    Shoulder Key2    |     
-// |         Call key      |      Blackberry Key        |    Trackpad    |             Back Key                |             Endcall Key          |
-// |     Q      |     W    |     E    |     R    |      T      |       Y        |       U        |        I        |       O      |      P        |     
-// |     A      |     S    |     D    |     F    |      G      |       H        |       J        |        K        |       L      |      ←        |  
-// |     alt    |     Z    |     X    |     C    |      V      |       B        |       N        |        M        |       $      |    Enter      |   
-//        |         aA     |         0           |           SPACE              |         SYM         |        aA          |       
-//        -----------------------------------------------------------------------------------------------------------------
+
+/*
+ * KEYBOARD LAYOUT
+                 -----------------------                                                              ---------------------------
+                 |    Shoulder Key1    |                                                              |      Shoulder Key2      |
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    |        Call key        |   Blackberry Key    |              Trackpad            |             Back Key           |          Endcall Key           |
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    |     Q      |     W     |     E    |     R    |         T       |       Y        |        U       |       I       |        O        |      P       |
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    |     A      |     S     |     D    |     F    |         G       |       H        |        J       |       K       |        L        |      ←       |
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+     \    alt    |     Z     |     X    |     C    |         V       |       B        |        N       |       M       |        $        |    Enter    /
+      -----------------------------------------------------------------------------------------------------------------------------------------------
+                 \      aA        |       0        |                    SPACE                  |          SYM         |         aA      /
+                   ----------------------------------------------------------------------------------------------------------------
+*/
 
                  &mkp LCLK                                                                                          &mkp RCLK
     &kp CLCK                &kp LGUI                            &mkp LCLK                          &mt ESC K_BACK                    &kp TAB
@@ -62,25 +70,25 @@
 
         sym_layer {
 
-            bindings = <        
-                 &kp C_VOL_UP                                                                                       &mkp C_VOL_DN
-    &kp PSCRN               &kp C_AC_SEARCH                     &mkp LCLK                          &kp F5                            &kp F12 
-    &kp HASH     &kp N1     &kp N2      &kp N3    &mt LBKT LPAR &mt RBKT RPAR     &kp UNDER        &kp MINUS        &kp PLUS         &kp AT
-    &kp STAR     &kp N4     &kp N5      &kp N6    &kp SLASH     &kp COLON         &kp SEMI         &kp APOS         &kp DQT          &kp DEL
-    &kp LSHFT    &kp N7     &kp N8      &kp N9    &kp QMARK     &kp EXCL          &kp COMMA        &kp DOT          &kp C_MUTE       &kp ENTER
-    &kp LCTRL               &kp N0                              &kp SPACE                          &tog SYM                          &tog UPPER
+            bindings = <
+                 &msc SCRL_UP                                                                                       &msc SCRL_DOWN
+    &kp TAB                  &kp LMETA                                &mkp LCLK                          &kp ESC                           &kp CLCK
+    &kp HASH     &kp N1      &kp N2      &kp N3    &mt LBKT LPAR      &mt RBKT RPAR     &kp UNDER        &kp MINUS        &kp PLUS         &kp AT
+    &kp STAR     &kp N4      &kp N5      &kp N6    &kp SLASH          &kp COLON         &kp SEMI         &kp APOS         &kp DQT          &kp DEL
+    &tog SYM     &kp N7      &kp N8      &kp N9    &kp QMARK          &kp EXCL          &kp COMMA        &kp DOT          &kp C_MUTE       &kp ENTER
+    &kp LSHFT                &kp N0                                   &kp SPACE                          &kp N2                            &tog UPPER
             >;
         };
 
         upper_layer {
 
             bindings = <
-                 &msc SCRL_UP                                                                                       &msc SCRL_DOWN
-    &bt BT_SEL 0            &bt BT_SEL 1                             &td0                           &bt BT_SEL 2                     &bt BT_SEL 3
-    &none        &kp UP     &none       &sys_reset &ext_power EP_TOG &none         &kp LT           &kp GT          &kp PIPE         &kp KP_EQUAL
-    &kp LEFT     &kp DOWN   &kp RIGHT   &none      &kp BSLH          &kp AMPS      &kp LBRC         &kp RBRC        &kp CARET        &kp BSPC
-    &kp LSHFT    &none      &none       &none      &bl BL_DEC        &bl BL_TOG    &bl BL_INC       &none           &bootloader      &kp ENTER
-    &kp LCTRL               &kp LALT                                 &hm OUT_TOG SPACE              &tog SYM                         &tog UPPER
+                 &kp C_BRI_DN                                                                                        &kp C_BRI_UP
+    &bt BT_SEL 0             &bt BT_SEL 1                             &td0                               &bt BT_SEL 2                     &bt BT_SEL 3
+    &none        &none       &kp UP      &sys_reset &ext_power EP_TOG &none             &out OUT_TOG     &kp C_VOL_DN    &kp C_VOL_UP     &none
+    &none        &kp LEFT    &kp DOWN    &kp RIGHT  &none             &none             &kp C_PREV       &kp C_PP        &kp C_NEXT       &kp BSPC
+    &tog SYM     &bootloader &none       &none      &bl BL_DEC        &bl BL_TOG        &bl BL_INC       &none           &kp C_MUTE       &kp ENTER
+    &kp LSHFT                &kp LALT                                 &kp SPACE                          &kp N2                           &tog UPPER
             >;
         };
     };
