@@ -6,15 +6,16 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/mouse.h>
-#include <dt-bindings/zmk/backlight.h>
-#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/bt.h> // 蓝牙连接管理，最多5个连接
+#include <dt-bindings/zmk/outputs.h> // 选择输出途径 蓝牙|USB
+#include <dt-bindings/zmk/mouse.h> // 模拟鼠标操作
+#include <dt-bindings/zmk/backlight.h> // 背光操作
+#include <dt-bindings/zmk/ext_power.h> // 电源相关操作
 
  
 #define SYM 1
-#define UPPER 2
+#define MEDIA 2
+#define UTIL 3
 
 / {
     behaviors {
@@ -34,61 +35,116 @@
         };
     };
 
+
     keymap {
         compatible = "zmk,keymap";
 
+        /*
+         *    KEYBOARD LAYOUT
+         *
+                             -----------------------                                                              ---------------------------
+                             |    Shoulder Key1    |                                                              |      Shoulder Key2      |
+                ----------------------------------------------------------------------------------------------------------------------------------------------------
+                |        Call key        |   Blackberry Key    |              Trackpad            |             Back Key           |          Endcall Key           |
+                ----------------------------------------------------------------------------------------------------------------------------------------------------
+                |     Q      |     W     |     E    |     R    |         T       |       Y        |        U       |       I       |        O        |      P       |
+                ----------------------------------------------------------------------------------------------------------------------------------------------------
+                |     A      |     S     |     D    |     F    |         G       |       H        |        J       |       K       |        L        |      ←       |
+                ----------------------------------------------------------------------------------------------------------------------------------------------------
+                 \    alt    |     Z     |     X    |     C    |         V       |       B        |        N       |       M       |        $        |    Enter    /
+                  -----------------------------------------------------------------------------------------------------------------------------------------------
+                             \      aA        |       0        |                    SPACE                  |          SYM          |         aA      /
+                               --------------------------------------------------------------------------------------------------------------------
+        */
+
+        /*******************
+         *    字母层 DEFAULT
+         ******************/
         default_layer {
+                bindings = <
+                             &mkp LCLK                                                                                                &mkp RCLK
+                &kp TAB                  &kp LMETA                                 &mkp LCLK                          &kp ESC                           &kp CLCK
 
-            bindings = <
+            //  Q            W           E           R          T                  Y                 U                I               O                P
+                &kp Q        &kp W       &kp E       &kp R     &kp T               &kp Y             &kp U            &kp I           &kp O            &kp P
 
-/*
- * KEYBOARD LAYOUT
-                 -----------------------                                                              ---------------------------
-                 |    Shoulder Key1    |                                                              |      Shoulder Key2      |
-    ----------------------------------------------------------------------------------------------------------------------------------------------------
-    |        Call key        |   Blackberry Key    |              Trackpad            |             Back Key           |          Endcall Key           |
-    ----------------------------------------------------------------------------------------------------------------------------------------------------
-    |     Q      |     W     |     E    |     R    |         T       |       Y        |        U       |       I       |        O        |      P       |
-    ----------------------------------------------------------------------------------------------------------------------------------------------------
-    |     A      |     S     |     D    |     F    |         G       |       H        |        J       |       K       |        L        |      ←       |
-    ----------------------------------------------------------------------------------------------------------------------------------------------------
-     \    alt    |     Z     |     X    |     C    |         V       |       B        |        N       |       M       |        $        |    Enter    /
-      -----------------------------------------------------------------------------------------------------------------------------------------------
-                 \      aA        |       0        |                    SPACE                  |          SYM         |         aA      /
-                   ----------------------------------------------------------------------------------------------------------------
-*/
+            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
+                &kp A        &kp S       &kp D       &kp F     &kp G               &kp H             &kp J            &kp K           &kp L            &kp BSPC
 
-                 &mkp LCLK                                                                                             &mkp RCLK
-    &kp TAB                  &kp LMETA                                &mkp LCLK                          &kp ESC                           &kp CLCK
-    &kp Q        &kp W       &kp E       &kp R     &kp T              &kp Y             &kp U            &kp I            &kp O            &kp P
-    &kp A        &kp S       &kp D       &kp F     &kp G              &kp H             &kp J            &kp K            &kp L            &kp BSPC
-    &tog SYM     &kp Z       &kp X       &kp C     &kp V              &kp B             &kp N            &kp M            &kp DLLR         &kp ENTER
-    &kp LSHFT                &kp LALT                                 &kp SPACE                          &kp N2                            &tog UPPER
+            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
+                &tog SYM     &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &kp DLLR         &kp ENTER
+
+            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                             &kp LSHFT         &kp LCTRL                           &kp SPACE                 &kp N2                   &tog UPPER
             >;
         };
 
 
+        /*******************
+        *    符号层 SYMBOL
+        ******************/
         sym_layer {
-
             bindings = <
-                 &msc SCRL_UP                                                                                       &msc SCRL_DOWN
-    &kp TAB                  &kp LMETA                                &mkp LCLK                          &kp ESC                           &kp CLCK
-    &kp HASH     &kp N1      &kp N2      &kp N3    &mt LBKT LPAR      &mt RBKT RPAR     &kp UNDER        &kp MINUS        &kp PLUS         &kp AT
-    &kp STAR     &kp N4      &kp N5      &kp N6    &kp SLASH          &kp COLON         &kp SEMI         &kp APOS         &kp DQT          &kp DEL
-    &tog SYM     &kp N7      &kp N8      &kp N9    &kp QMARK          &kp EXCL          &kp COMMA        &kp DOT          &kp C_MUTE       &kp ENTER
-    &kp LSHFT                &kp N0                                   &kp SPACE                          &kp N2                            &tog UPPER
+                             &msc SCRL_UP                                                                                            &msc SCRL_DOWN
+                &kp TAB                  &kp LMETA                                 &mkp LCLK                          &kp ESC                           &kp CLCK
+
+            //  Q            W           E           R          T                  Y                 U                I               O                P
+                &kp HASH     &kp N1      &kp N2      &kp N3    &mt LBKT LPAR       &mt RBKT RPAR     &kp UNDER        &kp MINUS       &kp PLUS         &kp AT
+
+            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
+                &kp STAR     &kp N4      &kp N5      &kp N6    &kp SLASH           &kp COLON         &kp SEMI         &kp APOS        &kp DQT          &kp BSPC
+
+            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
+                &tog SYM     &kp N7      &kp N8      &kp N9    &kp QMARK           &kp EXCL          &kp COMMA        &kp DOT         &kp C_MUTE       &kp ENTER
+
+            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                             &kp LSHFT         &kp N0                              &kp SPACE                 &kp N2                   &tog UPPER
             >;
         };
 
-        upper_layer {
 
+        /*******************
+        *    媒体层 MEDIA
+        ******************/
+        upper_layer {
             bindings = <
-                 &kp C_BRI_DN                                                                                        &kp C_BRI_UP
-    &bt BT_SEL 0             &bt BT_SEL 1                             &td0                               &bt BT_SEL 2                     &bt BT_SEL 3
-    &none        &none       &kp UP      &sys_reset &ext_power EP_TOG &none             &out OUT_TOG     &kp C_VOL_DN    &kp C_VOL_UP     &none
-    &none        &kp LEFT    &kp DOWN    &kp RIGHT  &none             &none             &kp C_PREV       &kp C_PP        &kp C_NEXT       &kp BSPC
-    &tog SYM     &bootloader &none       &none      &bl BL_DEC        &bl BL_TOG        &bl BL_INC       &none           &kp C_MUTE       &kp ENTER
-    &kp LSHFT                &kp LALT                                 &kp SPACE                          &kp N2                           &tog UPPER
+                             &kp K_BACK                                                                                               &kp K_FORWARD
+                &kp TAB                  &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
+
+            //  Q            W           E           R          T                  Y                 U                I               O                P
+                &kp PG_UP    &kp PG_DN   &kp UP      &kp HOME   &kp END            &none             &none            &kp C_VOL_DN    &kp C_VOL_UP     &none
+
+            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
+                &none        &kp LEFT    &kp DOWN    &kp RIGHT  &none              &none             &none            &kp C_BRI_DN    &kp C_BRI_UP     &kp BSPC
+
+            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
+                &none        &none       &none       &none      &none              &kp C_PREV        &kp C_PP         &kp C_NEXT      &kp C_MUTE       &kp ENTER
+
+            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                             &kp LSHFT         &kp LALT                            &kp SPACE                 &kp N2                   &tog UPPER
+            >;
+        };
+
+
+        /*******************
+        *  功能层 UTILITY
+        ********************/
+        util_layer {
+            bindings = <
+                             &kp C_BRI_DN                                                                                             &kp C_BRI_UP
+                &bt BT_SEL 0             &bt BT_SEL 1                              &mkp LCLK                          &bt BT_SEL 2                     &bt BT_SEL 3
+
+            //  Q            W           E           R          T                  Y                 U                I               O                P
+                &none        &none       &none       &sys_reset &ext_power EP_TOG  &none             &out OUT_TOG     &none           &none            &none
+
+            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
+                &none        &none       &none       &none      &none              &none             &none            &none           &none            &bt BT_CLR
+
+            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
+                &none        &bootloader &none       &none      &bl BL_DEC         &bl BL_TOG        &bl BL_INC       &none           &tog UTIL        &kp ENTER
+
+            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                             &kp LSHFT         &kp LALT                            &kp SPACE                 &kp N2                   &none
             >;
         };
     };
