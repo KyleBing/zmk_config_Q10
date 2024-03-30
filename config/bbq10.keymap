@@ -52,30 +52,27 @@
 
 / {
     behaviors {
+        // 单击 | 双击 动作
         td0: tap_dance_0 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <400>;
             bindings = <&mkp LCLK>, <&bt BT_CLR>;
         };
-    };
-    behaviors {
+        // 单击 | 长按 动作
         htl: hold_toggle_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <500>;
             bindings = <&tog &kp>;
         };
-    };
-    behaviors {
-        htsl: hold_toggle_sticky_layer {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <500>;
-            bindings = <&sl &kp>;
+        tdl: tap_dance_layer {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <400>;
+            bindings = <&sl SYM>, <&tog SYM>;
         };
     };
-
 
     keymap {
         compatible = "zmk,keymap";
@@ -116,7 +113,7 @@
                 &kp A           &kp S       &kp D       &kp F     &kp G               &kp H             &kp J            &kp K           &kp L            &kp BSPC
 
             //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
-                &htsl SYM SYM   &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &htl UTIL DLLR   &kp ENTER
+                &tdl            &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &htl UTIL DLLR   &kp ENTER
 
             //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
                                 &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
