@@ -59,7 +59,7 @@
 
         /*==================
          *  1. 字母层 DEFAULT
-         *==================/
+         *==================*/
         default_layer {
                 bindings = <
             //               TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
@@ -85,7 +85,7 @@
 
         /*==================
         * 2. 符号层 SYMBOL
-        *==================/
+        *==================*/
         sym_layer {
             bindings = <
             //               TOP LEFT BUTTON                                                                                         TOP RIGHT BUTTON
@@ -111,7 +111,7 @@
 
         /*==================
         *  3. 媒体层 MEDIA
-        *==================/
+        *==================*/
         media_layer {
             bindings = <
             //               TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
@@ -137,7 +137,7 @@
 
         /*==================
         *  4. 功能层 UTILITY
-        ==================/
+        ==================*/
         util_layer {
             bindings = <
             //               TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
