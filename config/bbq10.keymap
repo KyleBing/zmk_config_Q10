@@ -75,7 +75,7 @@
                 &kp A        &kp S       &kp D       &kp F     &kp G               &kp H             &kp J            &kp K           &kp L            &kp BSPC
 
             //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
-                &sl SYM      &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &hd UTIL $       &kp ENTER
+                &sl SYM      &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &hd UTIL DLLR    &kp ENTER
 
             //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
                              &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
