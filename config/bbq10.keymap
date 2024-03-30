@@ -52,20 +52,18 @@
 
 / {
     behaviors {
-        // 单击 | 双击 动作
-        td0: tap_dance_0 {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <400>;
-            bindings = <&mkp LCLK>, <&bt BT_CLR>;
-        };
-        // 单击 | 长按 动作
+        // 动作: 短按 | 长按
+        // 长按: 切换层
+        // 短按: 普通按键
         htl: hold_toggle_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <500>;
             bindings = <&tog &kp>;
         };
+        // 动作: 单击 | 双击
+        // 单击: 粘滞层
+        // 双击: 切换层
         tdl: tap_dance_layer {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;

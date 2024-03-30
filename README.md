@@ -1,16 +1,6 @@
-# Q10 wireless Keyboard: zmk-config
+# 黑莓蓝牙键盘配置文件
 
-| key          | 含义            | 说明                                                                                                                                                   |
-|--------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| &kp	         | 普通按键          | 	点击的时候发送指定按键                                                                                                                                         |
-| &mt	         | 普通按键 + 长按	    | 长按的时候发送一个键，点击的时候发送另一个键                                                                                                                               |              
-| &kt	         | toggle 按键	    | 按键状态切换，点击时将指定键处于按下的状态，直到这个键被再次点击                                                                                                                     | 
-| &sk	         | 粘滞按键	         | 点击后该键将处于按下的状态，直到点击其它按键，该键才恢复弹起状态                                                                                                                     |                                                                                                                                                                                                                                                   |
-| &gresc	      | Grave Escape	 | Sends Grave Accent ` keycode if shift or GUI is held, sends Escape keycode otherwise                                                                 |                                                                                                                                                                                                                                                   |
-| &caps_word	  | Caps Word	    | Behaves similar to caps lock, but automatically deactivates when any key not in a continue list is pressed, or if the caps word key is pressed again |                                                                                                                                                                                                                                                   |
-| &key_repeat	 | Key Repeat	   | Sends again whatever keycode was last sent                                                                                                           |                                                                                                                                                                                                                                                   |
-
-Hey 👋 welcome. Use this repo to generate your own ZMK keymap for the BBQ10 BLE keyboard.
+> ZMK 固件可用的动作、按键说明：  
 > [ZMK 固件中可以使用哪些按键](https://zmk.dev/docs/codes)  
 > [ZMK 固件可以使用哪些动作](https://zmk.dev/docs/behaviors)
 
