@@ -12,10 +12,43 @@
 #include <dt-bindings/zmk/backlight.h> // 背光操作
 #include <dt-bindings/zmk/ext_power.h> // 电源相关操作
 
+
+/**
+ * ######################
+ * #      说  明
+ *######################
+ *
+ * ## 一、共 4 层：
+ *      1. 字母层：字母
+ *      2. 符号层：数字、符号
+ *      3. 媒体层：方向键、屏幕亮度、音量、上一曲|暂停|下一曲
+ *      4. 功能层：触控板开关、BootLoader 固件升级、键盘灯控制、输出途径控制（蓝牙、USB）
+ *
+ * ## 二、层级切换说明：
+ *      1. 字母层：
+ *
+ *      2. 符号层：
+ *          alt 点击：临时进入符号层，2 秒内点击任意符号，上屏对应符号并立即退出符号层，<四个键盘灯长亮>
+ *          alt 长按：进入符号层，<四个键盘灯长亮>
+ *
+ *      3. 媒体层：
+ *          右侧 aA↑ 点击：切换媒体层、字母层 <四个键盘灯呼吸>
+ *
+ *      4. 功能层：
+ *          $ 键点击：输入 $
+ *          $ 键长按：进入功能层，<四个键盘灯闪烁>
+ *
+ **/
+
  
 #define SYM 1
 #define MEDIA 2
 #define UTIL 3
+
+&sl {
+    release-after-ms = <2000>;  // 粘滞层： 2 秒后如果没有按下其它键，将复原。默认值为 1000
+};
+
 
 / {
     behaviors {
@@ -27,12 +60,19 @@
         };
     };
     behaviors {
-        hd: hold_behavior {
+        htl: hold_toggle_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <500>;
             bindings = <&tog &kp>;
         };
+        htsl: hold_toggle_sticky_layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <500>;
+            bindings = <&sl &kp>;
+        };
+
     };
 
 
@@ -62,23 +102,23 @@
          *==================*/
         default_layer {
                 bindings = <
-            //               TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
-                             &mkp LCLK                                                                                                &mkp RCLK
+            //                  TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
+                                &mkp LCLK                                                                                                &mkp RCLK
 
-            //  PHONE                    BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
-                &kp TAB                  &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
+            //  PHONE                       BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
+                &kp TAB                     &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
 
-            //  Q            W           E           R          T                  Y                 U                I               O                P
-                &kp Q        &kp W       &kp E       &kp R     &kp T               &kp Y             &kp U            &kp I           &kp O            &kp P
+            //  Q               W           E           R          T                  Y                 U                I               O                P
+                &kp Q           &kp W       &kp E       &kp R     &kp T               &kp Y             &kp U            &kp I           &kp O            &kp P
 
-            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
-                &kp A        &kp S       &kp D       &kp F     &kp G               &kp H             &kp J            &kp K           &kp L            &kp BSPC
+            //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
+                &kp A           &kp S       &kp D       &kp F     &kp G               &kp H             &kp J            &kp K           &kp L            &kp BSPC
 
-            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
-                &sl SYM      &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &hd UTIL DLLR    &kp ENTER
+            //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
+                &htsl SYM SYM   &kp Z       &kp X       &kp C     &kp V               &kp B             &kp N            &kp M           &htl UTIL DLLR   &kp ENTER
 
-            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
-                             &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
+            //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                                &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
             >;
         };
 
@@ -88,23 +128,23 @@
         *==================*/
         sym_layer {
             bindings = <
-            //               TOP LEFT BUTTON                                                                                         TOP RIGHT BUTTON
-                             &msc SCRL_UP                                                                                            &msc SCRL_DOWN
+            //                  TOP LEFT BUTTON                                                                                         TOP RIGHT BUTTON
+                                &msc SCRL_UP                                                                                            &msc SCRL_DOWN
 
-            //  PHONE                    BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
-                &kp TAB                  &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
+            //  PHONE                       BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
+                &kp TAB                     &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
 
-            //  Q            W           E           R          T                  Y                 U                I               O                P
-                &kp HASH     &kp N1      &kp N2      &kp N3    &mt LBKT LPAR       &mt RBKT RPAR     &kp UNDER        &kp MINUS       &kp PLUS         &kp AT
+            //  Q               W           E           R          T                  Y                 U                I               O                P
+                &kp HASH        &kp N1      &kp N2      &kp N3    &mt LBKT LPAR       &mt RBKT RPAR     &kp UNDER        &kp MINUS       &kp PLUS         &kp AT
 
-            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
-                &kp STAR     &kp N4      &kp N5      &kp N6    &kp SLASH           &kp COLON         &kp SEMI         &kp APOS        &kp DQT          &kp BSPC
+            //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
+                &kp STAR        &kp N4      &kp N5      &kp N6    &kp SLASH           &kp COLON         &kp SEMI         &kp APOS        &kp DQT          &kp BSPC
 
-            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
-                &sl SYM      &kp N7      &kp N8      &kp N9    &kp QMARK           &kp EXCL          &kp COMMA        &kp DOT         &kp C_MUTE       &kp ENTER
+            //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
+                &tog SYM        &kp N7      &kp N8      &kp N9    &kp QMARK           &kp EXCL          &kp COMMA        &kp DOT         &kp C_MUTE       &kp ENTER
 
-            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
-                             &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
+            //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                                &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
             >;
         };
 
@@ -114,23 +154,23 @@
         *==================*/
         media_layer {
             bindings = <
-            //               TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
-                             &kp K_BACK                                                                                               &kp K_FORWARD
+            //                  TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
+                                &kp K_BACK                                                                                               &kp K_FORWARD
 
-            //  PHONE                    BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
-                &kp TAB                  &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
+            //  PHONE                       BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
+                &kp TAB                     &kp LMETA                                 &mkp LCLK                          &kp ESC                          &kp CLCK
 
-            //  Q            W           E           R          T                  Y                 U                I               O                P
-                &kp PG_UP    &kp PG_DN   &kp UP      &kp HOME   &kp END            &none             &none            &kp C_VOL_DN    &kp C_VOL_UP     &none
+            //  Q               W           E           R          T                  Y                 U                I               O                P
+                &kp PG_UP       &kp PG_DN   &kp UP      &kp HOME   &kp END            &none             &none            &kp C_VOL_DN    &kp C_VOL_UP     &none
 
-            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
-                &none        &kp LEFT    &kp DOWN    &kp RIGHT  &none              &none             &none            &kp C_BRI_DN    &kp C_BRI_UP     &kp BSPC
+            //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
+                &none           &kp LEFT    &kp DOWN    &kp RIGHT  &none              &none             &none            &kp C_BRI_DN    &kp C_BRI_UP     &kp BSPC
 
-            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
-                &none        &none       &none       &none      &none              &kp C_PREV        &kp C_PP         &kp C_NEXT      &kp C_MUTE       &kp ENTER
+            //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
+                &none           &none       &none       &none      &none              &kp C_PREV        &kp C_PP         &kp C_NEXT      &kp C_MUTE       &kp ENTER
 
-            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
-                             &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
+            //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                                &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &tog MEDIA
             >;
         };
 
@@ -140,23 +180,23 @@
         ==================*/
         util_layer {
             bindings = <
-            //               TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
-                             &kp C_BRI_DN                                                                                             &kp C_BRI_UP
+            //                  TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
+                                &kp C_BRI_DN                                                                                             &kp C_BRI_UP
 
-            //  PHONE                    BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
-                &bt BT_SEL 0             &bt BT_SEL 1                              &mkp LCLK                          &bt BT_SEL 2                     &bt BT_SEL 3
+            //  PHONE                       BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
+                &bt BT_SEL 0                &bt BT_SEL 1                              &mkp LCLK                          &bt BT_SEL 2                     &bt BT_SEL 3
 
-            //  Q            W           E           R          T                  Y                 U                I               O                P
-                &none        &none       &none       &sys_reset &ext_power EP_TOG  &none             &out OUT_TOG     &none           &none            &none
+            //  Q               W           E           R          T                  Y                 U                I               O                P
+                &none           &none       &none       &sys_reset &ext_power EP_TOG  &none             &out OUT_TOG     &none           &none            &none
 
-            //  A            S           D           F          G                  H                 J                K               L                BACKSPACE
-                &none        &none       &none       &none      &none              &none             &none            &none           &none            &bt BT_CLR
+            //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
+                &none           &none       &none       &none      &none              &none             &none            &none           &none            &bt BT_CLR
 
-            //  Alt          Z           X           C          V                  B                 N                M               $                ENTER
-                &none        &bootloader &none       &none      &bl BL_DEC         &bl BL_TOG        &bl BL_INC       &none           &tog UTIL        &kp ENTER
+            //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
+                &none           &bootloader &none       &none      &bl BL_DEC         &bl BL_TOG        &bl BL_INC       &none           &tog UTIL        &kp ENTER
 
-            //               LSHIFT            0                                   SPACE                     SYM                      RSHIFT
-                             &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &none
+            //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
+                                &kp LSHFT         &mt LCTRL N0                        &kp SPACE                 &kp N2                   &none
             >;
         };
     };
