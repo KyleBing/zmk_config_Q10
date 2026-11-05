@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" role="img" aria-label="WÍB">
+  <defs>
+    <style>
+      .bg{fill:#f7f7f5}.frame{fill:#1c1c1c;rx:10}
+      .k{fill:#2c2c2c;stroke:#3a3a3a;stroke-width:1;rx:6}
+      .accent{fill:#3d5a80}.soft{fill:#4a4a4a}
+      .t{fill:#f2f2f2;font:600 13px ui-rounded,system-ui,sans-serif;text-anchor:middle;dominant-baseline:central}
+      .ts{fill:#d0d0d0;font:600 11px ui-rounded,system-ui,sans-serif;text-anchor:middle;dominant-baseline:central}
+      .title{fill:#1c1c1c;font:700 18px ui-rounded,system-ui,sans-serif}
+      .sub{fill:#666;font:400 12px ui-rounded,system-ui,sans-serif}
+      .hint{fill:#888;font:400 11px ui-rounded,system-ui,sans-serif}
+    </style>
+  </defs>
+  <rect class="bg" width="920" height="420"/>
+  <text class="title" x="24" y="28">1 · WÍB DEFAULT</text>
+  <text class="sub" x="24" y="48">å8“e · Alt Û&÷B · $ 	ÛŸýB</text>
+
+  <!-- shoulders -->
+  <rect class="k soft" x="120" y="70" width="140" height="28"/><text class="ts" x="190" y="84">æ.</text>
+  <rect class="k soft" x="660" y="70" width="140" height="28"/><text class="ts" x="730" y="84">ó.</text>
+
+  <!-- top row -->
+  <g transform="translate(40,110)">
+    <rect class="k soft" x="0" y="0" width="140" height="36"/><text class="ts" x="70" y="18">Caps</text>
+    <rect class="k soft" x="150" y="0" width="140" height="36"/><text class="ts" x="220" y="18">Meta</text>
+    <rect class="k soft" x="300" y="0" width="200" height="36"/><text class="ts" x="400" y="18">æ§ · æ.</text>
+    <rect class="k soft" x="510" y="0" width="140" height="36"/><text class="ts" x="580" y="18">Esc</text>
+    <rect class="k soft" x="660" y="0" width="140" height="36"/><text class="ts" x="730" y="18">Tab</text>
+  </g>
+
+  <!-- letter rows -->
+  <g transform="translate(40,158)">
+    <g id="r1">
+      <rect class="k" x="0" y="0" width="76" height="44"/><text class="t" x="38" y="22">Q</text>
+      <rect class="k" x="84" y="0" width="76" height="44"/><text class="t" x="122" y="22">W</text>
+      <rect class="k" x="168" y="0" width="76" height="44"/><text class="t" x="206" y="22">E</text>
+      <rect class="k" x="252" y="0" width="76" height="44"/><text class="t" x="290" y="22">R</text>
+      <rect class="k" x="336" y="0" width="76" height="44"/><text class="t" x="374" y="22">T</text>
+      <rect class="k" x="420" y="0" width="76" height="44"/><text class="t" x="458" y="22">Y</text>
+      <rect class="k" x="504" y="0" width="76" height="44"/><text class="t" x="542" y="22">U</text>
+      <rect class="k" x="588" y="0" width="76" height="44"/><text class="t" x="626" y="22">I</text>
+      <rect class="k" x="672" y="0" width="76" height="44"/><text class="t" x="710" y="22">O</text>
+      <rect class="k" x="756" y="0" width="76" height="44"/><text class="t" x="794" y="22">P</text>
+    </g>
+    <g transform="translate(0,52)">
+      <rect class="k" x="0" y="0" width="76" height="44"/><text class="t" x="38" y="22">A</text>
+      <rect class="k" x="84" y="0" width="76" height="44"/><text class="t" x="122" y="22">S</text>
+      <rect class="k" x="168" y="0" width="76" height="44"/><text class="t" x="206" y="22">D</text>
+      <rect class="k" x="252" y="0" width="76" height="44"/><text class="t" x="290" y="22">F</text>
+      <rect class="k" x="336" y="0" width="76" height="44"/><text class="t" x="374" y="22">G</text>
+      <rect class="k" x="420" y="0" width="76" height="44"/><text class="t" x="458" y="22">H</text>
+      <rect class="k" x="504" y="0" width="76" height="44"/><text class="t" x="542" y="22">J</text>
+      <rect class="k" x="588" y="0" width="76" height="44"/><text class="t" x="626" y="22">K</text>
+      <rect class="k" x="672" y="0" width="76" height="44"/><text class="t" x="710" y="22">L</text>
+      <rect class="k soft" x="756" y="0" width="76" height="44"/><text class="ts" x="794" y="22">+</text>
+    </g>
+    <g transform="translate(0,104)">
+      <rect class="accent" x="0" y="0" width="76" height="44"/><text class="t" x="38" y="16">Alt</text><text class="ts" x="38" y="30">&÷</text>
+      <rect class="k" x="84" y="0" width="76" height="44"/><text class="t" x="122" y="22">Z</text>
+      <rect class="k" x="168" y="0" width="76" height="44"/><text class="t" x="206" y="22">X</text>
+      <rect class="k" x="252" y="0" width="76" height="44"/><text class="t" x="290" y="22">C</text>
+      <rect class="k" x="336" y="0" width="76" height="44"/><text class="t" x="374" y="22">V</text>
+      <rect class="k" x="420" y="0" width="76" height="44"/><text class="t" x="458" y="22">B</text>
+      <rect class="k" x="504" y="0" width="76" height="44"/><text class="t" x="542" y="22">N</text>
+      <rect class="k" x="588" y="0" width="76" height="44"/><text class="t" x="626" y="22">M</text>
+      <rect class="accent" x="672" y="0" width="76" height="44"/><text class="t" x="710" y="16">$</text><text class="ts" x="710" y="30">Ÿý</text>
+      <rect class="k soft" x="756" y="0" width="76" height="44"/><text class="ts" x="794" y="22">Enter</text>
+    </g>
+    <g transform="translate(42,156)">
+      <rect class="k soft" x="0" y="0" width="100" height="44"/><text class="ts" x="50" y="22">ç Shift</text>
+      <rect class="k soft" x="108" y="0" width="100" height="44"/><text class="ts" x="158" y="16">0</text><text class="ts" x="158" y="30">Ctrl</text>
+      <rect class="k" x="216" y="0" width="280" height="44"/><text class="t" x="356" y="22">Space</text>
+      <rect class="k soft" x="504" y="0" width="100" height="44"/><text class="ts" x="554" y="22">2</text>
+      <rect class="k soft" x="612" y="0" width="100" height="44"/><text class="ts" x="662" y="22">ç Shift</text>
+    </g>
+  </g>
+  <text class="hint" x="24" y="400">Ý.:BbAlt Uû=4ö&÷B / Ìû=š&÷B$ í	=$ / 	=ŸýB</text>
+</svg>
