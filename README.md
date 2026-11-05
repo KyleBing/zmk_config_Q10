@@ -17,15 +17,15 @@
 | 符号层 | 数字、常用符号、滚轮 |
 | 功能层 | 蓝牙设备 1–4、重启、背光、触控板电源、输出切换、刷机 |
 
-![层级切换](docs/layer-switch.svg)
+![层级切换](docs/layer-switch.png)
 
 ### 1. 字母层
 
-![字母层](docs/layer-default.svg)
+![字母层](docs/layer-default.png)
 
 ### 2. 符号层
 
-![符号层](docs/layer-symbol.svg)
+![符号层](docs/layer-symbol.png)
 
 ### 3. 功能层
 
@@ -40,7 +40,7 @@
 | **V / B / N** | 背光减 / 开关 / 加 |
 | **$** | 退出功能层 |
 
-![功能层](docs/layer-util.svg)
+![功能层](docs/layer-util.png)
 
 ---
 
@@ -79,9 +79,11 @@ macOS 上偶发「磁盘未正确推出」属正常现象。
 
 ## 四、文档图示
 
-| 文件 | 说明 |
-|------|------|
-| [`docs/layer-switch.svg`](docs/layer-switch.svg) | 三层切换总览 |
-| [`docs/layer-default.svg`](docs/layer-default.svg) | 字母层 |
-| [`docs/layer-symbol.svg`](docs/layer-symbol.svg) | 符号层 |
-| [`docs/layer-util.svg`](docs/layer-util.svg) | 功能层 |
+README 使用 PNG（GitHub 显示更稳）；同目录保留可编辑的 SVG 源文件。
+
+| 预览 | 源文件 |
+|------|--------|
+| [`docs/layer-switch.png`](docs/layer-switch.png) | [`layer-switch.svg`](docs/layer-switch.svg) |
+| [`docs/layer-default.png`](docs/layer-default.png) | [`layer-default.svg`](docs/layer-default.svg) |
+| [`docs/layer-symbol.png`](docs/layer-symbol.png) | [`layer-symbol.svg`](docs/layer-symbol.svg) |
+| [`docs/layer-util.png`](docs/layer-util.png) | [`layer-util.svg`](docs/layer-util.svg) |
