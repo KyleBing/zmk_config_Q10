@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="220" viewBox="0 0 920 220" role="img" aria-label="layer switch">
-  <rect width="920" height="220" fill="#f7f7f5"/>
-  <text x="24" y="28" fill="#1c1c1c" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700">层级切换</text>
+  <rect width="920" height="220" fill="#fafafa"/>
+  <text x="24" y="28" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700">层级切换</text>
 
-  <rect x="24" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#dddddd"/>
-  <rect x="40" y="66" width="64" height="24" rx="12" fill="#3d5a80"/>
+  <rect x="24" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="40" y="66" width="64" height="24" rx="12" fill="#5b8def"/>
   <text x="72" y="82" text-anchor="middle" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">字母</text>
-  <text x="116" y="84" fill="#1c1c1c" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">默认层</text>
+  <text x="116" y="84" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">默认层</text>
   <text x="40" y="112" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">日常字母输入</text>
   <text x="40" y="132" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">左 Shift / 右 Shift</text>
   <text x="40" y="152" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">0 短按=0 · 长按=Ctrl</text>
 
-  <rect x="320" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#dddddd"/>
-  <rect x="336" y="66" width="64" height="24" rx="12" fill="#2a9d8f"/>
+  <rect x="320" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="336" y="66" width="64" height="24" rx="12" fill="#3cb371"/>
   <text x="368" y="82" text-anchor="middle" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">符号</text>
-  <text x="412" y="84" fill="#1c1c1c" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">SYMBOL</text>
+  <text x="412" y="84" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">SYMBOL</text>
   <text x="336" y="112" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">Alt 单击 → 临时进入(2s)</text>
   <text x="336" y="132" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">Alt 双击 → 锁定符号层</text>
   <text x="336" y="152" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">再按 Alt → 退出</text>
 
-  <rect x="616" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#dddddd"/>
-  <rect x="632" y="66" width="64" height="24" rx="12" fill="#e76f51"/>
+  <rect x="616" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
+  <rect x="632" y="66" width="64" height="24" rx="12" fill="#f0a202"/>
   <text x="664" y="82" text-anchor="middle" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">功能</text>
-  <text x="708" y="84" fill="#1c1c1c" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">UTILITY</text>
+  <text x="708" y="84" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">UTILITY</text>
   <text x="632" y="112" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">$ 短按 → 输入 $</text>
   <text x="632" y="132" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">$ 长按 → 进入功能层</text>
   <text x="632" y="152" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">再按 $ → 退出</text>
