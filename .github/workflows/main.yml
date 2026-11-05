@@ -2,4 +2,6 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    # Pin to v0.3: @main added a board-compat check (`west boards --format "{qualifiers}"`)
+    # that crashes on ZitaoTech/zmk (bbkeyboard_tp, older Zephyr) even after a successful link.
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
