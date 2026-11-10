@@ -98,8 +98,9 @@
 
 上层 4 灯（Call / BB / Back / 挂断，共用一路，不能单颗亮）：符号层长亮，功能层 2 闪一顿。
 
-方向键手感在 [`config/bbq10.conf`](config/bbq10.conf) 里调：
+手感在 [`config/bbq10.conf`](config/bbq10.conf) 里调：
 
+- `CONFIG_TRACKPAD_SCROLL_INTERVAL`：滚动位移/格（越大越慢）；松手后惯性减速
 - `CONFIG_TRACKPAD_ARROW_THRESHOLD`：累积多少位移发一次方向键（越大越钝）
 - `CONFIG_TRACKPAD_ARROW_INTERVAL`：每次方向键后的间隔毫秒（越大连发越慢）
 
