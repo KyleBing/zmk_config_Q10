@@ -8,7 +8,7 @@
   <text x="72" y="82" text-anchor="middle" fill="#ffffff" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">字母</text>
   <text x="116" y="84" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700">默认层</text>
   <text x="40" y="112" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">日常字母输入</text>
-  <text x="40" y="132" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">BB 单击滚动 · 双击方向键</text>
+  <text x="40" y="132" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">BB 长按 Cmd · 单击滚动 · 双击方向</text>
   <text x="40" y="152" fill="#555555" font-family="Helvetica, Arial, sans-serif" font-size="12">0 短按=0 · 长按=Ctrl</text>
 
   <rect x="320" y="50" width="280" height="140" rx="12" fill="#ffffff" stroke="#e5e5e5"/>
