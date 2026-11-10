@@ -4,10 +4,12 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: ZitaoTech
       url-base: https://github.com/ZitaoTech
+    - name: KyleBing
+      url-base: https://github.com/KyleBing
   projects:
     - name: zmk
-      remote: ZitaoTech
-      revision: bbkeyboard_tp
+      remote: KyleBing
+      revision: bbkeyboard_tp-q10-modes
       import: app/west.yml
   self:
     path: config
