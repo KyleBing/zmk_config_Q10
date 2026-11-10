@@ -24,7 +24,7 @@
 <text x="78.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">重启</text>
 <rect x="124" y="158" width="76" height="44" rx="6" fill="#fef3c7" stroke="#fcd34d"/>
 <text x="162.0" y="174.0" text-anchor="middle" fill="#92400e" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">1</text>
-<text x="162.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">设备1</text>
+<text x="162.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">设备4</text>
 <rect x="208" y="158" width="76" height="44" rx="6" fill="#fef3c7" stroke="#fcd34d"/>
 <text x="246.0" y="174.0" text-anchor="middle" fill="#92400e" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">2</text>
 <text x="246.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">设备2</text>
@@ -49,7 +49,7 @@
 <text x="78.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700"></text>
 <rect x="124" y="210" width="76" height="44" rx="6" fill="#fef3c7" stroke="#fcd34d"/>
 <text x="162.0" y="226.0" text-anchor="middle" fill="#92400e" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="700">4</text>
-<text x="162.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">设备4</text>
+<text x="162.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">设备1</text>
 <rect x="208" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
 <text x="246.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700"></text>
 <rect x="292" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
@@ -99,5 +99,5 @@
 <text x="636.0" y="340.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700">2</text>
 <rect x="694" y="314" width="100" height="44" rx="6" fill="#f3f4f6" stroke="#d8d8d8"/>
 <text x="744.0" y="340.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700">⇧ Shift</text>
-<text x="24" y="400" fill="#777777" font-family="Helvetica, Arial, sans-serif" font-size="11">黄=蓝牙设备(物理 1–4 键: W E R S) · 红=危险操作 · 绿=电源/输出 · 橙=$ 退出功能层</text>
+<text x="24" y="400" fill="#777777" font-family="Helvetica, Arial, sans-serif" font-size="11">黄=蓝牙(物理 1–4 键 WERS → 设备 4/2/3/1) · 红=危险操作 · 绿=电源/输出 · 橙=$ 退出功能层</text>
 </svg>

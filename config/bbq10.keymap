@@ -22,7 +22,7 @@
  * ## 一、共 3 层：
  *      1. 字母层：字母
  *      2. 符号层：数字、符号
- *      3. 功能层：蓝牙设备切换(1–4)、重启(Q)、触控板电源、BootLoader、背光、输出切换
+ *      3. 功能层：蓝牙设备切换(物理 1/2/3/4 → 设备 4/2/3/1)、重启(Q)、触控板电源、BootLoader、背光、输出切换
  *
  * ## 二、层级切换说明：
  *      1. 字母层：
@@ -165,7 +165,7 @@
 
         /*==================
         *  3. 功能层 UTILITY
-        *     1/2/3/4 → 蓝牙设备 0–3
+        *     物理 1/2/3/4（W/E/R/S）→ 蓝牙设备 4/2/3/1
         *     Q → 重启
         ==================*/
         util_layer {
@@ -177,10 +177,10 @@
                 &kp CLCK                    &htbb LGUI 0                              &mkp LCLK                          &kp ESC                          &kp TAB
 
             //  Q               W           E           R          T                  Y                 U                I               O                P
-                &sys_reset      &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &ext_power EP_TOG &none           &out OUT_TOG     &none           &none            &none
+                &sys_reset      &bt BT_SEL 3 &bt BT_SEL 1 &bt BT_SEL 2 &ext_power EP_TOG &none           &out OUT_TOG     &none           &none            &none
 
             //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
-                &none           &bt BT_SEL 3 &none      &none      &none              &none             &none            &none           &none            &bt BT_CLR
+                &none           &bt BT_SEL 0 &none      &none      &none              &none             &none            &none           &none            &bt BT_CLR
 
             //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
                 &none           &bootloader &none       &none      &bl BL_DEC         &bl BL_TOG        &bl BL_INC       &none           &tog UTIL        &kp ENTER
