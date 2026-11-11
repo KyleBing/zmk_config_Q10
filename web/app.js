@@ -78,59 +78,153 @@ const KEYS = [
   { i: 41, row: "bot", phys: "aA", cls: "letter" },
 ];
 
-const PRESETS = [
-  ["自定义", ""],
-  ["无", "&none"],
-  ["透明(下层)", "&trans"],
-  ["BB 长按Cmd / 单击滚动 / 双击方向", "&htbb LGUI 0"],
-  ["Alt 单击粘滞 / 双击锁定符号层", "&tdl"],
-  ["$ 短按 / 长按功能层", "&htl UTIL DLLR"],
-  ["退出符号层", "&tog SYM"],
-  ["退出功能层", "&tog UTIL"],
-  ["鼠标左键", "&mkp LCLK"],
-  ["鼠标右键", "&mkp RCLK"],
-  ["滚轮上", "&msc SCRL_UP"],
-  ["滚轮下", "&msc SCRL_DOWN"],
-  ["Tab", "&kp TAB"],
-  ["Esc", "&kp ESC"],
-  ["Caps Lock", "&kp CLCK"],
-  ["Enter", "&kp ENTER"],
-  ["Backspace", "&kp BSPC"],
-  ["Delete", "&kp DEL"],
-  ["上 ↑", "&kp UP"],
-  ["下 ↓", "&kp DOWN"],
-  ["左 ←", "&kp LEFT"],
-  ["右 →", "&kp RIGHT"],
-  ["Space", "&kp SPACE"],
-  ["Shift", "&kp LSHFT"],
-  ["右 Shift", "&kp RSHFT"],
-  ["短按 0 / 长按 Ctrl", "&mt LCTRL N0"],
-  ["(  ·  Shift [", "&mm_par"],
-  [")  ·  Shift ]", "&mm_rbr"],
-  ["蓝牙设备 1", "&bt BT_SEL 0"],
-  ["蓝牙设备 2", "&bt BT_SEL 1"],
-  ["蓝牙设备 3", "&bt BT_SEL 2"],
-  ["蓝牙设备 4", "&bt BT_SEL 3"],
-  ["清除蓝牙配对", "&bt BT_CLR"],
-  ["USB/蓝牙输出", "&out OUT_TOG"],
-  ["触控板电源", "&ext_power EP_TOG"],
-  ["重启", "&sys_reset"],
-  ["Bootloader", "&bootloader"],
-  ["背光减", "&bl BL_DEC"],
-  ["背光开关", "&bl BL_TOG"],
-  ["背光加", "&bl BL_INC"],
-  ["静音", "&kp C_MUTE"],
-  ["2", "&kp N2"],
-];
+const PRESETS = [];
+function add(g, n, b, extra = {}) {
+  PRESETS.push({
+    g,
+    n,
+    b,
+    l: extra.l !== undefined ? extra.l : n,
+    a: extra.a || "",
+  });
+}
 
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-LETTERS.forEach((c) => PRESETS.push([`字母 ${c}`, `&kp ${c}`]));
-for (let n = 0; n <= 9; n++) PRESETS.push([`数字 ${n}`, `&kp N${n}`]);
+add("", "自定义", "");
+add("本键盘", "无", "&none", { l: "", a: "none empty" });
+add("本键盘", "透明(下层)", "&trans", { l: "▽", a: "transparent" });
+add("本键盘", "BB 长按Cmd / 单击滚动 / 双击方向", "&htbb LGUI 0", { l: "Cmd", a: "blackberry gui command" });
+add("本键盘", "Alt 单击粘滞 / 双击锁定符号层", "&tdl", { l: "Alt", a: "sticky symbol" });
+add("本键盘", "$ 短按 / 长按功能层", "&htl UTIL DLLR", { l: "$", a: "util dollar" });
+add("本键盘", "退出符号层", "&tog SYM", { l: "退出", a: "toggle symbol" });
+add("本键盘", "退出功能层", "&tog UTIL", { l: "退出", a: "toggle util" });
+add("本键盘", "短按 0 / 长按 Ctrl", "&mt LCTRL N0", { l: "0", a: "mod tap" });
+add("本键盘", "(  ·  Shift [", "&mm_par", { l: "(", a: "paren bracket" });
+add("本键盘", ")  ·  Shift ]", "&mm_rbr", { l: ")", a: "paren bracket" });
+
+add("鼠标", "鼠标左键", "&mkp LCLK", { l: "左键", a: "click mouse" });
+add("鼠标", "鼠标右键", "&mkp RCLK", { l: "右键", a: "click mouse" });
+add("鼠标", "鼠标中键", "&mkp MCLK", { l: "中键", a: "middle click" });
+add("鼠标", "滚轮上", "&msc SCRL_UP", { l: "滚上", a: "wheel" });
+add("鼠标", "滚轮下", "&msc SCRL_DOWN", { l: "滚下", a: "wheel" });
+add("鼠标", "滚轮左", "&msc SCRL_LEFT", { l: "滚左", a: "wheel" });
+add("鼠标", "滚轮右", "&msc SCRL_RIGHT", { l: "滚右", a: "wheel" });
+
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach((c) => add("字母", c, `&kp ${c}`, { a: "letter" }));
+for (let n = 0; n <= 9; n++) add("数字", String(n), `&kp N${n}`, { a: `digit number n${n}` });
+for (let n = 1; n <= 24; n++) add("F 键", `F${n}`, `&kp F${n}`, { a: "function" });
+
 [
-  ["#", "HASH"], ["@", "AT"], ["*", "STAR"], ["$", "DLLR"], ["_", "UNDER"],
-  ["-", "MINUS"], ["+", "PLUS"], ["/", "SLASH"], [":", "COLON"], [";", "SEMI"],
-  ["'", "APOS"], ['"', "DQT"], ["?", "QMARK"], ["!", "EXCL"], [",", "COMMA"], [".", "DOT"],
-].forEach(([l, c]) => PRESETS.push([l, `&kp ${c}`]));
+  ["Esc", "ESC", "escape"],
+  ["Tab", "TAB", ""],
+  ["Enter", "ENTER", "return"],
+  ["空格", "SPACE", "spacebar", "Space"],
+  ["Backspace", "BSPC", "back space"],
+  ["Delete", "DEL", ""],
+  ["Insert", "INS", ""],
+  ["Caps Lock", "CLCK", "capslock caps", "Caps"],
+  ["上 ↑", "UP", "arrow", "↑"],
+  ["下 ↓", "DOWN", "arrow", "↓"],
+  ["左 ←", "LEFT", "arrow", "←"],
+  ["右 →", "RIGHT", "arrow", "→"],
+  ["Home", "HOME", ""],
+  ["End", "END", ""],
+  ["Page Up", "PG_UP", "pageup page_up", "PgUp"],
+  ["Page Down", "PG_DN", "pagedown page_down", "PgDn"],
+  ["Print Screen", "PSCRN", "printscreen", "PrtSc"],
+  ["Scroll Lock", "SLCK", "scrolllock", "ScrLk"],
+  ["Pause", "PAUSE_BREAK", "break", "Pause"],
+  ["菜单", "K_APP", "menu context application", "菜单"],
+].forEach(([n, c, a, l]) => add("编辑 / 导航", n, `&kp ${c}`, { a, l }));
+
+[
+  ["左 Shift", "LSHFT", "shift", "Shift"],
+  ["右 Shift", "RSHFT", "shift", "RSft"],
+  ["左 Ctrl", "LCTRL", "control", "Ctrl"],
+  ["右 Ctrl", "RCTRL", "control", "RCtl"],
+  ["左 Alt", "LALT", "option", "Alt"],
+  ["右 Alt", "RALT", "option altgr", "RAlt"],
+  ["左 Win/Cmd", "LGUI", "windows command super gui", "Win"],
+  ["右 Win/Cmd", "RGUI", "windows command super gui", "RWin"],
+].forEach(([n, c, a, l]) => add("修饰键", n, `&kp ${c}`, { a, l }));
+
+[
+  ["`", "GRAVE", "backtick"],
+  ["~", "TILDE", ""],
+  ["!", "EXCL", "bang"],
+  ["@", "AT", ""],
+  ["#", "HASH", ""],
+  ["$", "DLLR", "dollar"],
+  ["%", "PRCNT", "percent"],
+  ["^", "CARET", ""],
+  ["&", "AMPS", "ampersand"],
+  ["*", "STAR", "asterisk"],
+  ["(", "LPAR", "paren"],
+  [")", "RPAR", "paren"],
+  ["-", "MINUS", "dash hyphen"],
+  ["_", "UNDER", "underscore"],
+  ["=", "EQUAL", ""],
+  ["+", "PLUS", ""],
+  ["[", "LBKT", "bracket"],
+  ["]", "RBKT", "bracket"],
+  ["{", "LBRC", "brace"],
+  ["}", "RBRC", "brace"],
+  ["\\", "BSLH", "backslash"],
+  ["|", "PIPE", ""],
+  [";", "SEMI", "semicolon"],
+  [":", "COLON", ""],
+  ["'", "APOS", "quote apostrophe"],
+  ['"', "DQT", "quote"],
+  [",", "COMMA", ""],
+  [".", "DOT", "period"],
+  ["/", "SLASH", "FSLH"],
+  ["?", "QMARK", ""],
+  ["<", "LT", "less"],
+  [">", "GT", "greater"],
+].forEach(([n, c, a]) => add("符号", n, `&kp ${c}`, { a }));
+
+[
+  ["Num Lock", "KP_NUM", "numlock", "Num"],
+  ["小键盘 /", "KP_SLASH", "", "Num/"],
+  ["小键盘 *", "KP_ASTERISK", "", "Num*"],
+  ["小键盘 -", "KP_MINUS", "", "Num-"],
+  ["小键盘 +", "KP_PLUS", "", "Num+"],
+  ["小键盘 Enter", "KP_ENTER", "", "Num↵"],
+  ["小键盘 .", "KP_DOT", "", "Num."],
+  ["小键盘 =", "KP_EQUAL", "", "Num="],
+].forEach(([n, c, a, l]) => add("小键盘", n, `&kp ${c}`, { a, l }));
+for (let n = 0; n <= 9; n++) add("小键盘", `小键盘 ${n}`, `&kp KP_N${n}`, { l: `Num${n}`, a: "keypad numpad" });
+
+[
+  ["静音", "C_MUTE", "mute volume"],
+  ["音量+", "C_VOL_UP", "volume"],
+  ["音量-", "C_VOL_DN", "volume down"],
+  ["播放/暂停", "C_PP", "play pause media", "⏯"],
+  ["下一曲", "C_NEXT", "media next", "⏭"],
+  ["上一曲", "C_PREV", "media previous", "⏮"],
+  ["停止", "C_STOP", "media", "⏹"],
+  ["亮度+", "C_BRI_UP", "brightness"],
+  ["亮度-", "C_BRI_DN", "brightness"],
+  ["睡眠", "C_SLEEP", ""],
+  ["计算器", "C_AL_CALCULATOR", "calculator"],
+  ["浏览器", "C_AC_SEARCH", "web search"],
+  ["剪切", "C_AC_CUT", "cut"],
+  ["复制", "C_AC_COPY", "copy"],
+  ["粘贴", "C_AC_PASTE", "paste"],
+  ["撤销", "C_AC_UNDO", "undo"],
+].forEach(([n, c, a, l]) => add("媒体 / 系统", n, `&kp ${c}`, { a, l }));
+
+add("系统", "蓝牙设备 1", "&bt BT_SEL 0", { l: "BT1", a: "bluetooth" });
+add("系统", "蓝牙设备 2", "&bt BT_SEL 1", { l: "BT2", a: "bluetooth" });
+add("系统", "蓝牙设备 3", "&bt BT_SEL 2", { l: "BT3", a: "bluetooth" });
+add("系统", "蓝牙设备 4", "&bt BT_SEL 3", { l: "BT4", a: "bluetooth" });
+add("系统", "清除蓝牙配对", "&bt BT_CLR", { l: "清BT", a: "bluetooth clear" });
+add("系统", "USB/蓝牙输出", "&out OUT_TOG", { l: "输出", a: "output usb" });
+add("系统", "触控板电源", "&ext_power EP_TOG", { l: "触电", a: "trackpad power" });
+add("系统", "重启", "&sys_reset", { l: "重启", a: "reset" });
+add("系统", "Bootloader", "&bootloader", { l: "DFU", a: "flash uf2" });
+add("系统", "背光减", "&bl BL_DEC", { l: "背光-", a: "backlight" });
+add("系统", "背光开关", "&bl BL_TOG", { l: "背光", a: "backlight" });
+add("系统", "背光加", "&bl BL_INC", { l: "背光+", a: "backlight" });
 
 function k(bind, legend, sub = "") {
   return { bind, legend, sub };
@@ -551,6 +645,67 @@ function range(a, b) {
   return Array.from({ length: b - a }, (_, i) => a + i);
 }
 
+function presetLabel(p) {
+  return p.n;
+}
+
+function applyPreset(p) {
+  if (!p || !p.b) return;
+  const data = state.layers[layer][selected];
+  data.bind = p.b;
+  data.legend = p.l;
+  if (data.legend.length > 8) data.legend = p.b.replace(/^&\w+\s*/, "").slice(0, 8);
+  document.getElementById("insp-bind").value = data.bind;
+  document.getElementById("insp-legend").value = data.legend;
+  document.getElementById("insp-preset-q").value = presetLabel(p);
+  renderKeyboard(document.getElementById("keyboard"), true);
+  refreshPreview();
+}
+
+function matchPreset(p, q) {
+  if (!q) return true;
+  const hay = `${p.n} ${p.b} ${p.g} ${p.a} ${p.l}`.toLowerCase();
+  return q.split(/\s+/).every((w) => hay.includes(w));
+}
+
+let comboHits = [];
+let comboHi = 0;
+
+function renderComboList() {
+  const q = document.getElementById("insp-preset-q").value.trim().toLowerCase();
+  const list = document.getElementById("insp-preset-list");
+  comboHits = PRESETS.filter((p) => p.b && matchPreset(p, q));
+  if (comboHi >= comboHits.length) comboHi = 0;
+  if (!comboHits.length) {
+    const raw = document.getElementById("insp-preset-q").value;
+    const shown = raw.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+    list.innerHTML = `<div class="combo-empty">没有匹配「${shown}」</div>`;
+    return;
+  }
+  let html = "";
+  let lastG = null;
+  comboHits.forEach((p, i) => {
+    if (p.g !== lastG) {
+      lastG = p.g;
+      html += `<div class="combo-g">${p.g}</div>`;
+    }
+    html += `<button type="button" class="combo-item${i === comboHi ? " on" : ""}" data-i="${i}"><span>${p.n}</span><small>${p.b}</small></button>`;
+  });
+  list.innerHTML = html;
+  const on = list.querySelector(".combo-item.on");
+  if (on) on.scrollIntoView({ block: "nearest" });
+}
+
+function openCombo() {
+  const list = document.getElementById("insp-preset-list");
+  list.hidden = false;
+  renderComboList();
+}
+
+function closeCombo() {
+  document.getElementById("insp-preset-list").hidden = true;
+}
+
 function fillInspector() {
   const data = state.layers[layer][selected];
   const meta = KEYS[selected];
@@ -558,30 +713,49 @@ function fillInspector() {
   document.getElementById("insp-legend").value = data.legend;
   document.getElementById("insp-sub").value = data.sub;
   document.getElementById("insp-bind").value = data.bind;
-  const sel = document.getElementById("insp-preset");
-  const hit = PRESETS.findIndex((p) => p[1] === data.bind);
-  sel.value = String(hit >= 0 ? hit : 0);
+  const hit = PRESETS.find((p) => p.b && p.b === data.bind);
+  document.getElementById("insp-preset-q").value = hit ? presetLabel(hit) : (data.bind ? "自定义" : "");
+  closeCombo();
 }
 
 function bindInspector() {
-  const sel = document.getElementById("insp-preset");
-  PRESETS.forEach((p, i) => {
-    const o = document.createElement("option");
-    o.value = String(i);
-    o.textContent = p[0];
-    sel.appendChild(o);
+  const q = document.getElementById("insp-preset-q");
+  const list = document.getElementById("insp-preset-list");
+  q.addEventListener("focus", openCombo);
+  q.addEventListener("input", () => {
+    comboHi = 0;
+    openCombo();
   });
-  sel.addEventListener("change", () => {
-    const p = PRESETS[Number(sel.value)];
-    if (!p[1]) return;
-    const data = state.layers[layer][selected];
-    data.bind = p[1];
-    data.legend = p[0].replace(/^字母 |^数字 /, "");
-    if (data.legend.length > 8) data.legend = p[1].replace(/^&\w+\s*/, "").slice(0, 8);
-    document.getElementById("insp-bind").value = data.bind;
-    document.getElementById("insp-legend").value = data.legend;
-    renderKeyboard(document.getElementById("keyboard"), true);
-    refreshPreview();
+  q.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (list.hidden) openCombo();
+      comboHi = Math.min(comboHits.length - 1, comboHi + 1);
+      renderComboList();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      comboHi = Math.max(0, comboHi - 1);
+      renderComboList();
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const p = comboHits[comboHi];
+      if (p) {
+        applyPreset(p);
+        closeCombo();
+      }
+    } else if (e.key === "Escape") {
+      closeCombo();
+    }
+  });
+  list.addEventListener("mousedown", (e) => {
+    const item = e.target.closest(".combo-item");
+    if (!item) return;
+    e.preventDefault();
+    applyPreset(comboHits[Number(item.dataset.i)]);
+    closeCombo();
+  });
+  document.addEventListener("mousedown", (e) => {
+    if (!document.getElementById("insp-combo").contains(e.target)) closeCombo();
   });
   ["insp-legend", "insp-sub", "insp-bind"].forEach((id) => {
     document.getElementById(id).addEventListener("input", () => {
@@ -589,6 +763,8 @@ function bindInspector() {
       data.legend = document.getElementById("insp-legend").value;
       data.sub = document.getElementById("insp-sub").value;
       data.bind = document.getElementById("insp-bind").value.trim();
+      const hit = PRESETS.find((p) => p.b && p.b === data.bind);
+      document.getElementById("insp-preset-q").value = hit ? presetLabel(hit) : (data.bind ? "自定义" : "");
       renderKeyboard(document.getElementById("keyboard"), true);
       refreshPreview();
     });

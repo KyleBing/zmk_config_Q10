@@ -152,7 +152,7 @@ a { color: var(--gold); }
   font-size: 13px;
   margin: 8px 0;
 }
-select, input[type="text"], input[type="number"], textarea {
+select, input[type="text"], input[type="number"], input[type="search"], textarea {
   width: 100%;
   background: #101218;
   color: var(--text);
@@ -286,6 +286,50 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
 }
 .row-form { display: grid; gap: 6px; margin-bottom: 10px; }
 .row-form label { font-size: 12px; color: var(--muted); }
+.combo { position: relative; }
+.combo-list {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  max-height: 280px;
+  overflow: auto;
+  background: #101218;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 14px 36px #0009;
+}
+.combo-g {
+  padding: 8px 10px 3px;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.combo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+.combo-item small {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.combo-item:hover,
+.combo-item.on { background: #1c2230; }
+.combo-empty { padding: 12px 10px; color: var(--muted); font-size: 13px; }
 .howto {
   margin: 0 0 14px;
   padding: 10px 14px 12px;

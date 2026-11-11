@@ -60,8 +60,11 @@
             <input id="insp-sub" type="text" placeholder="字母层：符号预览；符号层：⇧ 上层" />
           </div>
           <div class="row-form">
-            <label>常用绑定</label>
-            <select id="insp-preset"></select>
+            <label>绑定功能</label>
+            <div class="combo" id="insp-combo">
+              <input id="insp-preset-q" type="search" autocomplete="off" placeholder="搜索：方向、Ctrl、F1、静音…" />
+              <div class="combo-list" id="insp-preset-list" hidden></div>
+            </div>
           </div>
           <div class="row-form">
             <label>ZMK 绑定</label>
