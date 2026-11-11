@@ -238,7 +238,18 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
   color: var(--gold);
 }
 .key.pad {
-  background: radial-gradient(circle at 50% 40%, #2a3d3a, #1a1f24 70%);
+  background: linear-gradient(180deg, var(--key-top), var(--key));
+}
+.key.pad::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 5px;
+  pointer-events: none;
+  border: 1.5px solid rgba(255, 255, 255, calc(var(--pad-glow, 0) / 105));
+  box-shadow:
+    0 0 calc(var(--pad-glow, 0) * 0.14px) rgba(255, 255, 255, calc(var(--pad-glow, 0) / 95)),
+    inset 0 0 calc(var(--pad-glow, 0) * 0.1px) rgba(255, 255, 255, calc(var(--pad-glow, 0) / 160));
 }
 .key.wide { height: 58px; min-height: 58px; max-height: 58px; }
 .key.empty .leg { color: #5d6270; font-weight: 500; }
@@ -252,7 +263,7 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
     0 0 calc(var(--top-glow) * 0.2px) rgba(255, 176, 32, calc(var(--top-glow) / 130));
 }
 .kb-shell .key.pad {
-  box-shadow: inset 0 0 calc(var(--pad-glow) * 0.22px) rgba(110, 224, 196, calc(var(--pad-glow) / 110));
+  box-shadow: 0 3px 0 var(--shadow), inset 0 1px 0 #5c6370;
 }
 .kb-shell.glow-back .key.letter {
   box-shadow: 0 0 8px #e2b15a55, 0 3px 0 var(--shadow), inset 0 0 8px #e2b15a22;
