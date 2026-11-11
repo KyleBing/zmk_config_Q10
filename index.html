@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BBQ10 · 配置器</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#0b0c10" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <small>BlackBerry Q10 · ZMK</small>
+      <h1>键盘配置器</h1>
+      <p>触控板手感、键面、灯效预览；保存后生成 <code>bbq10.conf</code> / <code>bbq10.keymap</code></p>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button data-tab="track" class="active">触控板</button>
+      <button data-tab="keys">键面</button>
+      <button data-tab="leds">灯光</button>
+      <button data-tab="export">导出 / GitHub</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="panel active" id="tab-track">
+      <div class="grid-2">
+        <div class="card" id="conf-fields"></div>
+        <div class="card">
+          <h2>说明</h2>
+          <p class="note">这些值写入 <code>config/bbq10.conf</code>，提交后 GitHub Actions 会重新编译固件。鼠标移动和滚动是两套参数，互不影响。</p>
+          <p class="note">Blackberry：长按仍是 Command；单击切滚动，双击切方向键。Caps 只切大小写，不管滚动。</p>
+          <div class="actions">
+            <button class="btn" id="reset-conf">恢复触控板默认</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-keys">
+      <div class="layer-bar" id="layer-bar">
+        <button data-layer="0" class="active">字母层</button>
+        <button data-layer="1">符号层</button>
+        <button data-layer="2">功能层</button>
+      </div>
+      <div class="grid-2">
+        <div class="kb-shell" id="keyboard"></div>
+        <div class="card inspector">
+          <h2>键面</h2>
+          <p class="note" id="key-hint">字母层白字是字母，橙字是符号层（Alt 进入后输入）。符号层可单独指定 <strong>Shift + 此键</strong> 输出另一个符号（不会再走系统默认的 Shift+1=! 那种映射）。功能层只显示已定义的键。</p>
+          <div class="row-form">
+            <label>物理键</label>
+            <input id="insp-phys" type="text" readonly />
+          </div>
+          <div class="row-form">
+            <label>显示名</label>
+            <input id="insp-legend" type="text" />
+          </div>
+          <div class="row-form">
+            <label>副标题</label>
+            <input id="insp-sub" type="text" placeholder="字母层：符号预览；符号层：⇧ 上层" />
+          </div>
+          <div class="row-form">
+            <label>绑定功能</label>
+            <div class="combo" id="insp-combo">
+              <input id="insp-preset-q" type="search" autocomplete="off" placeholder="搜索：方向、Ctrl、F1、静音…" />
+              <div class="combo-list" id="insp-preset-list" hidden></div>
+            </div>
+          </div>
+          <div class="row-form">
+            <label>ZMK 绑定</label>
+            <input id="insp-bind" type="text" placeholder="&amp;kp Q" />
+          </div>
+          <div id="insp-shift-block" hidden>
+            <div class="row-form">
+              <label>Shift + 此键</label>
+              <div class="combo" id="insp-shift-combo">
+                <input id="insp-shift-q" type="search" autocomplete="off" placeholder="搜索符号；选「无」则用系统 Shift" />
+                <div class="combo-list" id="insp-shift-list" hidden></div>
+              </div>
+            </div>
+            <div class="row-form">
+              <label>Shift 绑定</label>
+              <input id="insp-shift-bind" type="text" placeholder="留空：系统 Shift（如 1→!）" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="reset-layer">恢复本层默认</button>
+            <button class="btn" id="reset-keys">恢复全部键面</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-leds">
+      <div class="leds-layout">
+        <div class="leds-preview">
+          <div class="kb-shell" id="led-keyboard"></div>
+          <div class="led-legend">
+            <span><i class="lg-top"></i>上层 4 灯</span>
+            <span><i class="lg-pad"></i>触控板边缘</span>
+            <span><i class="lg-back"></i>字母背光</span>
+          </div>
+        </div>
+        <div class="leds-panel">
+          <div class="card">
+            <h2>灯效</h2>
+            <div class="led-cards" id="led-cards"></div>
+          </div>
+          <div class="card" id="led-conf"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-export">
+      <div class="card">
+        <h2>GitHub 直接读写</h2>
+        <p class="note">Token <strong>只存在这台电脑的浏览器</strong>，请求只发到 <code>api.github.com</code>。不要发到聊天、不要写进仓库。</p>
+        <details class="howto" open>
+          <summary>如何获取 GitHub Token</summary>
+          <ol>
+            <li>打开
+              <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">创建 Fine-grained token</a>
+              （需先登录 GitHub）
+            </li>
+            <li>Token name 随便填，例如 <code>q10-config</code>；Expiration 自己选</li>
+            <li>Resource owner 选<strong>拥有该仓库的 GitHub 账号</strong>（下面仓库链接里 <code>github.com/</code> 后面第一段，<code id="hint-owner">你的用户名</code>）</li>
+            <li>Repository access 选 <strong>Only select repositories</strong>，只加链接里的那个仓库（<code id="hint-repo">仓库名</code>）</li>
+            <li>Permissions → Repository permissions → <strong>Contents</strong> 必须选 <strong>Read and write</strong>（选 Read-only 会推送、打 tag 失败）。改权限后要重新 Generate，旧 Token 不会自动升级</li>
+            <li>点 Generate token，立刻复制（只显示一次）</li>
+            <li>粘贴到下面的 Token 框</li>
+          </ol>
+          <p class="note">若出现 <code>Resource not accessible by personal access token</code>：Contents 不是 Read and write、没勾这个仓库，或改完权限仍在用旧 Token。公开库更省事：用
+            <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">Classic token</a> 只勾 <code>public_repo</code>。官方说明：
+            <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">Managing personal access tokens</a>。</p>
+        </details>
+        <div class="row-form"><label>仓库链接</label><input id="gh-repo-url" type="url" placeholder="https://github.com/你的用户名/你的仓库" /></div>
+        <p class="note" id="gh-derived">填写 GitHub 仓库地址后，会自动解析账号、仓库名和默认分支。</p>
+        <div class="row-form"><label>GitHub Token</label><input id="gh-token" type="password" autocomplete="off" placeholder="ghp_… 或 github_pat_…" /></div>
+        <label class="check"><input id="gh-remember" type="checkbox" /> 在本机记住 Token</label>
+        <div class="push-row">
+          <div class="row-form">
+            <label>提交说明</label>
+            <input id="gh-message" type="text" maxlength="200" placeholder="可空。留空则用默认说明" />
+          </div>
+          <div class="row-form">
+            <label>版本标签</label>
+            <input id="gh-tag" type="text" maxlength="40" placeholder="可空。新版本如 1.2.0，会发 Release" />
+          </div>
+        </div>
+        <p class="note tag-last" id="gh-last-tag">最近版本：填写仓库后显示</p>
+        <div class="actions">
+          <button class="btn" id="gh-pull">从仓库读取</button>
+          <button class="btn primary" id="gh-push">提交并 push</button>
+        </div>
+        <div id="gh-status" class="gh-banner" hidden>
+          <div class="gh-banner-icon" aria-hidden="true"></div>
+          <div class="gh-banner-body">
+            <strong id="gh-status-title"></strong>
+            <p id="gh-status-detail"></p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h2>本地下载</h2>
+        <p class="note">浏览器会记住上次编辑。也可下载文件后自己覆盖 <code>config/</code>。</p>
+        <div class="actions">
+          <button class="btn primary" id="save-local">保存到浏览器</button>
+          <button class="btn primary" id="save-folder">保存到文件夹</button>
+          <button class="btn" id="dl-conf">下载 bbq10.conf</button>
+          <button class="btn" id="dl-keymap">下载 bbq10.keymap</button>
+          <button class="btn" id="dl-json">下载配置 JSON</button>
+          <label class="btn ghost">导入 JSON<input type="file" id="import-json" accept="application/json" hidden /></label>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="file-tabs" id="file-tabs">
+          <button class="btn active" data-file="conf">bbq10.conf</button>
+          <button class="btn" data-file="keymap">bbq10.keymap</button>
+          <button class="btn" data-file="json">JSON</button>
+        </div>
+        <pre id="preview"></pre>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script src="github.js"></script>
+</body>
+</html>
