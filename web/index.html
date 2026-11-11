@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BBQ10 · 配置器</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <small>BlackBerry Q10 · ZMK</small>
+      <h1>键盘配置器</h1>
+      <p>触控板手感、键面、灯效预览；保存后生成 <code>bbq10.conf</code> / <code>bbq10.keymap</code></p>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button data-tab="track" class="active">触控板</button>
+      <button data-tab="keys">键面</button>
+      <button data-tab="leds">灯光</button>
+      <button data-tab="export">导出</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="panel active" id="tab-track">
+      <div class="grid-2">
+        <div class="card" id="conf-fields"></div>
+        <div class="card">
+          <h2>说明</h2>
+          <p class="note">这些值写入 <code>config/bbq10.conf</code>，提交后 GitHub Actions 会重新编译固件。鼠标移动和滚动是两套参数，互不影响。</p>
+          <p class="note">Blackberry：长按仍是 Command；单击切滚动，双击切方向键。Caps 只切大小写，不管滚动。</p>
+          <div class="actions">
+            <button class="btn" id="reset-conf">恢复触控板默认</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-keys">
+      <div class="layer-bar" id="layer-bar">
+        <button data-layer="0" class="active">字母层</button>
+        <button data-layer="1">符号层</button>
+        <button data-layer="2">功能层</button>
+      </div>
+      <div class="grid-2">
+        <div class="kb-shell" id="keyboard"></div>
+        <div class="card inspector">
+          <h2>键面</h2>
+          <p class="note" id="key-hint">点键盘上的键来改绑定。显示名可以和实际 ZMK 代码分开。</p>
+          <div class="row-form">
+            <label>物理键</label>
+            <input id="insp-phys" type="text" readonly />
+          </div>
+          <div class="row-form">
+            <label>显示名</label>
+            <input id="insp-legend" type="text" />
+          </div>
+          <div class="row-form">
+            <label>副标题</label>
+            <input id="insp-sub" type="text" placeholder="长按 / 双击说明" />
+          </div>
+          <div class="row-form">
+            <label>常用绑定</label>
+            <select id="insp-preset"></select>
+          </div>
+          <div class="row-form">
+            <label>ZMK 绑定</label>
+            <input id="insp-bind" type="text" placeholder="&amp;kp Q" />
+          </div>
+          <div class="actions">
+            <button class="btn" id="reset-layer">恢复本层默认</button>
+            <button class="btn" id="reset-keys">恢复全部键面</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-leds">
+      <div class="grid-2">
+        <div>
+          <div class="kb-shell" id="led-keyboard"></div>
+          <p class="note" style="margin-top:10px">三路灯：上层 4 颗功能键共用一路；触控板中间一颗；字母区背光一路。</p>
+        </div>
+        <div class="card">
+          <h2>灯效（固件实际行为）</h2>
+          <p class="note">闪法写在固件里，配置页用来预览。亮度、背光开关等可写入 conf。</p>
+          <div class="led-cards" id="led-cards"></div>
+          <div id="led-conf" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-export">
+      <div class="card">
+        <h2>保存 / 生成文件</h2>
+        <p class="note">浏览器会记住上次编辑。把生成的文件覆盖仓库 <code>config/</code> 后 push，即可触发固件编译。</p>
+        <div class="actions">
+          <button class="btn primary" id="save-local">保存到浏览器</button>
+          <button class="btn primary" id="save-folder">保存到文件夹</button>
+          <button class="btn" id="dl-conf">下载 bbq10.conf</button>
+          <button class="btn" id="dl-keymap">下载 bbq10.keymap</button>
+          <button class="btn" id="dl-json">下载配置 JSON</button>
+          <label class="btn ghost">导入 JSON<input type="file" id="import-json" accept="application/json" hidden /></label>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="file-tabs" id="file-tabs">
+          <button class="btn active" data-file="conf">bbq10.conf</button>
+          <button class="btn" data-file="keymap">bbq10.keymap</button>
+          <button class="btn" data-file="json">JSON</button>
+        </div>
+        <pre id="preview"></pre>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

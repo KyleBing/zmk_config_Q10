@@ -2,6 +2,11 @@
 
 仓库：[KyleBing/zmk_config_Q10](https://github.com/KyleBing/zmk_config_Q10)
 
+在线配置器（键面 / 触控板 / 灯效预览 / 导出文件）：  
+**[https://kylebing.github.io/zmk_config_Q10/](https://kylebing.github.io/zmk_config_Q10/)**
+
+在页面里改完后下载 `bbq10.conf` 和 `bbq10.keymap`，覆盖仓库 `config/` 再 push，Actions 会编译固件。
+
 > 按键与行为参考：  
 > [ZMK Key Codes](https://zmk.dev/docs/codes) · [ZMK Behaviors](https://zmk.dev/docs/behaviors)
 
@@ -115,7 +120,7 @@
 
 ### 2. 编辑 keymap
 
-修改 [`config/bbq10.keymap`](config/bbq10.keymap) 后提交。
+用 [配置器](https://kylebing.github.io/zmk_config_Q10/) 生成文件，或直接改 [`config/bbq10.keymap`](config/bbq10.keymap) 后提交。
 
 ### 3. GitHub Actions 出固件
 
