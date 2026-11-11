@@ -1,7 +1,37 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     # Pin to v0.3: @main added a board-compat check (`west boards --format "{qualifiers}"`)
     # that crashes on ZitaoTech/zmk (bbkeyboard_tp, older Zephyr) even after a successful link.
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: firmware
+          path: dist
+      - name: Collect extras
+        run: |
+          mkdir -p dist
+          cp -f config/bbq10.conf dist/ 2>/dev/null || true
+          cp -f config/bbq10.keymap dist/ 2>/dev/null || true
+          ls -la dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: false

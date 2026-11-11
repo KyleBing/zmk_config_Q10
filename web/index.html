@@ -112,7 +112,7 @@
             <li>Token name 随便填，例如 <code>q10-config</code>；Expiration 自己选</li>
             <li>Resource owner 选<strong>拥有该仓库的 GitHub 账号</strong>（下面仓库链接里 <code>github.com/</code> 后面第一段，<code id="hint-owner">你的用户名</code>）</li>
             <li>Repository access 选 <strong>Only select repositories</strong>，只加链接里的那个仓库（<code id="hint-repo">仓库名</code>）</li>
-            <li>Permissions → Repository permissions → <strong>Contents</strong> 必须选 <strong>Read and write</strong>（选 Read-only 会推送失败）。改权限后要重新 Generate，旧 Token 不会自动升级</li>
+            <li>Permissions → Repository permissions → <strong>Contents</strong> 必须选 <strong>Read and write</strong>（选 Read-only 会推送、打 tag 失败）。改权限后要重新 Generate，旧 Token 不会自动升级</li>
             <li>点 Generate token，立刻复制（只显示一次）</li>
             <li>粘贴到下面的 Token 框</li>
           </ol>
@@ -124,10 +124,17 @@
         <p class="note" id="gh-derived">填写 GitHub 仓库地址后，会自动解析账号、仓库名和默认分支。</p>
         <div class="row-form"><label>GitHub Token</label><input id="gh-token" type="password" autocomplete="off" placeholder="ghp_… 或 github_pat_…" /></div>
         <label class="check"><input id="gh-remember" type="checkbox" /> 在本机记住 Token</label>
-        <div class="row-form">
-          <label>提交说明</label>
-          <input id="gh-message" type="text" maxlength="200" placeholder="可空。留空则用默认说明" />
+        <div class="push-row">
+          <div class="row-form">
+            <label>提交说明</label>
+            <input id="gh-message" type="text" maxlength="200" placeholder="可空。留空则用默认说明" />
+          </div>
+          <div class="row-form">
+            <label>版本标签</label>
+            <input id="gh-tag" type="text" maxlength="40" placeholder="可空。新版本如 1.2.0，会发 Release" />
+          </div>
         </div>
+        <p class="note tag-last" id="gh-last-tag">最近版本：填写仓库后显示</p>
         <div class="actions">
           <button class="btn" id="gh-pull">从仓库读取</button>
           <button class="btn primary" id="gh-push">提交并 push</button>

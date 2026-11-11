@@ -105,6 +105,7 @@ async function refreshRepoMeta() {
   if (!parsed) {
     ghDefaultBranch = "";
     setDerived("填写 GitHub 仓库地址后，会自动解析账号、仓库名和默认分支。", null);
+    await refreshLatestTag();
     return;
   }
   setDerived(`解析为 ${parsed.owner}/${parsed.repo}，正在读取默认分支…`, parsed);
@@ -112,12 +113,14 @@ async function refreshRepoMeta() {
     const repo = await ghFetchRepo(parsed, token);
     ghDefaultBranch = repo.default_branch || "main";
     setDerived(`将读写 ${parsed.owner}/${parsed.repo} · 默认分支 ${ghDefaultBranch}`, parsed);
+    await refreshLatestTag();
   } catch (e) {
     ghDefaultBranch = "";
     setDerived(
       `已解析 ${parsed.owner}/${parsed.repo}，但读不到默认分支（${e.message}）。公开库应能自动读取；私有库请先填 Token。`,
       parsed
     );
+    await refreshLatestTag();
   }
 }
 
@@ -155,8 +158,8 @@ async function ghApi(g, path, opts = {}) {
     ...opts,
     headers: {
       Accept: "application/vnd.github+json",
-      Authorization: `token ${g.token}`,
       "X-GitHub-Api-Version": "2022-11-28",
+      ...(g.token ? { Authorization: `token ${g.token}` } : {}),
       ...(opts.body ? { "Content-Type": "application/json" } : {}),
       ...(opts.headers || {}),
     },
@@ -287,14 +290,106 @@ async function ghPush() {
       lastSha = out.commit?.sha || lastSha;
       await sleep(200);
     }
+    const head = await ghApi(g, `/commits/${encodeURIComponent(g.branch)}`);
+    lastSha = head.sha || lastSha;
+    let extra = "";
+    const tag = normalizeTag(document.getElementById("gh-tag").value);
+    if (tag) {
+      extra = await ghPublishVersion(g, tag, lastSha, message);
+      document.getElementById("gh-tag").value = "";
+      await refreshLatestTag();
+    }
     const where = `${g.owner}/${g.repo}  ·  ${g.branch}${lastSha ? "  ·  " + lastSha.slice(0, 7) : ""}`;
-    ghStatus("ok", "已推送到 GitHub", where + "\nGitHub Actions 随后会编译固件。");
-    toast("已推到 GitHub");
+    ghStatus("ok", extra ? "已推送并打版本 " + tag : "已推送到 GitHub", where + "\n" + (extra || "GitHub Actions 随后会编译固件。"));
+    toast(extra ? "已推送 " + tag : "已推到 GitHub");
     localStorage.setItem(STORAGE, JSON.stringify(state));
   } catch (e) {
     ghStatus("err", "推送失败", explainGhError(e));
     toast("推送失败");
   }
+}
+
+function normalizeTag(raw) {
+  const s = (raw || "").trim();
+  if (!s) return "";
+  return /^v/i.test(s) ? s : "v" + s;
+}
+
+async function refreshLatestTag() {
+  const el = document.getElementById("gh-last-tag");
+  if (!el) return;
+  const parsed = parseRepoLink(document.getElementById("gh-repo-url").value);
+  if (!parsed) {
+    el.textContent = "最近版本：填写仓库后显示";
+    return;
+  }
+  el.textContent = "最近版本：读取中…";
+  const g = { ...ghReadForm(), owner: parsed.owner, repo: parsed.repo };
+  try {
+    const info = await ghLatestVersion(g);
+    if (!info) {
+      el.textContent = "最近版本：尚无 tag";
+      return;
+    }
+    const body = (info.body || "").split("\n").filter((l) => l.trim() && !l.startsWith("<!--")).slice(0, 4).join("\n");
+    el.textContent = body ? `最近版本 ${info.tag}\n${body}` : `最近版本 ${info.tag}`;
+  } catch (e) {
+    el.textContent = "最近版本：读不到（" + (e.message || e) + "）";
+  }
+}
+
+async function ghLatestVersion(g) {
+  try {
+    const rel = await ghApi(g, "/releases/latest");
+    return { tag: rel.tag_name, body: (rel.body || rel.name || "").trim(), url: rel.html_url };
+  } catch (e) {
+    if (!/Not Found/i.test(String(e.message))) throw e;
+  }
+  const tags = await ghApi(g, "/tags?per_page=1");
+  if (!Array.isArray(tags) || !tags[0]) return null;
+  const t = tags[0];
+  let body = "";
+  try {
+    const commit = await ghApi(g, `/commits/${t.commit.sha}`);
+    body = (commit.commit?.message || "").trim();
+  } catch (_) { /* ignore */ }
+  return { tag: t.name, body, url: t.commit?.url };
+}
+
+async function ghPublishVersion(g, tag, sha, message) {
+  try {
+    await ghApi(g, `/git/ref/tags/${encodeURIComponent(tag)}`);
+    return `版本 ${tag} 已存在，未重复发 Release。`;
+  } catch (e) {
+    if (!/Not Found/i.test(String(e.message))) throw e;
+  }
+  try {
+    const annotated = await ghApi(g, "/git/tags", {
+      method: "POST",
+      body: JSON.stringify({
+        tag,
+        message: message || tag,
+        object: sha,
+        type: "commit",
+      }),
+    });
+    await ghApi(g, "/git/refs", {
+      method: "POST",
+      body: JSON.stringify({
+        ref: `refs/tags/${tag}`,
+        sha: annotated.sha,
+      }),
+    });
+  } catch (_) {
+    await ghApi(g, "/git/refs", {
+      method: "POST",
+      body: JSON.stringify({
+        ref: `refs/tags/${tag}`,
+        sha,
+      }),
+    });
+  }
+  return `已打标签 ${tag}。Actions 编译完成后会把 uf2 发到 Releases。`;
 }
 
 document.getElementById("gh-pull").addEventListener("click", ghPull);
