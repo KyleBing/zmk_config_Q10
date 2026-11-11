@@ -120,13 +120,13 @@
                 &kp TAB         &htbb LGUI 0    &mkp LCLK       &kp ESC         &kp CLCK    
 
             //  Q               W           E           R          T                  Y                 U                I               O                P
-                &sys_reset      &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &ext_power EP_TOG    &none           &out OUT_TOG    &none           &none           &none       
+                &sys_reset      &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &ext_power EP_TOG    &none           &none           &none           &none           &none       
 
             //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
                 &none           &bt BT_SEL 3    &none           &none           &none           &none           &none           &none           &none           &bt BT_CLR  
 
             //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
-                &none           &bootloader     &none           &none           &bl BL_DEC      &bl BL_TOG      &bl BL_INC      &none           &tog UTIL       &kp ENTER   
+                &none           &bootloader     &out OUT_TOG    &none           &bl BL_DEC      &bl BL_TOG      &bl BL_INC      &none           &tog UTIL       &kp ENTER   
 
             //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
                                 &kp LSHFT       &mt LCTRL N0    &kp SPACE       &kp N2          &kp RSHFT   
