@@ -21,7 +21,17 @@ function explainGhError(err) {
   if (/bad credentials|401/i.test(m)) {
     return m + "。Token 无效或已过期，请重新生成后粘贴。";
   }
+  if (/fast forward/i.test(m)) {
+    return (
+      m +
+      "。仓库默认分支刚被更新（上次推送或 GitHub Actions），当前提交叠不上去。请先点「从仓库读取」，再推送一次。"
+    );
+  }
   return m;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function parseRepoLink(url) {
@@ -150,20 +160,36 @@ async function ghApi(g, path, opts = {}) {
 }
 
 async function ghPutFile(g, path, content, message) {
-  let sha;
-  try {
-    const existing = await ghApi(g, `/contents/${path}?ref=${encodeURIComponent(g.branch)}`);
-    sha = existing.sha;
-  } catch (e) {
-    if (!String(e.message).includes("Not Found")) throw e;
+  let lastErr;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    if (attempt) await sleep(350 * attempt);
+    try {
+      let sha;
+      let existingText;
+      try {
+        const existing = await ghApi(g, `/contents/${path}?ref=${encodeURIComponent(g.branch)}`);
+        sha = existing.sha;
+        existingText = b64ToUtf8(existing.content);
+      } catch (e) {
+        if (!String(e.message).includes("Not Found")) throw e;
+      }
+      if (existingText === content) {
+        return { skipped: true, commit: { sha } };
+      }
+      const body = {
+        message,
+        content: utf8ToB64(content),
+        branch: g.branch,
+      };
+      if (sha) body.sha = sha;
+      return await ghApi(g, `/contents/${path}`, { method: "PUT", body: JSON.stringify(body) });
+    } catch (e) {
+      lastErr = e;
+      const msg = String(e.message || "");
+      if (!/fast forward|sha doesn|Conflict|409/i.test(msg)) throw e;
+    }
   }
-  const body = {
-    message,
-    content: utf8ToB64(content),
-    branch: g.branch,
-  };
-  if (sha) body.sha = sha;
-  return ghApi(g, `/contents/${path}`, { method: "PUT", body: JSON.stringify(body) });
+  throw lastErr;
 }
 
 function parseConfText(text) {
@@ -246,6 +272,7 @@ async function ghPush() {
     for (const f of files) {
       const out = await ghPutFile(g, f.path, f.content, "Update Q10 config from configurator");
       lastSha = out.commit?.sha || lastSha;
+      await sleep(200);
     }
     ghStatus(`已 push 到 ${g.owner}/${g.repo}@${g.branch}${lastSha ? "：" + lastSha.slice(0, 7) : ""}（随后 Actions 会编固件）`);
     toast("已推到 GitHub");
