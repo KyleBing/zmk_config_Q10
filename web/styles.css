@@ -260,13 +260,20 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
 }
 .kb-shell .key.fnled {
   background: linear-gradient(180deg,
-    color-mix(in srgb, #ffc45a calc(var(--top-glow) * 0.72%), var(--key-top)),
-    color-mix(in srgb, #e08916 calc(var(--top-glow) * 0.58%), var(--key)));
+    color-mix(in srgb, #ffffff calc(var(--top-glow) * 0.94%), var(--key-top)),
+    color-mix(in srgb, #d5dae4 calc(var(--top-glow) * 0.86%), var(--key)));
+  color: color-mix(in srgb, #1b1e24 calc(var(--top-glow) * 0.92%), #f3f1ea);
   box-shadow:
     0 3px 0 var(--shadow),
-    inset 0 1px 0 #5c6370,
-    inset 0 0 calc(var(--top-glow) * 0.16px) rgba(255, 196, 80, calc(var(--top-glow) / 110)),
-    0 0 calc(var(--top-glow) * 0.2px) rgba(255, 176, 32, calc(var(--top-glow) / 120));
+    inset 0 1px 0 color-mix(in srgb, #fff calc(var(--top-glow) * 0.7%), #5c6370),
+    inset 0 0 calc(var(--top-glow) * 0.12px) rgba(255, 255, 255, calc(var(--top-glow) / 140)),
+    0 0 calc(var(--top-glow) * 0.22px) rgba(255, 255, 255, calc(var(--top-glow) / 95));
+}
+.kb-shell .key.fnled .phys {
+  color: color-mix(in srgb, #3d434c calc(var(--top-glow) * 0.88%), #8b909b);
+}
+.kb-shell .key.fnled .sub {
+  color: color-mix(in srgb, #5c3a06 calc(var(--top-glow) * 0.9%), var(--gold));
 }
 .kb-shell .key.pad {
   box-shadow: 0 3px 0 var(--shadow), inset 0 1px 0 #5c6370;
@@ -355,6 +362,7 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
   box-shadow: inset 0 0 0 1px #3a3f48;
 }
 .dot.on.amber { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+.dot.on.white { background: #f4f6fa; box-shadow: 0 0 10px #fff; }
 .dot.on.mint { background: var(--pad); box-shadow: 0 0 10px var(--pad); }
 .dot.on.gold { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
 .led-card b { display: block; font-size: 13px; }

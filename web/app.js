@@ -678,7 +678,7 @@ function renderLedCards() {
   LED_SLOTS.forEach((m) => {
     const el = document.createElement("div");
     el.className = "led-card" + (ledMode === m.id ? " active" : "");
-    const color = m.ch === "pad" ? "mint" : "amber";
+    const color = m.ch === "pad" ? "mint" : "white";
     el.innerHTML = `<div class="dot ${color}"></div><div><b></b><span></span><select></select></div>`;
     el.querySelector("b").textContent = m.title;
     el.querySelector("span").textContent = m.desc;
