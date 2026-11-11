@@ -238,18 +238,18 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
   color: var(--gold);
 }
 .key.pad {
+  overflow: hidden;
   background: linear-gradient(180deg, var(--key-top), var(--key));
 }
 .key.pad::after {
   content: "";
   position: absolute;
-  inset: 4px;
-  border-radius: 5px;
+  inset: 0;
+  border-radius: inherit;
   pointer-events: none;
-  border: 1.5px solid rgba(255, 255, 255, calc(var(--pad-glow, 0) / 105));
   box-shadow:
-    0 0 calc(var(--pad-glow, 0) * 0.14px) rgba(255, 255, 255, calc(var(--pad-glow, 0) / 95)),
-    inset 0 0 calc(var(--pad-glow, 0) * 0.1px) rgba(255, 255, 255, calc(var(--pad-glow, 0) / 160));
+    inset 0 0 0 2px rgba(255, 255, 255, calc(var(--pad-glow, 0) / 95)),
+    inset 0 0 8px rgba(255, 255, 255, calc(var(--pad-glow, 0) / 170));
 }
 .key.wide { height: 58px; min-height: 58px; max-height: 58px; }
 .key.empty .leg { color: #5d6270; font-weight: 500; }
@@ -259,8 +259,14 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
   --pad-glow: 0;
 }
 .kb-shell .key.fnled {
-  box-shadow: 0 3px 0 var(--shadow), inset 0 1px 0 #5c6370,
-    0 0 calc(var(--top-glow) * 0.2px) rgba(255, 176, 32, calc(var(--top-glow) / 130));
+  background: linear-gradient(180deg,
+    color-mix(in srgb, #ffc45a calc(var(--top-glow) * 0.72%), var(--key-top)),
+    color-mix(in srgb, #e08916 calc(var(--top-glow) * 0.58%), var(--key)));
+  box-shadow:
+    0 3px 0 var(--shadow),
+    inset 0 1px 0 #5c6370,
+    inset 0 0 calc(var(--top-glow) * 0.16px) rgba(255, 196, 80, calc(var(--top-glow) / 110)),
+    0 0 calc(var(--top-glow) * 0.2px) rgba(255, 176, 32, calc(var(--top-glow) / 120));
 }
 .kb-shell .key.pad {
   box-shadow: 0 3px 0 var(--shadow), inset 0 1px 0 #5c6370;
