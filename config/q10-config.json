@@ -19,7 +19,15 @@
     "CONFIG_ZMK_BACKLIGHT_BRT_START": 40,
     "CONFIG_ZMK_BACKLIGHT_BRT_STEP": 10,
     "CONFIG_ZMK_BACKLIGHT_ON_START": "y",
-    "CONFIG_ZMK_BACKLIGHT_AUTO_OFF_IDLE": "y"
+    "CONFIG_ZMK_BACKLIGHT_AUTO_OFF_IDLE": "y",
+    "CONFIG_ZMK_LED_LAYER0_PATTERN": 0,
+    "CONFIG_ZMK_LED_LAYER1_PATTERN": 1,
+    "CONFIG_ZMK_LED_LAYER2_PATTERN": 3,
+    "CONFIG_ZMK_LED_PAD_IDLE_PATTERN": 0,
+    "CONFIG_ZMK_LED_PAD_CAPS_PATTERN": 1,
+    "CONFIG_ZMK_LED_PAD_SCROLL_PATTERN": 3,
+    "CONFIG_ZMK_LED_PAD_ARROW_PATTERN": 5,
+    "CONFIG_ZMK_LED_BURST_PAUSE_TICKS": 4
   },
   "timing": {
     "slMs": 2000,
@@ -298,14 +306,14 @@
         "sub": ""
       },
       {
-        "bind": "&mt LBKT LPAR",
+        "bind": "&mm_par",
         "legend": "(",
-        "sub": "["
+        "sub": "⇧ ["
       },
       {
-        "bind": "&mt RBKT RPAR",
+        "bind": "&mm_rbr",
         "legend": ")",
-        "sub": "]"
+        "sub": "⇧ ]"
       },
       {
         "bind": "&kp UNDER",
@@ -315,7 +323,7 @@
       {
         "bind": "&kp MINUS",
         "legend": "-",
-        "sub": "~"
+        "sub": ""
       },
       {
         "bind": "&kp PLUS",
@@ -350,7 +358,7 @@
       {
         "bind": "&kp SLASH",
         "legend": "/",
-        "sub": "|"
+        "sub": ""
       },
       {
         "bind": "&kp COLON",
