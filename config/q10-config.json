@@ -323,7 +323,7 @@
       {
         "bind": "&kp MINUS",
         "legend": "-",
-        "sub": ""
+        "sub": "~"
       },
       {
         "bind": "&kp PLUS",
@@ -358,7 +358,7 @@
       {
         "bind": "&kp SLASH",
         "legend": "/",
-        "sub": ""
+        "sub": "|"
       },
       {
         "bind": "&kp COLON",
