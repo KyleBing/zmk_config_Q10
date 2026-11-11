@@ -17,7 +17,7 @@
       <button data-tab="track" class="active">触控板</button>
       <button data-tab="keys">键面</button>
       <button data-tab="leds">灯光</button>
-      <button data-tab="export">导出</button>
+      <button data-tab="export">导出 / GitHub</button>
     </nav>
   </header>
 
@@ -82,8 +82,8 @@
           <p class="note" style="margin-top:10px">三路灯：上层 4 颗功能键共用一路；触控板中间一颗；字母区背光一路。</p>
         </div>
         <div class="card">
-          <h2>灯效（固件实际行为）</h2>
-          <p class="note">闪法写在固件里，配置页用来预览。亮度、背光开关等可写入 conf。</p>
+          <h2>灯效</h2>
+          <p class="note">点某一行预览。选项会写入 conf；刷含新固件的 uf2 后键盘才会换成同样的闪法。</p>
           <div class="led-cards" id="led-cards"></div>
           <div id="led-conf" style="margin-top:14px"></div>
         </div>
@@ -92,8 +92,23 @@
 
     <section class="panel" id="tab-export">
       <div class="card">
-        <h2>保存 / 生成文件</h2>
-        <p class="note">浏览器会记住上次编辑。把生成的文件覆盖仓库 <code>config/</code> 后 push，即可触发固件编译。</p>
+        <h2>GitHub 直接读写</h2>
+        <p class="note">Token <strong>只存在这台电脑的浏览器</strong>，请求只发到 <code>api.github.com</code>，不会进仓库、也不要发到聊天里。</p>
+        <p class="note">建 Fine-grained PAT：只勾本仓库 <strong>Contents: Read and write</strong>。公开库用 Classic 时选 <code>public_repo</code>。</p>
+        <div class="row-form"><label>Owner</label><input id="gh-owner" type="text" value="KyleBing" /></div>
+        <div class="row-form"><label>仓库</label><input id="gh-repo" type="text" value="zmk_config_Q10" /></div>
+        <div class="row-form"><label>分支</label><input id="gh-branch" type="text" value="main" /></div>
+        <div class="row-form"><label>GitHub Token</label><input id="gh-token" type="password" autocomplete="off" placeholder="ghp_… 或 github_pat_…" /></div>
+        <label class="check"><input id="gh-remember" type="checkbox" /> 在本机记住 Token</label>
+        <div class="actions">
+          <button class="btn" id="gh-pull">从仓库读取</button>
+          <button class="btn primary" id="gh-push">提交并 push</button>
+        </div>
+        <p class="note" id="gh-status"></p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h2>本地下载</h2>
+        <p class="note">浏览器会记住上次编辑。也可下载文件后自己覆盖 <code>config/</code>。</p>
         <div class="actions">
           <button class="btn primary" id="save-local">保存到浏览器</button>
           <button class="btn primary" id="save-folder">保存到文件夹</button>
@@ -115,5 +130,6 @@
   </main>
   <div class="toast" id="toast"></div>
   <script src="app.js"></script>
+  <script src="github.js"></script>
 </body>
 </html>

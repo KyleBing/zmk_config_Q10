@@ -2,10 +2,12 @@
 
 仓库：[KyleBing/zmk_config_Q10](https://github.com/KyleBing/zmk_config_Q10)
 
-在线配置器（键面 / 触控板 / 灯效预览 / 导出文件）：  
+在线配置器（键面 / 触控板 / 灯效 / 直接读写 GitHub）：  
 **[https://kylebing.github.io/zmk_config_Q10/](https://kylebing.github.io/zmk_config_Q10/)**
 
-在页面里改完后下载 `bbq10.conf` 和 `bbq10.keymap`，覆盖仓库 `config/` 再 push，Actions 会编译固件。
+页面可填 **GitHub Token**（只存在你自己的浏览器）从本仓库读取配置并直接 commit + push。不要把 Token 发到聊天或写进仓库。
+
+Fine-grained PAT：仅本仓库 **Contents: Read and write**。Classic：公开库勾 `public_repo`。
 
 > 按键与行为参考：  
 > [ZMK Key Codes](https://zmk.dev/docs/codes) · [ZMK Behaviors](https://zmk.dev/docs/behaviors)
@@ -102,7 +104,7 @@
 | Blackberry **单击** | 滚动 ↔ 鼠标 | 滚动时 **2 闪一顿**循环 |
 | Blackberry **双击** | 方向键 ↔ 鼠标 | 方向键时 **4 闪一顿**循环 |
 
-上层 4 灯（Call / BB / Back / 挂断，共用一路，不能单颗亮）：符号层长亮，功能层 2 闪一顿。
+上层 4 灯（Call / BB / Back / 挂断，共用一路，不能单颗亮）和触控板灯的闪法可在配置器里选：关 / 常亮 / 1–5 闪一顿 / 闪烁 / 呼吸 / 频闪 / 心跳 / 脉冲。默认仍是：符号层常亮、功能层 2 闪、滚动 2 闪、方向键 4 闪。
 
 手感在 [`config/bbq10.conf`](config/bbq10.conf) 里调：
 

@@ -13,6 +13,9 @@ const CONF_FIELDS = [
 const LED_CONF = [
   { key: "CONFIG_ZMK_INDICATOR_CAPSLOCK_BRT", label: "触控板灯亮度", min: 1, max: 100 },
   { key: "CONFIG_ZMK_IDICATOR_LAYER_BRT", label: "上层 4 灯亮度", min: 1, max: 100 },
+  { key: "CONFIG_ZMK_IDICATOR_LAYER_CYCLE_MINBRT", label: "呼吸最低亮度", min: 1, max: 100 },
+  { key: "CONFIG_ZMK_IDICATOR_BRT_STEP", label: "呼吸步进", min: 1, max: 30 },
+  { key: "CONFIG_ZMK_LED_BURST_PAUSE_TICKS", label: "闪后停顿（格）", min: 1, max: 20, hint: "每格约 120ms。1闪1顿的「顿」。" },
   { key: "CONFIG_ZMK_BACKLIGHT_BRT_START", label: "背光起始亮度", min: 0, max: 100 },
   { key: "CONFIG_ZMK_BACKLIGHT_BRT_STEP", label: "背光步进", min: 1, max: 50 },
 ];
@@ -199,6 +202,14 @@ function defaultState() {
       CONFIG_ZMK_BACKLIGHT_BRT_STEP: 10,
       CONFIG_ZMK_BACKLIGHT_ON_START: "y",
       CONFIG_ZMK_BACKLIGHT_AUTO_OFF_IDLE: "y",
+      CONFIG_ZMK_LED_LAYER0_PATTERN: 0,
+      CONFIG_ZMK_LED_LAYER1_PATTERN: 1,
+      CONFIG_ZMK_LED_LAYER2_PATTERN: 3,
+      CONFIG_ZMK_LED_PAD_IDLE_PATTERN: 0,
+      CONFIG_ZMK_LED_PAD_CAPS_PATTERN: 1,
+      CONFIG_ZMK_LED_PAD_SCROLL_PATTERN: 3,
+      CONFIG_ZMK_LED_PAD_ARROW_PATTERN: 5,
+      CONFIG_ZMK_LED_BURST_PAUSE_TICKS: 4,
     },
     timing: { slMs: 2000, htlMs: 500, tdlMs: 400, tdbbMs: 350, htbbMs: 200 },
     layers: defaultLayers(),
@@ -278,6 +289,16 @@ CONFIG_ZMK_BACKLIGHT_BRT_START=${c.CONFIG_ZMK_BACKLIGHT_BRT_START}
 CONFIG_ZMK_BACKLIGHT_BRT_STEP=${c.CONFIG_ZMK_BACKLIGHT_BRT_STEP}
 CONFIG_ZMK_BACKLIGHT_ON_START=${c.CONFIG_ZMK_BACKLIGHT_ON_START}
 CONFIG_ZMK_BACKLIGHT_AUTO_OFF_IDLE=${c.CONFIG_ZMK_BACKLIGHT_AUTO_OFF_IDLE}
+
+# ========== 灯效（0关 1常亮 2–6为1–5闪一顿 7闪烁 8呼吸 9频闪 10心跳 11脉冲）==========
+CONFIG_ZMK_LED_LAYER0_PATTERN=${c.CONFIG_ZMK_LED_LAYER0_PATTERN}
+CONFIG_ZMK_LED_LAYER1_PATTERN=${c.CONFIG_ZMK_LED_LAYER1_PATTERN}
+CONFIG_ZMK_LED_LAYER2_PATTERN=${c.CONFIG_ZMK_LED_LAYER2_PATTERN}
+CONFIG_ZMK_LED_PAD_IDLE_PATTERN=${c.CONFIG_ZMK_LED_PAD_IDLE_PATTERN}
+CONFIG_ZMK_LED_PAD_CAPS_PATTERN=${c.CONFIG_ZMK_LED_PAD_CAPS_PATTERN}
+CONFIG_ZMK_LED_PAD_SCROLL_PATTERN=${c.CONFIG_ZMK_LED_PAD_SCROLL_PATTERN}
+CONFIG_ZMK_LED_PAD_ARROW_PATTERN=${c.CONFIG_ZMK_LED_PAD_ARROW_PATTERN}
+CONFIG_ZMK_LED_BURST_PAUSE_TICKS=${c.CONFIG_ZMK_LED_BURST_PAUSE_TICKS}
 `;
 }
 
@@ -545,51 +566,113 @@ function bindInspector() {
   });
 }
 
-const LED_MODES = [
-  { id: "alpha", title: "字母层", desc: "上层 4 灯灭；触控板灯灭（Caps 关时）", top: "off", pad: "off", back: "on" },
-  { id: "sym", title: "符号层", desc: "上层 4 灯长亮（Call / BB / Back / 挂断共用一路）", top: "solid", pad: "off", back: "on" },
-  { id: "util", title: "功能层", desc: "上层 4 灯 2 闪一顿", top: "burst2", pad: "off", back: "on" },
-  { id: "caps", title: "Caps Lock", desc: "触控板灯长亮；不管滚动", top: "off", pad: "solid", back: "on" },
-  { id: "scroll", title: "滚动模式", desc: "触控板灯 2 闪一顿（Blackberry 单击）", top: "off", pad: "burst2", back: "on" },
-  { id: "arrow", title: "方向键模式", desc: "触控板灯 4 闪一顿（Blackberry 双击）", top: "off", pad: "burst4", back: "on" },
+const LED_FX = [
+  { id: 0, name: "关闭" },
+  { id: 1, name: "常亮" },
+  { id: 2, name: "1闪1顿" },
+  { id: 3, name: "2闪1顿" },
+  { id: 4, name: "3闪1顿" },
+  { id: 5, name: "4闪1顿" },
+  { id: 6, name: "5闪1顿" },
+  { id: 7, name: "均匀闪烁" },
+  { id: 8, name: "呼吸灯" },
+  { id: 9, name: "频闪" },
+  { id: 10, name: "心跳" },
+  { id: 11, name: "长脉冲" },
 ];
 
-function burstOn(flashes, tick) {
+const LED_SLOTS = [
+  { id: "alpha", key: "CONFIG_ZMK_LED_LAYER0_PATTERN", title: "字母层", desc: "上层 4 灯（Call / BB / Back / 挂断）", ch: "top" },
+  { id: "sym", key: "CONFIG_ZMK_LED_LAYER1_PATTERN", title: "符号层", desc: "上层 4 灯", ch: "top" },
+  { id: "util", key: "CONFIG_ZMK_LED_LAYER2_PATTERN", title: "功能层", desc: "上层 4 灯", ch: "top" },
+  { id: "idle", key: "CONFIG_ZMK_LED_PAD_IDLE_PATTERN", title: "触控板 · 鼠标", desc: "默认划动、Caps 关", ch: "pad" },
+  { id: "caps", key: "CONFIG_ZMK_LED_PAD_CAPS_PATTERN", title: "触控板 · Caps", desc: "大小写开", ch: "pad" },
+  { id: "scroll", key: "CONFIG_ZMK_LED_PAD_SCROLL_PATTERN", title: "触控板 · 滚动", desc: "Blackberry 单击", ch: "pad" },
+  { id: "arrow", key: "CONFIG_ZMK_LED_PAD_ARROW_PATTERN", title: "触控板 · 方向键", desc: "Blackberry 双击", ch: "pad" },
+];
+
+const ledFxMem = {};
+
+function fxBurst(flashes, pause, step, max) {
   const onoff = flashes * 2;
-  const period = onoff + 4;
-  const phase = tick % period;
-  return phase < onoff && phase % 2 === 0;
+  const period = onoff + pause;
+  const phase = step % period;
+  return phase < onoff && phase % 2 === 0 ? max : 0;
 }
 
-function ledMap() {
-  return { off: false, solid: true, burst2: burstOn(2, ledTick), burst4: burstOn(4, ledTick) };
+function fxTick(pattern, slotId) {
+  const pause = Number(state.conf.CONFIG_ZMK_LED_BURST_PAUSE_TICKS) || 4;
+  const max = 100;
+  const min = Number(state.conf.CONFIG_ZMK_IDICATOR_LAYER_CYCLE_MINBRT) || 20;
+  const stepSz = Number(state.conf.CONFIG_ZMK_IDICATOR_BRT_STEP) || 5;
+  if (!ledFxMem[slotId]) ledFxMem[slotId] = { step: 0, brt: min, dir: 1 };
+  const s = ledFxMem[slotId];
+  s.step++;
+  switch (Number(pattern)) {
+    case 1: return max;
+    case 2: return fxBurst(1, pause, s.step, max);
+    case 3: return fxBurst(2, pause, s.step, max);
+    case 4: return fxBurst(3, pause, s.step, max);
+    case 5: return fxBurst(4, pause, s.step, max);
+    case 6: return fxBurst(5, pause, s.step, max);
+    case 7: return (s.step % 4) < 2 ? max : 0;
+    case 9: return s.step % 2 ? max : 0;
+    case 10: return (s.step % 10 === 0 || s.step % 10 === 2) ? max : 0;
+    case 11: return (s.step % 8) < 5 ? max : 0;
+    case 8: {
+      s.brt += s.dir * stepSz;
+      if (s.brt >= max) { s.brt = max; s.dir = -1; }
+      if (s.brt <= min) { s.brt = min; s.dir = 1; }
+      return s.brt;
+    }
+    default: return 0;
+  }
 }
 
 function applyLedMode() {
-  const mode = LED_MODES.find((m) => m.id === ledMode);
   const kb = document.getElementById("led-keyboard");
-  const map = ledMap();
-  kb.classList.toggle("glow-top", map[mode.top]);
-  kb.classList.toggle("glow-pad", map[mode.pad]);
-  kb.classList.toggle("glow-back", mode.back === "on");
+  if (!kb) return;
+  const slot = LED_SLOTS.find((m) => m.id === ledMode) || LED_SLOTS[1];
+  const brt = fxTick(state.conf[slot.key], slot.id);
+  kb.style.setProperty("--top-glow", slot.ch === "top" ? String(brt) : "0");
+  kb.style.setProperty("--pad-glow", slot.ch === "pad" ? String(brt) : "0");
+  kb.classList.toggle("glow-back", true);
   document.querySelectorAll("#led-cards .led-card").forEach((card, i) => {
-    const m = LED_MODES[i];
+    const m = LED_SLOTS[i];
     if (!m) return;
-    const on = m.pad !== "off" ? ledMap()[m.pad] : ledMap()[m.top];
-    card.querySelector(".dot").classList.toggle("on", on);
+    const v = fxTick(state.conf[m.key], m.id + "-dot");
+    const dot = card.querySelector(".dot");
+    dot.classList.toggle("on", v > 8);
+    dot.style.opacity = String(Math.max(0.15, v / 100));
   });
 }
 
 function renderLedCards() {
   const host = document.getElementById("led-cards");
   host.innerHTML = "";
-  LED_MODES.forEach((m) => {
+  LED_SLOTS.forEach((m) => {
     const el = document.createElement("div");
     el.className = "led-card" + (ledMode === m.id ? " active" : "");
-    const color = m.pad !== "off" ? "mint" : m.top !== "off" ? "amber" : "gold";
-    el.innerHTML = `<div class="dot ${color}" data-kind="${m.pad !== "off" ? "pad" : "top"}"></div><div><b></b><span></span></div>`;
+    const color = m.ch === "pad" ? "mint" : "amber";
+    el.innerHTML = `<div class="dot ${color}"></div><div><b></b><span></span><select></select></div>`;
     el.querySelector("b").textContent = m.title;
     el.querySelector("span").textContent = m.desc;
+    const sel = el.querySelector("select");
+    LED_FX.forEach((fx) => {
+      const o = document.createElement("option");
+      o.value = String(fx.id);
+      o.textContent = fx.name;
+      sel.appendChild(o);
+    });
+    sel.value = String(state.conf[m.key] ?? 0);
+    sel.addEventListener("click", (e) => e.stopPropagation());
+    sel.addEventListener("change", () => {
+      state.conf[m.key] = Number(sel.value);
+      ledMode = m.id;
+      ledFxMem[m.id] = { step: 0, brt: 20, dir: 1 };
+      renderLedCards();
+      refreshPreview();
+    });
     el.addEventListener("click", () => {
       ledMode = m.id;
       renderLedCards();
