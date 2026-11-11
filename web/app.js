@@ -527,7 +527,7 @@ function renderKeyboard(root, interactive) {
       if (interactive && selected === id) btn.classList.add("selected");
       btn.innerHTML = `<span class="phys"></span><span class="leg"></span><span class="sub"></span>`;
       const legend = defined ? (data.legend || "") : "";
-      btn.querySelector(".phys").textContent = layer === 0 ? meta.phys : "";
+      btn.querySelector(".phys").textContent = meta.phys;
       btn.querySelector(".leg").textContent = legend || "\u00a0";
       btn.querySelector(".sub").textContent = defined ? (secondLegend(id, data) || "\u00a0") : "\u00a0";
       if (interactive) {
