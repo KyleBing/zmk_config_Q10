@@ -93,8 +93,24 @@
     <section class="panel" id="tab-export">
       <div class="card">
         <h2>GitHub 直接读写</h2>
-        <p class="note">Token <strong>只存在这台电脑的浏览器</strong>，请求只发到 <code>api.github.com</code>，不会进仓库、也不要发到聊天里。</p>
-        <p class="note">建 Fine-grained PAT：只勾本仓库 <strong>Contents: Read and write</strong>。公开库用 Classic 时选 <code>public_repo</code>。</p>
+        <p class="note">Token <strong>只存在这台电脑的浏览器</strong>，请求只发到 <code>api.github.com</code>。不要发到聊天、不要写进仓库。</p>
+        <details class="howto" open>
+          <summary>如何获取 GitHub Token</summary>
+          <ol>
+            <li>打开
+              <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">创建 Fine-grained token</a>
+              （需先登录 GitHub）
+            </li>
+            <li>Token name 随便填，例如 <code>q10-config</code>；Expiration 自己选</li>
+            <li>Resource owner 选 <strong>KyleBing</strong></li>
+            <li>Repository access 选 <strong>Only select repositories</strong>，只加 <code>zmk_config_Q10</code></li>
+            <li>Permissions → <strong>Repository permissions</strong> → <strong>Contents</strong> → <strong>Read and write</strong></li>
+            <li>点 Generate token，立刻复制（只显示一次）</li>
+            <li>粘贴到下面的 Token 框</li>
+          </ol>
+          <p class="note">备用：<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Classic token</a> 对公开库勾 <code>public_repo</code> 即可。官方说明见
+            <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">Managing personal access tokens</a>。</p>
+        </details>
         <div class="row-form"><label>Owner</label><input id="gh-owner" type="text" value="KyleBing" /></div>
         <div class="row-form"><label>仓库</label><input id="gh-repo" type="text" value="zmk_config_Q10" /></div>
         <div class="row-form"><label>分支</label><input id="gh-branch" type="text" value="main" /></div>

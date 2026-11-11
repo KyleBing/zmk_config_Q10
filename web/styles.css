@@ -262,6 +262,27 @@ textarea { min-height: 88px; font-family: ui-monospace, SFMono-Regular, Menlo, m
 }
 .row-form { display: grid; gap: 6px; margin-bottom: 10px; }
 .row-form label { font-size: 12px; color: var(--muted); }
+.howto {
+  margin: 0 0 14px;
+  padding: 10px 14px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #101218;
+}
+.howto summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 650;
+}
+.howto ol {
+  margin: 10px 0 8px;
+  padding-left: 22px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.65;
+}
+.howto li { margin: 2px 0; }
 
 .layer-bar {
   display: flex;
