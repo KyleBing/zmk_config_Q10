@@ -502,9 +502,9 @@ function renderKeyboard(root, interactive) {
       if (interactive && selected === id) btn.classList.add("selected");
       btn.innerHTML = `<span class="phys"></span><span class="leg"></span><span class="sub"></span>`;
       const legend = data.legend || data.bind.replace(/^&/, "");
-      btn.querySelector(".phys").textContent = legend === meta.phys ? "" : meta.phys;
-      btn.querySelector(".leg").textContent = legend;
-      btn.querySelector(".sub").textContent = data.sub || "";
+      btn.querySelector(".phys").textContent = meta.phys;
+      btn.querySelector(".leg").textContent = legend || "\u00a0";
+      btn.querySelector(".sub").textContent = data.sub || "\u00a0";
       if (interactive) {
         btn.addEventListener("click", () => {
           selected = id;
