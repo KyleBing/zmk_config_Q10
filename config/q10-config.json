@@ -523,18 +523,18 @@
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "",
+        "bind": "&kp PG_UP",
+        "legend": "PgUp",
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "无",
+        "bind": "&kp UP",
+        "legend": "↑",
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "",
+        "bind": "&kp PG_DN",
+        "legend": "PgDn",
         "sub": ""
       },
       {
@@ -573,18 +573,18 @@
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "",
+        "bind": "&kp LEFT",
+        "legend": "←",
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "",
+        "bind": "&kp DOWN",
+        "legend": "↓",
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "",
+        "bind": "&kp RIGHT",
+        "legend": "→",
         "sub": ""
       },
       {
