@@ -6,6 +6,23 @@ let ghDefaultBranch = "";
 function b64ToUtf8(b64) {
   return decodeURIComponent(escape(atob(b64.replace(/\n/g, ""))));
 }
+function utf8ToB64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+function explainGhError(err) {
+  const m = String(err.message || err);
+  if (/resource not accessible/i.test(m)) {
+    return (
+      m +
+      "。Token 没有写仓库权限。请重新生成：Fine-grained 必须把 Contents 设为 Read and write（不是 Read-only），并勾选当前这个仓库；改权限后旧 Token 不会生效。公开库也可以用 Classic token，勾 public_repo。"
+    );
+  }
+  if (/bad credentials|401/i.test(m)) {
+    return m + "。Token 无效或已过期，请重新生成后粘贴。";
+  }
+  return m;
+}
 
 function parseRepoLink(url) {
   const s = (url || "").trim();
@@ -117,7 +134,7 @@ async function ghApi(g, path, opts = {}) {
     ...opts,
     headers: {
       Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${g.token}`,
+      Authorization: `token ${g.token}`,
       "X-GitHub-Api-Version": "2022-11-28",
       ...(opts.body ? { "Content-Type": "application/json" } : {}),
       ...(opts.headers || {}),
@@ -130,6 +147,23 @@ async function ghApi(g, path, opts = {}) {
     throw new Error(data.message || res.statusText);
   }
   return data;
+}
+
+async function ghPutFile(g, path, content, message) {
+  let sha;
+  try {
+    const existing = await ghApi(g, `/contents/${path}?ref=${encodeURIComponent(g.branch)}`);
+    sha = existing.sha;
+  } catch (e) {
+    if (!String(e.message).includes("Not Found")) throw e;
+  }
+  const body = {
+    message,
+    content: utf8ToB64(content),
+    branch: g.branch,
+  };
+  if (sha) body.sha = sha;
+  return ghApi(g, `/contents/${path}`, { method: "PUT", body: JSON.stringify(body) });
 }
 
 function parseConfText(text) {
@@ -188,7 +222,7 @@ async function ghPull() {
     toast("已从仓库读取");
     location.reload();
   } catch (e) {
-    ghStatus("读取失败：" + e.message);
+    ghStatus("读取失败：" + explainGhError(e));
     toast("读取失败");
   }
 }
@@ -199,43 +233,25 @@ async function ghPush() {
   ghStatus("正在提交…");
   try {
     g = await ensureRepo(g);
+    const repo = await ghApi(g, "");
+    if (repo.permissions && repo.permissions.push === false) {
+      throw new Error("Resource not accessible by personal access token");
+    }
     const files = [
       { path: "config/bbq10.conf", content: generateConf() },
       { path: "config/bbq10.keymap", content: generateKeymap() },
       { path: "config/q10-config.json", content: generateJson() },
     ];
-    const branch = await ghApi(g, `/branches/${encodeURIComponent(g.branch)}`);
-    const parent = branch.commit.sha;
-    const baseTree = branch.commit.commit.tree.sha;
-    const treeItems = [];
+    let lastSha = "";
     for (const f of files) {
-      const blob = await ghApi(g, "/git/blobs", {
-        method: "POST",
-        body: JSON.stringify({ content: f.content, encoding: "utf-8" }),
-      });
-      treeItems.push({ path: f.path, mode: "100644", type: "blob", sha: blob.sha });
+      const out = await ghPutFile(g, f.path, f.content, "Update Q10 config from configurator");
+      lastSha = out.commit?.sha || lastSha;
     }
-    const tree = await ghApi(g, "/git/trees", {
-      method: "POST",
-      body: JSON.stringify({ base_tree: baseTree, tree: treeItems }),
-    });
-    const commit = await ghApi(g, "/git/commits", {
-      method: "POST",
-      body: JSON.stringify({
-        message: "Update Q10 config from configurator",
-        tree: tree.sha,
-        parents: [parent],
-      }),
-    });
-    await ghApi(g, `/git/refs/heads/${encodeURIComponent(g.branch)}`, {
-      method: "PATCH",
-      body: JSON.stringify({ sha: commit.sha }),
-    });
-    ghStatus(`已 push 到 ${g.owner}/${g.repo}@${g.branch}：${commit.sha.slice(0, 7)}（随后 Actions 会编固件）`);
+    ghStatus(`已 push 到 ${g.owner}/${g.repo}@${g.branch}${lastSha ? "：" + lastSha.slice(0, 7) : ""}（随后 Actions 会编固件）`);
     toast("已推到 GitHub");
     localStorage.setItem(STORAGE, JSON.stringify(state));
   } catch (e) {
-    ghStatus("推送失败：" + e.message);
+    ghStatus("推送失败：" + explainGhError(e));
     toast("推送失败");
   }
 }

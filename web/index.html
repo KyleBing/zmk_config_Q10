@@ -104,11 +104,12 @@
             <li>Token name 随便填，例如 <code>q10-config</code>；Expiration 自己选</li>
             <li>Resource owner 选<strong>拥有该仓库的 GitHub 账号</strong>（下面仓库链接里 <code>github.com/</code> 后面第一段，<code id="hint-owner">你的用户名</code>）</li>
             <li>Repository access 选 <strong>Only select repositories</strong>，只加链接里的那个仓库（<code id="hint-repo">仓库名</code>）</li>
-            <li>Permissions → <strong>Repository permissions</strong> → <strong>Contents</strong> → <strong>Read and write</strong></li>
+            <li>Permissions → Repository permissions → <strong>Contents</strong> 必须选 <strong>Read and write</strong>（选 Read-only 会推送失败）。改权限后要重新 Generate，旧 Token 不会自动升级</li>
             <li>点 Generate token，立刻复制（只显示一次）</li>
             <li>粘贴到下面的 Token 框</li>
           </ol>
-          <p class="note">备用：<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Classic token</a> 对公开库勾 <code>public_repo</code> 即可。官方说明见
+          <p class="note">若出现 <code>Resource not accessible by personal access token</code>：Contents 不是 Read and write、没勾这个仓库，或改完权限仍在用旧 Token。公开库更省事：用
+            <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">Classic token</a> 只勾 <code>public_repo</code>。官方说明：
             <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">Managing personal access tokens</a>。</p>
         </details>
         <div class="row-form"><label>仓库链接</label><input id="gh-repo-url" type="url" placeholder="https://github.com/你的用户名/你的仓库" /></div>
