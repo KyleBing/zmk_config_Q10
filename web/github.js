@@ -250,7 +250,7 @@ async function ghPull() {
       state = {
         conf: { ...base.conf, ...parsed.conf },
         timing: { ...base.timing, ...parsed.timing },
-        layers: parsed.layers?.length === 3 ? parsed.layers : base.layers,
+        layers: migrateLayerKeys(parsed.layers?.length === 3 ? parsed.layers : base.layers),
       };
     } else if (confText) {
       state.conf = { ...base.conf, ...parseConfText(confText) };

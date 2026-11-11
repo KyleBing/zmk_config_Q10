@@ -50,7 +50,7 @@
         <div class="kb-shell" id="keyboard"></div>
         <div class="card inspector">
           <h2>键面</h2>
-          <p class="note" id="key-hint">字母层白字是字母，橙字是符号层（Alt 进入后输入）。符号层橙字是 Shift 上层，不是 Ctrl，也不能再打字母。功能层只显示已定义的键。</p>
+          <p class="note" id="key-hint">字母层白字是字母，橙字是符号层（Alt 进入后输入）。符号层可单独指定 <strong>Shift + 此键</strong> 输出另一个符号（不会再走系统默认的 Shift+1=! 那种映射）。功能层只显示已定义的键。</p>
           <div class="row-form">
             <label>物理键</label>
             <input id="insp-phys" type="text" readonly />
@@ -73,6 +73,19 @@
           <div class="row-form">
             <label>ZMK 绑定</label>
             <input id="insp-bind" type="text" placeholder="&amp;kp Q" />
+          </div>
+          <div id="insp-shift-block" hidden>
+            <div class="row-form">
+              <label>Shift + 此键</label>
+              <div class="combo" id="insp-shift-combo">
+                <input id="insp-shift-q" type="search" autocomplete="off" placeholder="搜索符号；选「无」则用系统 Shift" />
+                <div class="combo-list" id="insp-shift-list" hidden></div>
+              </div>
+            </div>
+            <div class="row-form">
+              <label>Shift 绑定</label>
+              <input id="insp-shift-bind" type="text" placeholder="留空：系统 Shift（如 1→!）" />
+            </div>
           </div>
           <div class="actions">
             <button class="btn" id="reset-layer">恢复本层默认</button>

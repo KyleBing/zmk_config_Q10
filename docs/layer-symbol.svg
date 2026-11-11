@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="420" viewBox="0 0 920 420" role="img">
   <rect width="920" height="420" fill="#fafafa"/>
   <text x="24" y="28" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700">2 · 符号层 SYMBOL</text>
-  <text x="24" y="48" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="12">数字九宫格 + 常用符号 · 肩键滚轮</text>
+  <text x="24" y="48" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="12">数字九宫格 + 常用符号 · 第二行 = Shift 上层（配置器可改）</text>
 
 <rect x="120" y="70" width="140" height="28" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
 <text x="190.0" y="88.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700">滚轮↑</text>
@@ -20,7 +20,8 @@
 <rect x="700" y="110" width="140" height="36" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
 <text x="770.0" y="132.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700">Caps</text>
 <rect x="40" y="158" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="78.0" y="184.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">#</text>
+<text x="78.0" y="174.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">#</text>
+<text x="78.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ `</text>
 <rect x="124" y="158" width="76" height="44" rx="6" fill="#e0f2fe" stroke="#7dd3fc"/>
 <text x="162.0" y="184.0" text-anchor="middle" fill="#0c4a6e" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">1</text>
 <rect x="208" y="158" width="76" height="44" rx="6" fill="#e0f2fe" stroke="#7dd3fc"/>
@@ -34,15 +35,20 @@
 <text x="498.0" y="174.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">)</text>
 <text x="498.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ ]</text>
 <rect x="544" y="158" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="582.0" y="184.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">_</text>
+<text x="582.0" y="174.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">_</text>
+<text x="582.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ {</text>
 <rect x="628" y="158" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="666.0" y="184.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">-</text>
+<text x="666.0" y="174.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">-</text>
+<text x="666.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ ~</text>
 <rect x="712" y="158" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="750.0" y="184.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">+</text>
+<text x="750.0" y="174.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">+</text>
+<text x="750.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ =</text>
 <rect x="796" y="158" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="834.0" y="184.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">@</text>
+<text x="834.0" y="174.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">@</text>
+<text x="834.0" y="190.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ }</text>
 <rect x="40" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="78.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">*</text>
+<text x="78.0" y="226.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">*</text>
+<text x="78.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ %</text>
 <rect x="124" y="210" width="76" height="44" rx="6" fill="#e0f2fe" stroke="#7dd3fc"/>
 <text x="162.0" y="236.0" text-anchor="middle" fill="#0c4a6e" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">4</text>
 <rect x="208" y="210" width="76" height="44" rx="6" fill="#e0f2fe" stroke="#7dd3fc"/>
@@ -50,13 +56,17 @@
 <rect x="292" y="210" width="76" height="44" rx="6" fill="#e0f2fe" stroke="#7dd3fc"/>
 <text x="330.0" y="236.0" text-anchor="middle" fill="#0c4a6e" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">6</text>
 <rect x="376" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="414.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">/</text>
+<text x="414.0" y="226.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">/</text>
+<text x="414.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ \</text>
 <rect x="460" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="498.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">:</text>
+<text x="498.0" y="226.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">:</text>
+<text x="498.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ |</text>
 <rect x="544" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="582.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">;</text>
+<text x="582.0" y="226.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">;</text>
+<text x="582.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ &amp;</text>
 <rect x="628" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="666.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">'</text>
+<text x="666.0" y="226.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">'</text>
+<text x="666.0" y="242.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ ^</text>
 <rect x="712" y="210" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
 <text x="750.0" y="236.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">"</text>
 <rect x="796" y="210" width="76" height="44" rx="6" fill="#f3f4f6" stroke="#d8d8d8"/>
@@ -70,9 +80,11 @@
 <rect x="292" y="262" width="76" height="44" rx="6" fill="#e0f2fe" stroke="#7dd3fc"/>
 <text x="330.0" y="288.0" text-anchor="middle" fill="#0c4a6e" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">9</text>
 <rect x="376" y="262" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="414.0" y="288.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">?</text>
+<text x="414.0" y="278.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">?</text>
+<text x="414.0" y="294.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ &lt;</text>
 <rect x="460" y="262" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
-<text x="498.0" y="288.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">!</text>
+<text x="498.0" y="278.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">!</text>
+<text x="498.0" y="294.0" text-anchor="middle" fill="#666666" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="600">⇧ &gt;</text>
 <rect x="544" y="262" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
 <text x="582.0" y="288.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700">,</text>
 <rect x="628" y="262" width="76" height="44" rx="6" fill="#ffffff" stroke="#d8d8d8"/>
@@ -92,5 +104,5 @@
 <text x="636.0" y="340.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700">2</text>
 <rect x="694" y="314" width="100" height="44" rx="6" fill="#f3f4f6" stroke="#d8d8d8"/>
 <text x="744.0" y="340.0" text-anchor="middle" fill="#1a1a1a" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700">⇧ Shift</text>
-<text x="24" y="400" fill="#777777" font-family="Helvetica, Arial, sans-serif" font-size="11">浅蓝=数字 · 绿=退出符号层 · [/( 与 ]/) 为短按/长按</text>
+<text x="24" y="400" fill="#777777" font-family="Helvetica, Arial, sans-serif" font-size="11">浅蓝=数字 · 绿=退出符号层 · 第二行是 Shift 上层，可在配置器里改</text>
 </svg>

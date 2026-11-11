@@ -288,7 +288,9 @@
       {
         "bind": "&kp HASH",
         "legend": "#",
-        "sub": ""
+        "sub": "⇧ `",
+        "shiftBind": "&kp GRAVE",
+        "shiftLegend": "`"
       },
       {
         "bind": "&kp N1",
@@ -306,39 +308,53 @@
         "sub": ""
       },
       {
-        "bind": "&mm_par",
+        "bind": "&kp LPAR",
         "legend": "(",
-        "sub": "⇧ ["
+        "sub": "⇧ [",
+        "shiftBind": "&kp LBKT",
+        "shiftLegend": "["
       },
       {
-        "bind": "&mm_rbr",
+        "bind": "&kp RPAR",
         "legend": ")",
-        "sub": "⇧ ]"
+        "sub": "⇧ ]",
+        "shiftBind": "&kp RBKT",
+        "shiftLegend": "]"
       },
       {
         "bind": "&kp UNDER",
         "legend": "_",
-        "sub": ""
+        "sub": "⇧ {",
+        "shiftBind": "&kp LBRC",
+        "shiftLegend": "{"
       },
       {
         "bind": "&kp MINUS",
         "legend": "-",
-        "sub": "~"
+        "sub": "⇧ ~",
+        "shiftBind": "&kp TILDE",
+        "shiftLegend": "~"
       },
       {
         "bind": "&kp PLUS",
         "legend": "+",
-        "sub": ""
+        "sub": "⇧ =",
+        "shiftBind": "&kp EQUAL",
+        "shiftLegend": "="
       },
       {
         "bind": "&kp AT",
         "legend": "@",
-        "sub": ""
+        "sub": "⇧ }",
+        "shiftBind": "&kp RBRC",
+        "shiftLegend": "}"
       },
       {
         "bind": "&kp STAR",
         "legend": "*",
-        "sub": ""
+        "sub": "⇧ %",
+        "shiftBind": "&kp PRCNT",
+        "shiftLegend": "%"
       },
       {
         "bind": "&kp N4",
@@ -358,22 +374,30 @@
       {
         "bind": "&kp SLASH",
         "legend": "/",
-        "sub": "|"
+        "sub": "⇧ \\",
+        "shiftBind": "&kp BSLH",
+        "shiftLegend": "\\"
       },
       {
         "bind": "&kp COLON",
         "legend": ":",
-        "sub": ""
+        "sub": "⇧ |",
+        "shiftBind": "&kp PIPE",
+        "shiftLegend": "|"
       },
       {
         "bind": "&kp SEMI",
         "legend": ";",
-        "sub": ""
+        "sub": "⇧ &",
+        "shiftBind": "&kp AMPS",
+        "shiftLegend": "&"
       },
       {
         "bind": "&kp APOS",
         "legend": "'",
-        "sub": ""
+        "sub": "⇧ ^",
+        "shiftBind": "&kp CARET",
+        "shiftLegend": "^"
       },
       {
         "bind": "&kp DQT",
@@ -408,12 +432,16 @@
       {
         "bind": "&kp QMARK",
         "legend": "?",
-        "sub": ""
+        "sub": "⇧ <",
+        "shiftBind": "&kp LT",
+        "shiftLegend": "<"
       },
       {
         "bind": "&kp EXCL",
         "legend": "!",
-        "sub": ""
+        "sub": "⇧ >",
+        "shiftBind": "&kp GT",
+        "shiftLegend": ">"
       },
       {
         "bind": "&kp COMMA",

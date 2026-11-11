@@ -1,4 +1,4 @@
-const STORAGE = "q10-config-v3";
+const STORAGE = "q10-config-v4";
 
 const CONF_FIELDS = [
   { key: "CONFIG_TRACKPAD_SPEEDMULTIPLIER_HORIZONTAL", label: "鼠标水平速度", min: 0, max: 1000, hint: "百分比，100=默认。越大越快。" },
@@ -98,8 +98,6 @@ add("本键盘", "$ 短按 / 长按功能层", "&htl UTIL DLLR", { l: "$", a: "u
 add("本键盘", "退出符号层", "&tog SYM", { l: "退出", a: "toggle symbol" });
 add("本键盘", "退出功能层", "&tog UTIL", { l: "退出", a: "toggle util" });
 add("本键盘", "短按 0 / 长按 Ctrl", "&mt LCTRL N0", { l: "0", a: "mod tap" });
-add("本键盘", "(  ·  Shift [", "&mm_par", { l: "(", a: "paren bracket" });
-add("本键盘", ")  ·  Shift ]", "&mm_rbr", { l: ")", a: "paren bracket" });
 
 add("鼠标", "鼠标左键", "&mkp LCLK", { l: "左键", a: "click mouse" });
 add("鼠标", "鼠标右键", "&mkp RCLK", { l: "右键", a: "click mouse" });
@@ -226,8 +224,50 @@ add("系统", "背光减", "&bl BL_DEC", { l: "背光-", a: "backlight" });
 add("系统", "背光开关", "&bl BL_TOG", { l: "背光", a: "backlight" });
 add("系统", "背光加", "&bl BL_INC", { l: "背光+", a: "backlight" });
 
-function k(bind, legend, sub = "") {
-  return { bind, legend, sub };
+function k(bind, legend, sub = "", shiftBind = "", shiftLegend = "") {
+  const o = { bind, legend, sub };
+  if (shiftBind) {
+    o.shiftBind = shiftBind;
+    o.shiftLegend = shiftLegend;
+    if (!sub && shiftLegend) o.sub = "⇧ " + shiftLegend;
+  }
+  return o;
+}
+
+function isKpBind(s) {
+  return /^&kp\s+\S+$/.test(String(s || "").trim());
+}
+
+function kpBinding(s) {
+  const t = String(s || "").trim();
+  if (!t || t === "&none" || t === "&trans") return "";
+  if (isKpBind(t)) return t;
+  if (/^&/.test(t)) return "";
+  if (/^[A-Z][A-Z0-9_]*$/.test(t)) return `&kp ${t}`;
+  return "";
+}
+
+function migrateLayerKeys(layers) {
+  if (!Array.isArray(layers)) return layers;
+  const morph = {
+    "&mm_par": { bind: "&kp LPAR", legend: "(", shiftBind: "&kp LBKT", shiftLegend: "[", sub: "⇧ [" },
+    "&mm_rbr": { bind: "&kp RPAR", legend: ")", shiftBind: "&kp RBKT", shiftLegend: "]", sub: "⇧ ]" },
+  };
+  return layers.map((keys) =>
+    (keys || []).map((key) => {
+      if (!key) return key;
+      const extra = morph[key.bind];
+      if (!extra) return key;
+      return {
+        ...key,
+        bind: extra.bind,
+        legend: key.legend || extra.legend,
+        shiftBind: key.shiftBind || extra.shiftBind,
+        shiftLegend: key.shiftLegend || extra.shiftLegend,
+        sub: key.sub || extra.sub,
+      };
+    })
+  );
 }
 
 function secondLegend(id, data) {
@@ -260,12 +300,25 @@ function defaultLayers() {
       k("&msc SCRL_UP", "滚上"), k("&msc SCRL_DOWN", "滚下"),
       k("&kp TAB", "Tab"), k("&htbb LGUI 0", "Cmd", "单击滚 · 双击方向"),
       k("&mkp LCLK", "左键"), k("&kp ESC", "Esc"), k("&kp CLCK", "Caps"),
-      k("&kp HASH", "#"), k("&kp N1", "1"), k("&kp N2", "2"), k("&kp N3", "3"), k("&mm_par", "(", "⇧ ["),
-      k("&mm_rbr", ")", "⇧ ]"), k("&kp UNDER", "_"), k("&kp MINUS", "-"), k("&kp PLUS", "+"), k("&kp AT", "@"),
-      k("&kp STAR", "*"), k("&kp N4", "4"), k("&kp N5", "5"), k("&kp N6", "6"), k("&kp SLASH", "/"),
-      k("&kp COLON", ":"), k("&kp SEMI", ";"), k("&kp APOS", "'"), k("&kp DQT", '"'), k("&kp BSPC", "⌫"),
+      k("&kp HASH", "#", "⇧ `", "&kp GRAVE", "`"),
+      k("&kp N1", "1"), k("&kp N2", "2"), k("&kp N3", "3"),
+      k("&kp LPAR", "(", "⇧ [", "&kp LBKT", "["),
+      k("&kp RPAR", ")", "⇧ ]", "&kp RBKT", "]"),
+      k("&kp UNDER", "_", "⇧ {", "&kp LBRC", "{"),
+      k("&kp MINUS", "-", "⇧ ~", "&kp TILDE", "~"),
+      k("&kp PLUS", "+", "⇧ =", "&kp EQUAL", "="),
+      k("&kp AT", "@", "⇧ }", "&kp RBRC", "}"),
+      k("&kp STAR", "*", "⇧ %", "&kp PRCNT", "%"),
+      k("&kp N4", "4"), k("&kp N5", "5"), k("&kp N6", "6"),
+      k("&kp SLASH", "/", "⇧ \\", "&kp BSLH", "\\"),
+      k("&kp COLON", ":", "⇧ |", "&kp PIPE", "|"),
+      k("&kp SEMI", ";", "⇧ &", "&kp AMPS", "&"),
+      k("&kp APOS", "'", "⇧ ^", "&kp CARET", "^"),
+      k("&kp DQT", '"'), k("&kp BSPC", "⌫"),
       k("&tog SYM", "退出"),
-      k("&kp N7", "7"), k("&kp N8", "8"), k("&kp N9", "9"), k("&kp QMARK", "?"), k("&kp EXCL", "!"),
+      k("&kp N7", "7"), k("&kp N8", "8"), k("&kp N9", "9"),
+      k("&kp QMARK", "?", "⇧ <", "&kp LT", "<"),
+      k("&kp EXCL", "!", "⇧ >", "&kp GT", ">"),
       k("&kp COMMA", ","), k("&kp DOT", "."), k("&kp C_MUTE", "静音"), k("&kp ENTER", "Enter"),
       k("&kp LSHFT", "Shift"), k("&mt LCTRL N0", "0", "长按 Ctrl"), k("&kp SPACE", "Space"),
       k("&kp N2", "2"), k("&kp RSHFT", "Shift"),
@@ -340,7 +393,7 @@ function loadState() {
     return {
       conf: { ...base.conf, ...parsed.conf },
       timing: { ...base.timing, ...parsed.timing },
-      layers: parsed.layers?.length === 3 ? parsed.layers : base.layers,
+      layers: migrateLayerKeys(parsed.layers?.length === 3 ? parsed.layers : base.layers),
     };
   } catch {
     return defaultState();
@@ -410,12 +463,13 @@ CONFIG_ZMK_LED_BURST_PAUSE_TICKS=${c.CONFIG_ZMK_LED_BURST_PAUSE_TICKS}
 `;
 }
 
-function layerBlock(name, comment, keys, extraComment) {
-  const L = (a, b) => keys.slice(a, b).map((x) => padBind(x.bind)).join("    ");
+function layerBlock(name, comment, keys, extraComment, bindOf) {
+  const bind = (i) => (bindOf ? bindOf(i, keys[i]) : keys[i].bind);
+  const L = (a, b) => keys.slice(a, b).map((_, j) => padBind(bind(a + j))).join("    ");
   return `        ${name} {
 ${extraComment || ""}            bindings = <
             //                  TOP LEFT BUTTON                                                                                          TOP RIGHT BUTTON
-                                ${keys[0].bind.padEnd(40)} ${keys[1].bind}
+                                ${bind(0).padEnd(40)} ${bind(1)}
 
             //  PHONE                       BLACKBERRY                                TOUCH_PAD                          BACK                             HUNG_UP
                 ${L(2, 7)}
@@ -433,6 +487,32 @@ ${extraComment || ""}            bindings = <
                                 ${L(37, 42)}
             >;
         };`;
+}
+
+function morphName(i) {
+  return `mm${i}`;
+}
+
+function morphRef(i, key) {
+  if (!isKpBind(key.bind) || !kpBinding(key.shiftBind)) return "";
+  return `&${morphName(i)}`;
+}
+
+function morphBehaviorDts(keys) {
+  return keys
+    .map((key, i) => {
+      const shifted = kpBinding(key.shiftBind);
+      if (!isKpBind(key.bind) || !shifted) return "";
+      return `
+        ${morphName(i)}: mod_morph_${i} {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <${key.bind}>, <${shifted}>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };`;
+    })
+    .join("");
 }
 
 function generateKeymap() {
@@ -485,21 +565,7 @@ function generateKeymap() {
             tapping-term-ms = <${t.htbbMs}>;
             quick-tap-ms = <${t.tdbbMs}>;
             bindings = <&kp>, <&tdbb>;
-        };
-        mm_par: mod_morph_par {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LPAR>, <&kp LBKT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-            keep-mods = <0>;
-        };
-        mm_rbr: mod_morph_rbr {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp RPAR>, <&kp RBKT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-            keep-mods = <0>;
-        };
+        };${morphBehaviorDts(s)}
     };
 
     keymap {
@@ -508,7 +574,7 @@ function generateKeymap() {
 ${layerBlock("default_layer", "", d)}
 
 
-${layerBlock("sym_layer", "", s)}
+${layerBlock("sym_layer", "", s, "", (i, key) => morphRef(i, key) || key.bind)}
 
 
 ${layerBlock("util_layer", "", u)}
@@ -678,9 +744,30 @@ function applyPreset(p) {
   data.bind = p.b;
   data.legend = p.l;
   if (data.legend.length > 8) data.legend = p.b.replace(/^&\w+\s*/, "").slice(0, 8);
+  if (!isKpBind(data.bind)) {
+    data.shiftBind = "";
+    data.shiftLegend = "";
+  }
   document.getElementById("insp-bind").value = data.bind;
   document.getElementById("insp-legend").value = data.legend;
   document.getElementById("insp-preset-q").value = presetLabel(p);
+  fillInspector();
+  renderKeyboard(document.getElementById("keyboard"), true);
+  refreshPreview();
+}
+
+function applyShiftPreset(p) {
+  const data = state.layers[layer][selected];
+  if (!p || !p.b) {
+    data.shiftBind = "";
+    data.shiftLegend = "";
+    if (/^⇧ /.test(data.sub || "")) data.sub = "";
+  } else {
+    data.shiftBind = kpBinding(p.b) || p.b;
+    data.shiftLegend = p.l || p.n;
+    data.sub = "⇧ " + data.shiftLegend;
+  }
+  fillInspector();
   renderKeyboard(document.getElementById("keyboard"), true);
   refreshPreview();
 }
@@ -729,6 +816,47 @@ function closeCombo() {
   document.getElementById("insp-preset-list").hidden = true;
 }
 
+let shiftComboHits = [];
+let shiftComboHi = 0;
+
+function shiftPresets() {
+  return [{ g: "本键盘", n: "无（系统 Shift）", b: "", l: "", a: "none" }].concat(
+    PRESETS.filter((p) => p.b && isKpBind(p.b))
+  );
+}
+
+function renderShiftComboList() {
+  const q = document.getElementById("insp-shift-q").value.trim().toLowerCase();
+  const list = document.getElementById("insp-shift-list");
+  shiftComboHits = shiftPresets().filter((p) => matchPreset(p, q) || (!p.b && (!q || "无 系统 shift".includes(q))));
+  if (shiftComboHi >= shiftComboHits.length) shiftComboHi = 0;
+  if (!shiftComboHits.length) {
+    list.innerHTML = `<div class="combo-empty">没有匹配</div>`;
+    return;
+  }
+  let html = "";
+  let lastG = null;
+  shiftComboHits.forEach((p, i) => {
+    if (p.g !== lastG) {
+      lastG = p.g;
+      html += `<div class="combo-g">${p.g}</div>`;
+    }
+    html += `<button type="button" class="combo-item${i === shiftComboHi ? " on" : ""}" data-i="${i}"><span>${p.n}</span><small>${p.b || "系统 Shift"}</small></button>`;
+  });
+  list.innerHTML = html;
+  const on = list.querySelector(".combo-item.on");
+  if (on) on.scrollIntoView({ block: "nearest" });
+}
+
+function openShiftCombo() {
+  document.getElementById("insp-shift-list").hidden = false;
+  renderShiftComboList();
+}
+
+function closeShiftCombo() {
+  document.getElementById("insp-shift-list").hidden = true;
+}
+
 function fillInspector() {
   const data = state.layers[layer][selected];
   const meta = KEYS[selected];
@@ -738,7 +866,17 @@ function fillInspector() {
   document.getElementById("insp-bind").value = data.bind;
   const hit = PRESETS.find((p) => p.b && p.b === data.bind);
   document.getElementById("insp-preset-q").value = hit ? presetLabel(hit) : (data.bind ? "自定义" : "");
+  const shiftOn = layer === 1 && isKpBind(data.bind);
+  const shiftBlock = document.getElementById("insp-shift-block");
+  shiftBlock.hidden = !shiftOn;
+  if (shiftOn) {
+    const sb = data.shiftBind || "";
+    document.getElementById("insp-shift-bind").value = sb;
+    const sh = PRESETS.find((p) => p.b && p.b === sb);
+    document.getElementById("insp-shift-q").value = sb ? (sh ? presetLabel(sh) : "自定义") : "无（系统 Shift）";
+  }
   closeCombo();
+  closeShiftCombo();
 }
 
 function bindInspector() {
@@ -779,6 +917,7 @@ function bindInspector() {
   });
   document.addEventListener("mousedown", (e) => {
     if (!document.getElementById("insp-combo").contains(e.target)) closeCombo();
+    if (!document.getElementById("insp-shift-combo").contains(e.target)) closeShiftCombo();
   });
   ["insp-legend", "insp-sub", "insp-bind"].forEach((id) => {
     document.getElementById(id).addEventListener("input", () => {
@@ -788,9 +927,65 @@ function bindInspector() {
       data.bind = document.getElementById("insp-bind").value.trim();
       const hit = PRESETS.find((p) => p.b && p.b === data.bind);
       document.getElementById("insp-preset-q").value = hit ? presetLabel(hit) : (data.bind ? "自定义" : "");
+      document.getElementById("insp-shift-block").hidden = !(layer === 1 && isKpBind(data.bind));
       renderKeyboard(document.getElementById("keyboard"), true);
       refreshPreview();
     });
+  });
+
+  const sq = document.getElementById("insp-shift-q");
+  const slist = document.getElementById("insp-shift-list");
+  sq.addEventListener("focus", openShiftCombo);
+  sq.addEventListener("input", () => {
+    shiftComboHi = 0;
+    openShiftCombo();
+  });
+  sq.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (slist.hidden) openShiftCombo();
+      shiftComboHi = Math.min(shiftComboHits.length - 1, shiftComboHi + 1);
+      renderShiftComboList();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      shiftComboHi = Math.max(0, shiftComboHi - 1);
+      renderShiftComboList();
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const p = shiftComboHits[shiftComboHi];
+      if (p) {
+        applyShiftPreset(p);
+        closeShiftCombo();
+      }
+    } else if (e.key === "Escape") {
+      closeShiftCombo();
+    }
+  });
+  slist.addEventListener("mousedown", (e) => {
+    const item = e.target.closest(".combo-item");
+    if (!item) return;
+    e.preventDefault();
+    applyShiftPreset(shiftComboHits[Number(item.dataset.i)]);
+    closeShiftCombo();
+  });
+  document.getElementById("insp-shift-bind").addEventListener("input", () => {
+    const data = state.layers[layer][selected];
+    const raw = document.getElementById("insp-shift-bind").value.trim();
+    data.shiftBind = raw;
+    const shifted = kpBinding(raw);
+    const hit = PRESETS.find((p) => p.b && p.b === (shifted || raw));
+    if (!raw) {
+      data.shiftLegend = "";
+      if (/^⇧ /.test(data.sub || "")) data.sub = "";
+      document.getElementById("insp-shift-q").value = "无（系统 Shift）";
+    } else {
+      data.shiftLegend = hit ? hit.l : raw.replace(/^&kp\s+/, "");
+      data.sub = "⇧ " + data.shiftLegend;
+      document.getElementById("insp-sub").value = data.sub;
+      document.getElementById("insp-shift-q").value = hit ? presetLabel(hit) : "自定义";
+    }
+    renderKeyboard(document.getElementById("keyboard"), true);
+    refreshPreview();
   });
 }
 
@@ -998,7 +1193,7 @@ function init() {
     state = {
       conf: { ...base.conf, ...parsed.conf },
       timing: { ...base.timing, ...parsed.timing },
-      layers: parsed.layers?.length === 3 ? parsed.layers : base.layers,
+      layers: migrateLayerKeys(parsed.layers?.length === 3 ? parsed.layers : base.layers),
     };
     localStorage.setItem(STORAGE, JSON.stringify(state));
     location.reload();

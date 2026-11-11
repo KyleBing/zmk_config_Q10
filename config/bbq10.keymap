@@ -46,17 +46,101 @@
             quick-tap-ms = <350>;
             bindings = <&kp>, <&tdbb>;
         };
-        mm_par: mod_morph_par {
+        mm7: mod_morph_7 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp HASH>, <&kp GRAVE>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm11: mod_morph_11 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LPAR>, <&kp LBKT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
             keep-mods = <0>;
         };
-        mm_rbr: mod_morph_rbr {
+        mm12: mod_morph_12 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp RPAR>, <&kp RBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm13: mod_morph_13 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp UNDER>, <&kp LBRC>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm14: mod_morph_14 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&kp TILDE>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm15: mod_morph_15 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp PLUS>, <&kp EQUAL>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm16: mod_morph_16 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp AT>, <&kp RBRC>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm17: mod_morph_17 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp STAR>, <&kp PRCNT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm21: mod_morph_21 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SLASH>, <&kp BSLH>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm22: mod_morph_22 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp COLON>, <&kp PIPE>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm23: mod_morph_23 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SEMI>, <&kp AMPS>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm24: mod_morph_24 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp APOS>, <&kp CARET>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm31: mod_morph_31 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp QMARK>, <&kp LT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm32: mod_morph_32 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp EXCL>, <&kp GT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
             keep-mods = <0>;
         };
@@ -97,13 +181,13 @@
                 &kp TAB         &htbb LGUI 0    &mkp LCLK       &kp ESC         &kp CLCK    
 
             //  Q               W           E           R          T                  Y                 U                I               O                P
-                &kp HASH        &kp N1          &kp N2          &kp N3          &mm_par         &mm_rbr         &kp UNDER       &kp MINUS       &kp PLUS        &kp AT      
+                &mm7            &kp N1          &kp N2          &kp N3          &mm11           &mm12           &mm13           &mm14           &mm15           &mm16       
 
             //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
-                &kp STAR        &kp N4          &kp N5          &kp N6          &kp SLASH       &kp COLON       &kp SEMI        &kp APOS        &kp DQT         &kp BSPC    
+                &mm17           &kp N4          &kp N5          &kp N6          &mm21           &mm22           &mm23           &mm24           &kp DQT         &kp BSPC    
 
             //  Alt             Z           X           C          V                  B                 N                M               $                ENTER
-                &tog SYM        &kp N7          &kp N8          &kp N9          &kp QMARK       &kp EXCL        &kp COMMA       &kp DOT         &kp C_MUTE      &kp ENTER   
+                &tog SYM        &kp N7          &kp N8          &kp N9          &mm31           &mm32           &kp COMMA       &kp DOT         &kp C_MUTE      &kp ENTER   
 
             //                  LSHIFT            0                                   SPACE                     SYM                      RSHIFT
                                 &kp LSHFT       &mt LCTRL N0    &kp SPACE       &kp N2          &kp RSHFT   
