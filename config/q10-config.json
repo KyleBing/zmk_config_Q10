@@ -528,8 +528,8 @@
         "sub": ""
       },
       {
-        "bind": "&out OUT_TOG",
-        "legend": "输出",
+        "bind": "&none",
+        "legend": "无",
         "sub": ""
       },
       {
@@ -608,8 +608,8 @@
         "sub": ""
       },
       {
-        "bind": "&none",
-        "legend": "",
+        "bind": "&out OUT_TOG",
+        "legend": "USB/蓝牙输出",
         "sub": ""
       },
       {
