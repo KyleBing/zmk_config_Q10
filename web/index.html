@@ -102,8 +102,8 @@
               （需先登录 GitHub）
             </li>
             <li>Token name 随便填，例如 <code>q10-config</code>；Expiration 自己选</li>
-            <li>Resource owner 选 <strong>KyleBing</strong></li>
-            <li>Repository access 选 <strong>Only select repositories</strong>，只加 <code>zmk_config_Q10</code></li>
+            <li>Resource owner 选<strong>拥有该仓库的 GitHub 账号</strong>（下面仓库链接里 <code>github.com/</code> 后面第一段，<code id="hint-owner">你的用户名</code>）</li>
+            <li>Repository access 选 <strong>Only select repositories</strong>，只加链接里的那个仓库（<code id="hint-repo">仓库名</code>）</li>
             <li>Permissions → <strong>Repository permissions</strong> → <strong>Contents</strong> → <strong>Read and write</strong></li>
             <li>点 Generate token，立刻复制（只显示一次）</li>
             <li>粘贴到下面的 Token 框</li>
@@ -111,9 +111,8 @@
           <p class="note">备用：<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Classic token</a> 对公开库勾 <code>public_repo</code> 即可。官方说明见
             <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">Managing personal access tokens</a>。</p>
         </details>
-        <div class="row-form"><label>Owner</label><input id="gh-owner" type="text" value="KyleBing" /></div>
-        <div class="row-form"><label>仓库</label><input id="gh-repo" type="text" value="zmk_config_Q10" /></div>
-        <div class="row-form"><label>分支</label><input id="gh-branch" type="text" value="main" /></div>
+        <div class="row-form"><label>仓库链接</label><input id="gh-repo-url" type="url" placeholder="https://github.com/你的用户名/你的仓库" /></div>
+        <p class="note" id="gh-derived">填写 GitHub 仓库地址后，会自动解析账号、仓库名和默认分支。</p>
         <div class="row-form"><label>GitHub Token</label><input id="gh-token" type="password" autocomplete="off" placeholder="ghp_… 或 github_pat_…" /></div>
         <label class="check"><input id="gh-remember" type="checkbox" /> 在本机记住 Token</label>
         <div class="actions">

@@ -5,9 +5,9 @@
 在线配置器（键面 / 触控板 / 灯效 / 直接读写 GitHub）：  
 **[https://kylebing.github.io/zmk_config_Q10/](https://kylebing.github.io/zmk_config_Q10/)**
 
-页面可填 **GitHub Token**（只存在你自己的浏览器）从本仓库读取配置并直接 commit + push。不要把 Token 发到聊天或写进仓库。
+页面填写**你的 GitHub 仓库链接**和 Token（只存在你自己的浏览器）即可读取并 commit + push。Owner / 仓库名从链接解析，默认分支从仓库信息读取。不要把 Token 发到聊天或写进仓库。
 
-Fine-grained PAT：仅本仓库 **Contents: Read and write**。Classic：公开库勾 `public_repo`。
+Fine-grained PAT：只授权**你的这个仓库** **Contents: Read and write**。Classic：公开库勾 `public_repo`。
 
 > 按键与行为参考：  
 > [ZMK Key Codes](https://zmk.dev/docs/codes) · [ZMK Behaviors](https://zmk.dev/docs/behaviors)

@@ -1,37 +1,110 @@
-const GH_META = "q10-gh-meta-v1";
+const GH_META = "q10-gh-meta-v2";
 const GH_TOKEN = "q10-gh-token-v1";
+
+let ghDefaultBranch = "";
 
 function b64ToUtf8(b64) {
   return decodeURIComponent(escape(atob(b64.replace(/\n/g, ""))));
 }
 
-function ghReadForm() {
+function parseRepoLink(url) {
+  const s = (url || "").trim();
+  if (!s) return null;
+  let m = s.match(/github\.com[/:]([^/]+)\/([^/#?\s]+)/i);
+  if (m) return { owner: m[1], repo: m[2].replace(/\.git$/i, "") };
+  m = s.match(/^https?:\/\/([^.]+)\.github\.io\/([^/#?\s]+)/i);
+  if (m) return { owner: m[1], repo: m[2].replace(/\/$/, "") };
+  return null;
+}
+
+function detectRepoFromPage() {
+  const host = location.hostname;
+  const m = host.match(/^([^.]+)\.github\.io$/i);
+  if (!m) return null;
+  const repo = location.pathname.split("/").filter(Boolean)[0];
+  if (!repo) return null;
   return {
-    owner: document.getElementById("gh-owner").value.trim(),
-    repo: document.getElementById("gh-repo").value.trim(),
-    branch: document.getElementById("gh-branch").value.trim() || "main",
+    owner: m[1],
+    repo,
+    url: `https://github.com/${m[1]}/${repo}`,
+  };
+}
+
+function ghReadForm() {
+  const parsed = parseRepoLink(document.getElementById("gh-repo-url").value);
+  return {
+    owner: parsed?.owner || "",
+    repo: parsed?.repo || "",
+    branch: ghDefaultBranch || "main",
     token: document.getElementById("gh-token").value.trim(),
     remember: document.getElementById("gh-remember").checked,
+    url: document.getElementById("gh-repo-url").value.trim(),
   };
 }
 
 function ghSaveMeta() {
   const g = ghReadForm();
-  localStorage.setItem(GH_META, JSON.stringify({ owner: g.owner, repo: g.repo, branch: g.branch, remember: g.remember }));
+  localStorage.setItem(GH_META, JSON.stringify({ url: g.url, remember: g.remember }));
   if (g.remember && g.token) localStorage.setItem(GH_TOKEN, g.token);
   else localStorage.removeItem(GH_TOKEN);
+}
+
+function setDerived(text, parsed) {
+  document.getElementById("gh-derived").textContent = text;
+  if (parsed) {
+    document.getElementById("hint-owner").textContent = parsed.owner;
+    document.getElementById("hint-repo").textContent = parsed.repo;
+  } else {
+    document.getElementById("hint-owner").textContent = "你的用户名";
+    document.getElementById("hint-repo").textContent = "仓库名";
+  }
+}
+
+async function ghFetchRepo(parsed, token) {
+  const headers = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`https://api.github.com/repos/${parsed.owner}/${parsed.repo}`, { headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.message || res.statusText);
+  return data;
+}
+
+async function refreshRepoMeta() {
+  const parsed = parseRepoLink(document.getElementById("gh-repo-url").value);
+  const token = document.getElementById("gh-token").value.trim();
+  if (!parsed) {
+    ghDefaultBranch = "";
+    setDerived("填写 GitHub 仓库地址后，会自动解析账号、仓库名和默认分支。", null);
+    return;
+  }
+  setDerived(`解析为 ${parsed.owner}/${parsed.repo}，正在读取默认分支…`, parsed);
+  try {
+    const repo = await ghFetchRepo(parsed, token);
+    ghDefaultBranch = repo.default_branch || "main";
+    setDerived(`将读写 ${parsed.owner}/${parsed.repo} · 默认分支 ${ghDefaultBranch}`, parsed);
+  } catch (e) {
+    ghDefaultBranch = "";
+    setDerived(
+      `已解析 ${parsed.owner}/${parsed.repo}，但读不到默认分支（${e.message}）。公开库应能自动读取；私有库请先填 Token。`,
+      parsed
+    );
+  }
 }
 
 function ghRestoreMeta() {
   try {
     const meta = JSON.parse(localStorage.getItem(GH_META) || "{}");
-    if (meta.owner) document.getElementById("gh-owner").value = meta.owner;
-    if (meta.repo) document.getElementById("gh-repo").value = meta.repo;
-    if (meta.branch) document.getElementById("gh-branch").value = meta.branch;
+    const detected = detectRepoFromPage();
+    const url = meta.url || detected?.url || "";
+    if (url) document.getElementById("gh-repo-url").value = url;
     document.getElementById("gh-remember").checked = !!meta.remember;
     const tok = localStorage.getItem(GH_TOKEN);
     if (tok) document.getElementById("gh-token").value = tok;
   } catch (_) { /* ignore */ }
+  refreshRepoMeta();
 }
 
 function ghStatus(msg) {
@@ -54,8 +127,7 @@ async function ghApi(g, path, opts = {}) {
   let data = {};
   try { data = text ? JSON.parse(text) : {}; } catch (_) { data = { raw: text }; }
   if (!res.ok) {
-    const msg = data.message || res.statusText;
-    throw new Error(msg);
+    throw new Error(data.message || res.statusText);
   }
   return data;
 }
@@ -81,12 +153,21 @@ async function ghGetFile(g, path) {
   }
 }
 
+async function ensureRepo(g) {
+  if (!g.owner || !g.repo) throw new Error("请先填写 GitHub 仓库链接");
+  if (!g.token) throw new Error("请先填写 GitHub Token");
+  if (!ghDefaultBranch) await refreshRepoMeta();
+  g.branch = ghDefaultBranch || g.branch || "main";
+  if (!g.branch) throw new Error("无法读取仓库默认分支");
+  return g;
+}
+
 async function ghPull() {
-  const g = ghReadForm();
-  if (!g.token) { toast("先填 GitHub Token"); return; }
+  let g = ghReadForm();
   ghSaveMeta();
   ghStatus("正在读取…");
   try {
+    g = await ensureRepo(g);
     const jsonText = await ghGetFile(g, "config/q10-config.json");
     const confText = await ghGetFile(g, "config/bbq10.conf");
     const base = defaultState();
@@ -113,11 +194,11 @@ async function ghPull() {
 }
 
 async function ghPush() {
-  const g = ghReadForm();
-  if (!g.token) { toast("先填 GitHub Token"); return; }
+  let g = ghReadForm();
   ghSaveMeta();
   ghStatus("正在提交…");
   try {
+    g = await ensureRepo(g);
     const files = [
       { path: "config/bbq10.conf", content: generateConf() },
       { path: "config/bbq10.keymap", content: generateKeymap() },
@@ -150,7 +231,7 @@ async function ghPush() {
       method: "PATCH",
       body: JSON.stringify({ sha: commit.sha }),
     });
-    ghStatus("已 push：" + commit.sha.slice(0, 7) + "（随后 Actions 会编固件）");
+    ghStatus(`已 push 到 ${g.owner}/${g.repo}@${g.branch}：${commit.sha.slice(0, 7)}（随后 Actions 会编固件）`);
     toast("已推到 GitHub");
     localStorage.setItem(STORAGE, JSON.stringify(state));
   } catch (e) {
@@ -161,7 +242,17 @@ async function ghPush() {
 
 document.getElementById("gh-pull").addEventListener("click", ghPull);
 document.getElementById("gh-push").addEventListener("click", ghPush);
-["gh-owner", "gh-repo", "gh-branch", "gh-token", "gh-remember"].forEach((id) => {
-  document.getElementById(id).addEventListener("change", ghSaveMeta);
+let repoMetaTimer = 0;
+document.getElementById("gh-repo-url").addEventListener("input", () => {
+  clearTimeout(repoMetaTimer);
+  repoMetaTimer = setTimeout(() => {
+    ghSaveMeta();
+    refreshRepoMeta();
+  }, 400);
 });
+document.getElementById("gh-token").addEventListener("change", () => {
+  ghSaveMeta();
+  refreshRepoMeta();
+});
+document.getElementById("gh-remember").addEventListener("change", ghSaveMeta);
 ghRestoreMeta();
