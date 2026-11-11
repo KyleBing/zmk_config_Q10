@@ -1,4 +1,4 @@
-const STORAGE = "q10-config-v1";
+const STORAGE = "q10-config-v2";
 
 const CONF_FIELDS = [
   { key: "CONFIG_TRACKPAD_SPEEDMULTIPLIER_HORIZONTAL", label: "鼠标水平速度", min: 0, max: 1000, hint: "百分比，100=默认。越大越快。" },
@@ -130,6 +130,16 @@ for (let n = 0; n <= 9; n++) PRESETS.push([`数字 ${n}`, `&kp N${n}`]);
 
 function k(bind, legend, sub = "") {
   return { bind, legend, sub };
+}
+
+function secondLegend(id, data) {
+  if (data.sub) return data.sub;
+  const otherLayer = layer === 1 ? 0 : 1;
+  const other = state.layers[otherLayer]?.[id];
+  if (!other) return "";
+  const oleg = other.legend || "";
+  if (!oleg || oleg === (data.legend || "")) return "";
+  return oleg;
 }
 
 function defaultLayers() {
@@ -504,7 +514,7 @@ function renderKeyboard(root, interactive) {
       const legend = data.legend || data.bind.replace(/^&/, "");
       btn.querySelector(".phys").textContent = meta.phys;
       btn.querySelector(".leg").textContent = legend || "\u00a0";
-      btn.querySelector(".sub").textContent = data.sub || "\u00a0";
+      btn.querySelector(".sub").textContent = secondLegend(id, data) || "\u00a0";
       if (interactive) {
         btn.addEventListener("click", () => {
           selected = id;

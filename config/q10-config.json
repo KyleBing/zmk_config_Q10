@@ -1,0 +1,669 @@
+{
+  "conf": {
+    "CONFIG_TRACKPAD_SPEEDMULTIPLIER_HORIZONTAL": 80,
+    "CONFIG_TRACKPAD_SPEEDMULTIPLIER_VERTICAL": 80,
+    "CONFIG_TRACKPAD_SCROLL_INTERVAL": 16,
+    "CONFIG_TRACKPAD_ARROW_THRESHOLD": 30,
+    "CONFIG_TRACKPAD_ARROW_INTERVAL": 80,
+    "CONFIG_INPUT_A320_POLLINGRATE": 100,
+    "CONFIG_ZMK_IDLE_TIMEOUT": 30000,
+    "CONFIG_ZMK_INDICATOR_CAPSLOCK": "y",
+    "CONFIG_ZMK_INDICATOR_CAPSLOCK_BRT": 100,
+    "CONFIG_ZMK_INDICATOR_LED": "y",
+    "CONFIG_ZMK_IDICATOR_LAYER_BRT": 100,
+    "CONFIG_ZMK_IDICATOR_LAYER_CYCLE_MAXBRT": 100,
+    "CONFIG_ZMK_IDICATOR_LAYER_CYCLE_MINBRT": 20,
+    "CONFIG_ZMK_IDICATOR_LAYER_CYCLE_INTERVAL": 20,
+    "CONFIG_ZMK_IDICATOR_BRT_STEP": 5,
+    "CONFIG_ZMK_BACKLIGHT": "y",
+    "CONFIG_ZMK_BACKLIGHT_BRT_START": 40,
+    "CONFIG_ZMK_BACKLIGHT_BRT_STEP": 10,
+    "CONFIG_ZMK_BACKLIGHT_ON_START": "y",
+    "CONFIG_ZMK_BACKLIGHT_AUTO_OFF_IDLE": "y"
+  },
+  "timing": {
+    "slMs": 2000,
+    "htlMs": 500,
+    "tdlMs": 400,
+    "tdbbMs": 350,
+    "htbbMs": 200
+  },
+  "layers": [
+    [
+      {
+        "bind": "&mkp LCLK",
+        "legend": "左键",
+        "sub": ""
+      },
+      {
+        "bind": "&mkp RCLK",
+        "legend": "右键",
+        "sub": ""
+      },
+      {
+        "bind": "&kp TAB",
+        "legend": "Tab",
+        "sub": ""
+      },
+      {
+        "bind": "&htbb LGUI 0",
+        "legend": "Cmd",
+        "sub": "单击滚 · 双击方向"
+      },
+      {
+        "bind": "&mkp LCLK",
+        "legend": "左键",
+        "sub": ""
+      },
+      {
+        "bind": "&kp ESC",
+        "legend": "Esc",
+        "sub": ""
+      },
+      {
+        "bind": "&kp CLCK",
+        "legend": "Caps",
+        "sub": ""
+      },
+      {
+        "bind": "&kp Q",
+        "legend": "Q",
+        "sub": ""
+      },
+      {
+        "bind": "&kp W",
+        "legend": "W",
+        "sub": ""
+      },
+      {
+        "bind": "&kp E",
+        "legend": "E",
+        "sub": ""
+      },
+      {
+        "bind": "&kp R",
+        "legend": "R",
+        "sub": ""
+      },
+      {
+        "bind": "&kp T",
+        "legend": "T",
+        "sub": ""
+      },
+      {
+        "bind": "&kp Y",
+        "legend": "Y",
+        "sub": ""
+      },
+      {
+        "bind": "&kp U",
+        "legend": "U",
+        "sub": ""
+      },
+      {
+        "bind": "&kp I",
+        "legend": "I",
+        "sub": ""
+      },
+      {
+        "bind": "&kp O",
+        "legend": "O",
+        "sub": ""
+      },
+      {
+        "bind": "&kp P",
+        "legend": "P",
+        "sub": ""
+      },
+      {
+        "bind": "&kp A",
+        "legend": "A",
+        "sub": ""
+      },
+      {
+        "bind": "&kp S",
+        "legend": "S",
+        "sub": ""
+      },
+      {
+        "bind": "&kp D",
+        "legend": "D",
+        "sub": ""
+      },
+      {
+        "bind": "&kp F",
+        "legend": "F",
+        "sub": ""
+      },
+      {
+        "bind": "&kp G",
+        "legend": "G",
+        "sub": ""
+      },
+      {
+        "bind": "&kp H",
+        "legend": "H",
+        "sub": ""
+      },
+      {
+        "bind": "&kp J",
+        "legend": "J",
+        "sub": ""
+      },
+      {
+        "bind": "&kp K",
+        "legend": "K",
+        "sub": ""
+      },
+      {
+        "bind": "&kp L",
+        "legend": "L",
+        "sub": ""
+      },
+      {
+        "bind": "&kp BSPC",
+        "legend": "⌫",
+        "sub": ""
+      },
+      {
+        "bind": "&tdl",
+        "legend": "Alt",
+        "sub": "单击符号 · 双击锁定"
+      },
+      {
+        "bind": "&kp Z",
+        "legend": "Z",
+        "sub": ""
+      },
+      {
+        "bind": "&kp X",
+        "legend": "X",
+        "sub": ""
+      },
+      {
+        "bind": "&kp C",
+        "legend": "C",
+        "sub": ""
+      },
+      {
+        "bind": "&kp V",
+        "legend": "V",
+        "sub": ""
+      },
+      {
+        "bind": "&kp B",
+        "legend": "B",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N",
+        "legend": "N",
+        "sub": ""
+      },
+      {
+        "bind": "&kp M",
+        "legend": "M",
+        "sub": ""
+      },
+      {
+        "bind": "&htl UTIL DLLR",
+        "legend": "$",
+        "sub": "长按功能层"
+      },
+      {
+        "bind": "&kp ENTER",
+        "legend": "Enter",
+        "sub": ""
+      },
+      {
+        "bind": "&kp LSHFT",
+        "legend": "Shift",
+        "sub": ""
+      },
+      {
+        "bind": "&mt LCTRL N0",
+        "legend": "0",
+        "sub": "长按 Ctrl"
+      },
+      {
+        "bind": "&kp SPACE",
+        "legend": "Space",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N2",
+        "legend": "2",
+        "sub": ""
+      },
+      {
+        "bind": "&kp RSHFT",
+        "legend": "Shift",
+        "sub": ""
+      }
+    ],
+    [
+      {
+        "bind": "&msc SCRL_UP",
+        "legend": "滚上",
+        "sub": ""
+      },
+      {
+        "bind": "&msc SCRL_DOWN",
+        "legend": "滚下",
+        "sub": ""
+      },
+      {
+        "bind": "&kp TAB",
+        "legend": "Tab",
+        "sub": ""
+      },
+      {
+        "bind": "&htbb LGUI 0",
+        "legend": "Cmd",
+        "sub": "单击滚 · 双击方向"
+      },
+      {
+        "bind": "&mkp LCLK",
+        "legend": "左键",
+        "sub": ""
+      },
+      {
+        "bind": "&kp ESC",
+        "legend": "Esc",
+        "sub": ""
+      },
+      {
+        "bind": "&kp CLCK",
+        "legend": "Caps",
+        "sub": ""
+      },
+      {
+        "bind": "&kp HASH",
+        "legend": "#",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N1",
+        "legend": "1",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N2",
+        "legend": "2",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N3",
+        "legend": "3",
+        "sub": ""
+      },
+      {
+        "bind": "&mt LBKT LPAR",
+        "legend": "(",
+        "sub": "["
+      },
+      {
+        "bind": "&mt RBKT RPAR",
+        "legend": ")",
+        "sub": "]"
+      },
+      {
+        "bind": "&kp UNDER",
+        "legend": "_",
+        "sub": ""
+      },
+      {
+        "bind": "&kp MINUS",
+        "legend": "-",
+        "sub": "~"
+      },
+      {
+        "bind": "&kp PLUS",
+        "legend": "+",
+        "sub": ""
+      },
+      {
+        "bind": "&kp AT",
+        "legend": "@",
+        "sub": ""
+      },
+      {
+        "bind": "&kp STAR",
+        "legend": "*",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N4",
+        "legend": "4",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N5",
+        "legend": "5",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N6",
+        "legend": "6",
+        "sub": ""
+      },
+      {
+        "bind": "&kp SLASH",
+        "legend": "/",
+        "sub": "|"
+      },
+      {
+        "bind": "&kp COLON",
+        "legend": ":",
+        "sub": ""
+      },
+      {
+        "bind": "&kp SEMI",
+        "legend": ";",
+        "sub": ""
+      },
+      {
+        "bind": "&kp APOS",
+        "legend": "'",
+        "sub": ""
+      },
+      {
+        "bind": "&kp DQT",
+        "legend": "\"",
+        "sub": ""
+      },
+      {
+        "bind": "&kp BSPC",
+        "legend": "⌫",
+        "sub": ""
+      },
+      {
+        "bind": "&tog SYM",
+        "legend": "退出",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N7",
+        "legend": "7",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N8",
+        "legend": "8",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N9",
+        "legend": "9",
+        "sub": ""
+      },
+      {
+        "bind": "&kp QMARK",
+        "legend": "?",
+        "sub": ""
+      },
+      {
+        "bind": "&kp EXCL",
+        "legend": "!",
+        "sub": ""
+      },
+      {
+        "bind": "&kp COMMA",
+        "legend": ",",
+        "sub": ""
+      },
+      {
+        "bind": "&kp DOT",
+        "legend": ".",
+        "sub": ""
+      },
+      {
+        "bind": "&kp C_MUTE",
+        "legend": "静音",
+        "sub": ""
+      },
+      {
+        "bind": "&kp ENTER",
+        "legend": "Enter",
+        "sub": ""
+      },
+      {
+        "bind": "&kp LSHFT",
+        "legend": "Shift",
+        "sub": ""
+      },
+      {
+        "bind": "&mt LCTRL N0",
+        "legend": "0",
+        "sub": "长按 Ctrl"
+      },
+      {
+        "bind": "&kp SPACE",
+        "legend": "Space",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N2",
+        "legend": "2",
+        "sub": ""
+      },
+      {
+        "bind": "&kp RSHFT",
+        "legend": "Shift",
+        "sub": ""
+      }
+    ],
+    [
+      {
+        "bind": "&mkp LCLK",
+        "legend": "左键",
+        "sub": ""
+      },
+      {
+        "bind": "&mkp RCLK",
+        "legend": "右键",
+        "sub": ""
+      },
+      {
+        "bind": "&kp TAB",
+        "legend": "Tab",
+        "sub": ""
+      },
+      {
+        "bind": "&htbb LGUI 0",
+        "legend": "Cmd",
+        "sub": "单击滚 · 双击方向"
+      },
+      {
+        "bind": "&mkp LCLK",
+        "legend": "左键",
+        "sub": ""
+      },
+      {
+        "bind": "&kp ESC",
+        "legend": "Esc",
+        "sub": ""
+      },
+      {
+        "bind": "&kp CLCK",
+        "legend": "Caps",
+        "sub": ""
+      },
+      {
+        "bind": "&sys_reset",
+        "legend": "重启",
+        "sub": ""
+      },
+      {
+        "bind": "&bt BT_SEL 0",
+        "legend": "BT1",
+        "sub": ""
+      },
+      {
+        "bind": "&bt BT_SEL 1",
+        "legend": "BT2",
+        "sub": ""
+      },
+      {
+        "bind": "&bt BT_SEL 2",
+        "legend": "BT3",
+        "sub": ""
+      },
+      {
+        "bind": "&ext_power EP_TOG",
+        "legend": "触控板电源",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&out OUT_TOG",
+        "legend": "输出",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&bt BT_SEL 3",
+        "legend": "BT4",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&bt BT_CLR",
+        "legend": "清配对",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&bootloader",
+        "legend": "刷机",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&bl BL_DEC",
+        "legend": "背光-",
+        "sub": ""
+      },
+      {
+        "bind": "&bl BL_TOG",
+        "legend": "背光",
+        "sub": ""
+      },
+      {
+        "bind": "&bl BL_INC",
+        "legend": "背光+",
+        "sub": ""
+      },
+      {
+        "bind": "&none",
+        "legend": "",
+        "sub": ""
+      },
+      {
+        "bind": "&tog UTIL",
+        "legend": "退出",
+        "sub": ""
+      },
+      {
+        "bind": "&kp ENTER",
+        "legend": "Enter",
+        "sub": ""
+      },
+      {
+        "bind": "&kp LSHFT",
+        "legend": "Shift",
+        "sub": ""
+      },
+      {
+        "bind": "&mt LCTRL N0",
+        "legend": "0",
+        "sub": "长按 Ctrl"
+      },
+      {
+        "bind": "&kp SPACE",
+        "legend": "Space",
+        "sub": ""
+      },
+      {
+        "bind": "&kp N2",
+        "legend": "2",
+        "sub": ""
+      },
+      {
+        "bind": "&kp RSHFT",
+        "legend": "Shift",
+        "sub": ""
+      }
+    ]
+  ]
+}
