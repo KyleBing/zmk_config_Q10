@@ -46,7 +46,7 @@
         <div class="kb-shell" id="keyboard"></div>
         <div class="card inspector">
           <h2>键面</h2>
-          <p class="note" id="key-hint">点键盘上的键来改绑定。显示名可以和实际 ZMK 代码分开。</p>
+          <p class="note" id="key-hint">字母层白字是字母，橙字是符号层（Alt 进入后输入）。符号层橙字是 Shift 上层，不是 Ctrl，也不能再打字母。功能层只显示已定义的键。</p>
           <div class="row-form">
             <label>物理键</label>
             <input id="insp-phys" type="text" readonly />
@@ -57,7 +57,7 @@
           </div>
           <div class="row-form">
             <label>副标题</label>
-            <input id="insp-sub" type="text" placeholder="长按 / 双击说明" />
+            <input id="insp-sub" type="text" placeholder="字母层：符号预览；符号层：⇧ 上层" />
           </div>
           <div class="row-form">
             <label>常用绑定</label>

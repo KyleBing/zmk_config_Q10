@@ -46,6 +46,20 @@
             quick-tap-ms = <350>;
             bindings = <&kp>, <&tdbb>;
         };
+        mm_par: mod_morph_par {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR>, <&kp LBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm_rbr: mod_morph_rbr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RPAR>, <&kp RBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
     };
 
     keymap {
@@ -83,7 +97,7 @@
                 &kp TAB         &htbb LGUI 0    &mkp LCLK       &kp ESC         &kp CLCK    
 
             //  Q               W           E           R          T                  Y                 U                I               O                P
-                &kp HASH        &kp N1          &kp N2          &kp N3          &mt LBKT LPAR    &mt RBKT RPAR    &kp UNDER       &kp MINUS       &kp PLUS        &kp AT      
+                &kp HASH        &kp N1          &kp N2          &kp N3          &mm_par          &mm_rbr          &kp UNDER       &kp MINUS       &kp PLUS        &kp AT      
 
             //  A               S           D           F          G                  H                 J                K               L                BACKSPACE
                 &kp STAR        &kp N4          &kp N5          &kp N6          &kp SLASH       &kp COLON       &kp SEMI        &kp APOS        &kp DQT         &kp BSPC    

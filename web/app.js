@@ -1,4 +1,4 @@
-const STORAGE = "q10-config-v2";
+const STORAGE = "q10-config-v3";
 
 const CONF_FIELDS = [
   { key: "CONFIG_TRACKPAD_SPEEDMULTIPLIER_HORIZONTAL", label: "鼠标水平速度", min: 0, max: 1000, hint: "百分比，100=默认。越大越快。" },
@@ -101,8 +101,8 @@ const PRESETS = [
   ["Shift", "&kp LSHFT"],
   ["右 Shift", "&kp RSHFT"],
   ["短按 0 / 长按 Ctrl", "&mt LCTRL N0"],
-  ["短按 ( / 长按 [", "&mt LBKT LPAR"],
-  ["短按 ) / 长按 ]", "&mt RBKT RPAR"],
+  ["(  ·  Shift [", "&mm_par"],
+  [")  ·  Shift ]", "&mm_rbr"],
   ["蓝牙设备 1", "&bt BT_SEL 0"],
   ["蓝牙设备 2", "&bt BT_SEL 1"],
   ["蓝牙设备 3", "&bt BT_SEL 2"],
@@ -133,11 +133,11 @@ function k(bind, legend, sub = "") {
 }
 
 function secondLegend(id, data) {
+  if (layer >= 1) return data.sub || "";
   if (data.sub) return data.sub;
-  const otherLayer = layer === 1 ? 0 : 1;
-  const other = state.layers[otherLayer]?.[id];
-  if (!other) return "";
-  const oleg = other.legend || "";
+  const sym = state.layers[1]?.[id];
+  if (!sym || sym.bind === "&none") return "";
+  const oleg = sym.legend || "";
   if (!oleg || oleg === (data.legend || "")) return "";
   return oleg;
 }
@@ -162,8 +162,8 @@ function defaultLayers() {
       k("&msc SCRL_UP", "滚上"), k("&msc SCRL_DOWN", "滚下"),
       k("&kp TAB", "Tab"), k("&htbb LGUI 0", "Cmd", "单击滚 · 双击方向"),
       k("&mkp LCLK", "左键"), k("&kp ESC", "Esc"), k("&kp CLCK", "Caps"),
-      k("&kp HASH", "#"), k("&kp N1", "1"), k("&kp N2", "2"), k("&kp N3", "3"), k("&mt LBKT LPAR", "(", "["),
-      k("&mt RBKT RPAR", ")", "]"), k("&kp UNDER", "_"), k("&kp MINUS", "-"), k("&kp PLUS", "+"), k("&kp AT", "@"),
+      k("&kp HASH", "#"), k("&kp N1", "1"), k("&kp N2", "2"), k("&kp N3", "3"), k("&mm_par", "(", "⇧ ["),
+      k("&mm_rbr", ")", "⇧ ]"), k("&kp UNDER", "_"), k("&kp MINUS", "-"), k("&kp PLUS", "+"), k("&kp AT", "@"),
       k("&kp STAR", "*"), k("&kp N4", "4"), k("&kp N5", "5"), k("&kp N6", "6"), k("&kp SLASH", "/"),
       k("&kp COLON", ":"), k("&kp SEMI", ";"), k("&kp APOS", "'"), k("&kp DQT", '"'), k("&kp BSPC", "⌫"),
       k("&tog SYM", "退出"),
@@ -388,6 +388,20 @@ function generateKeymap() {
             quick-tap-ms = <${t.tdbbMs}>;
             bindings = <&kp>, <&tdbb>;
         };
+        mm_par: mod_morph_par {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR>, <&kp LBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
+        mm_rbr: mod_morph_rbr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RPAR>, <&kp RBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <0>;
+        };
     };
 
     keymap {
@@ -508,13 +522,14 @@ function renderKeyboard(root, interactive) {
       const data = state.layers[layer][id];
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "key " + (meta.cls || "") + (data.bind === "&none" ? " empty" : "");
+      const defined = data.bind && data.bind !== "&none";
+      btn.className = "key " + (meta.cls || "") + (defined ? "" : " empty");
       if (interactive && selected === id) btn.classList.add("selected");
       btn.innerHTML = `<span class="phys"></span><span class="leg"></span><span class="sub"></span>`;
-      const legend = data.legend || data.bind.replace(/^&/, "");
-      btn.querySelector(".phys").textContent = meta.phys;
+      const legend = defined ? (data.legend || "") : "";
+      btn.querySelector(".phys").textContent = layer === 0 ? meta.phys : "";
       btn.querySelector(".leg").textContent = legend || "\u00a0";
-      btn.querySelector(".sub").textContent = secondLegend(id, data) || "\u00a0";
+      btn.querySelector(".sub").textContent = defined ? (secondLegend(id, data) || "\u00a0") : "\u00a0";
       if (interactive) {
         btn.addEventListener("click", () => {
           selected = id;
