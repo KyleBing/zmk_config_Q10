@@ -83,16 +83,17 @@
     </section>
 
     <section class="panel" id="tab-leds">
-      <div class="grid-2">
-        <div>
+      <div class="leds-layout">
+        <div class="leds-preview">
           <div class="kb-shell" id="led-keyboard"></div>
-          <p class="note" style="margin-top:10px">三路灯：上层 4 颗功能键共用一路；触控板中间一颗；字母区背光一路。</p>
+          <p class="note">点右侧一行预览。上层 4 灯一路，触控板边缘一圈，字母区背光一路。</p>
         </div>
-        <div class="card">
-          <h2>灯效</h2>
-          <p class="note">点某一行预览。选项会写入 conf；刷含新固件的 uf2 后键盘才会换成同样的闪法。</p>
-          <div class="led-cards" id="led-cards"></div>
-          <div id="led-conf" style="margin-top:14px"></div>
+        <div class="leds-panel">
+          <div class="card">
+            <h2>灯效</h2>
+            <div class="led-cards" id="led-cards"></div>
+          </div>
+          <div class="card" id="led-conf"></div>
         </div>
       </div>
     </section>

@@ -554,14 +554,22 @@ async function saveFolder() {
   }
 }
 
-function renderFields(host, fields, bools) {
-  host.innerHTML = "<h2>参数</h2>";
+function renderFields(host, fields, bools, opts = {}) {
+  host.innerHTML = opts.title === false ? "" : `<h2>${opts.title || "参数"}</h2>`;
+  host.classList.toggle("fields-compact", !!opts.compact);
   fields.forEach((f) => {
     const wrap = document.createElement("div");
     wrap.className = "field";
-    wrap.innerHTML = `<label></label><span class="val"></span><input type="range"><div class="hint"></div>`;
+    wrap.innerHTML = `<label></label><span class="val"></span><input type="range">`;
     wrap.querySelector("label").textContent = f.label;
-    wrap.querySelector(".hint").textContent = f.hint || "";
+    if (f.hint && !opts.compact) {
+      const hint = document.createElement("div");
+      hint.className = "hint";
+      hint.textContent = f.hint;
+      wrap.appendChild(hint);
+    } else if (f.hint) {
+      wrap.title = f.hint;
+    }
     const input = wrap.querySelector("input");
     const val = wrap.querySelector(".val");
     input.min = f.min;
@@ -857,8 +865,8 @@ function applyLedMode() {
   kb.style.setProperty("--top-glow", slot.ch === "top" ? String(brt) : "0");
   kb.style.setProperty("--pad-glow", slot.ch === "pad" ? String(brt) : "0");
   kb.classList.toggle("glow-back", true);
-  document.querySelectorAll("#led-cards .led-card").forEach((card, i) => {
-    const m = LED_SLOTS[i];
+  document.querySelectorAll("#led-cards .led-card").forEach((card) => {
+    const m = LED_SLOTS.find((x) => x.id === card.dataset.id);
     if (!m) return;
     const v = fxTick(state.conf[m.key], m.id + "-dot");
     const dot = card.querySelector(".dot");
@@ -870,13 +878,23 @@ function applyLedMode() {
 function renderLedCards() {
   const host = document.getElementById("led-cards");
   host.innerHTML = "";
+  let lastG = "";
   LED_SLOTS.forEach((m) => {
+    const g = m.ch === "top" ? "上层 4 灯" : "触控板";
+    if (g !== lastG) {
+      lastG = g;
+      const h = document.createElement("div");
+      h.className = "led-group";
+      h.textContent = g;
+      host.appendChild(h);
+    }
     const el = document.createElement("div");
     el.className = "led-card" + (ledMode === m.id ? " active" : "");
+    el.dataset.id = m.id;
+    el.title = m.desc;
     const color = m.ch === "pad" ? "mint" : "white";
-    el.innerHTML = `<div class="dot ${color}"></div><div><b></b><span></span><select></select></div>`;
+    el.innerHTML = `<div class="dot ${color}"></div><b></b><select></select>`;
     el.querySelector("b").textContent = m.title;
-    el.querySelector("span").textContent = m.desc;
     const sel = el.querySelector("select");
     LED_FX.forEach((fx) => {
       const o = document.createElement("option");
@@ -933,7 +951,7 @@ function init() {
   fillInspector();
   renderKeyboard(document.getElementById("led-keyboard"), false);
   renderLedCards();
-  renderFields(document.getElementById("led-conf"), LED_CONF, BOOL_CONF);
+  renderFields(document.getElementById("led-conf"), LED_CONF, BOOL_CONF, { title: "亮度 / 背光", compact: true });
 
   document.getElementById("tabs").addEventListener("click", (e) => {
     const b = e.target.closest("button");
