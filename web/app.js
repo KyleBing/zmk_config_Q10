@@ -639,6 +639,21 @@ function renderKeyboard(root, interactive) {
     });
     root.appendChild(row);
   });
+  fitKeyLabels(root);
+}
+
+function fitKeyLabels(root) {
+  root.querySelectorAll(".key .leg").forEach((el) => fitLabel(el, 13, 8));
+  root.querySelectorAll(".key .sub").forEach((el) => fitLabel(el, 9, 7));
+}
+
+function fitLabel(el, start, min) {
+  el.style.fontSize = start + "px";
+  let size = start;
+  while (size > min && (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1)) {
+    size -= 0.5;
+    el.style.fontSize = size + "px";
+  }
 }
 
 function range(a, b) {
