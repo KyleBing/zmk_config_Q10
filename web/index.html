@@ -123,6 +123,10 @@
         <p class="note" id="gh-derived">填写 GitHub 仓库地址后，会自动解析账号、仓库名和默认分支。</p>
         <div class="row-form"><label>GitHub Token</label><input id="gh-token" type="password" autocomplete="off" placeholder="ghp_… 或 github_pat_…" /></div>
         <label class="check"><input id="gh-remember" type="checkbox" /> 在本机记住 Token</label>
+        <div class="row-form">
+          <label>提交说明</label>
+          <input id="gh-message" type="text" maxlength="200" placeholder="可空。留空则用默认说明" />
+        </div>
         <div class="actions">
           <button class="btn" id="gh-pull">从仓库读取</button>
           <button class="btn primary" id="gh-push">提交并 push</button>

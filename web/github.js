@@ -279,9 +279,11 @@ async function ghPush() {
       { path: "config/bbq10.keymap", content: generateKeymap() },
       { path: "config/q10-config.json", content: generateJson() },
     ];
+    const note = document.getElementById("gh-message").value.trim();
+    const message = note || "Update Q10 config from configurator";
     let lastSha = "";
     for (const f of files) {
-      const out = await ghPutFile(g, f.path, f.content, "Update Q10 config from configurator");
+      const out = await ghPutFile(g, f.path, f.content, message);
       lastSha = out.commit?.sha || lastSha;
       await sleep(200);
     }
