@@ -134,9 +134,20 @@ function ghRestoreMeta() {
   refreshRepoMeta();
 }
 
-function ghStatus(msg) {
-  const el = document.getElementById("gh-status");
-  if (el) el.textContent = msg;
+function ghStatus(kind, title, detail) {
+  const box = document.getElementById("gh-status");
+  const t = document.getElementById("gh-status-title");
+  const d = document.getElementById("gh-status-detail");
+  if (!box || !t || !d) return;
+  if (!title) {
+    box.hidden = true;
+    return;
+  }
+  box.hidden = false;
+  box.className = "gh-banner " + (kind || "");
+  t.textContent = title;
+  d.textContent = detail || "";
+  d.hidden = !detail;
 }
 
 async function ghApi(g, path, opts = {}) {
@@ -225,7 +236,7 @@ async function ensureRepo(g) {
 async function ghPull() {
   let g = ghReadForm();
   ghSaveMeta();
-  ghStatus("正在读取…");
+  ghStatus("pending", "正在读取仓库…", "拉取 keymap 与 conf");
   try {
     g = await ensureRepo(g);
     const jsonText = await ghGetFile(g, "config/q10-config.json");
@@ -244,11 +255,11 @@ async function ghPull() {
       throw new Error("仓库里没有 config/q10-config.json 或 bbq10.conf");
     }
     localStorage.setItem(STORAGE, JSON.stringify(state));
-    ghStatus("已从 GitHub 读入，正在刷新页面");
+    ghStatus("ok", "已从仓库读取", "正在刷新页面以套用配置");
     toast("已从仓库读取");
     location.reload();
   } catch (e) {
-    ghStatus("读取失败：" + explainGhError(e));
+    ghStatus("err", "读取失败", explainGhError(e));
     toast("读取失败");
   }
 }
@@ -256,7 +267,7 @@ async function ghPull() {
 async function ghPush() {
   let g = ghReadForm();
   ghSaveMeta();
-  ghStatus("正在提交…");
+  ghStatus("pending", "正在推送到 GitHub…", "写入 conf / keymap / JSON");
   try {
     g = await ensureRepo(g);
     const repo = await ghApi(g, "");
@@ -274,11 +285,12 @@ async function ghPush() {
       lastSha = out.commit?.sha || lastSha;
       await sleep(200);
     }
-    ghStatus(`已 push 到 ${g.owner}/${g.repo}@${g.branch}${lastSha ? "：" + lastSha.slice(0, 7) : ""}（随后 Actions 会编固件）`);
+    const where = `${g.owner}/${g.repo}  ·  ${g.branch}${lastSha ? "  ·  " + lastSha.slice(0, 7) : ""}`;
+    ghStatus("ok", "已推送到 GitHub", where + "\nGitHub Actions 随后会编译固件。");
     toast("已推到 GitHub");
     localStorage.setItem(STORAGE, JSON.stringify(state));
   } catch (e) {
-    ghStatus("推送失败：" + explainGhError(e));
+    ghStatus("err", "推送失败", explainGhError(e));
     toast("推送失败");
   }
 }
